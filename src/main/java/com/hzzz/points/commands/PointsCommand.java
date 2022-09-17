@@ -8,12 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public final class PointsCommand implements CommandExecutor {
-    private static PointsCommand instance;
+    private static final PointsCommand instance = new PointsCommand();
 
     public static PointsCommand getInstance() {
-        if (instance == null) {
-            instance = new PointsCommand();
-        }
         return instance;
     }
 

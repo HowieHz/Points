@@ -15,12 +15,9 @@ import org.jetbrains.annotations.NotNull;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Where implements CommandExecutor {
-    private static Where instance;
+    private static final Where instance = new Where();
 
     public static Where getInstance() {
-        if (instance == null) {
-            instance = new Where();
-        }
         return instance;
     }
 

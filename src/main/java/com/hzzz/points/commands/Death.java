@@ -10,12 +10,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class Death implements CommandExecutor {
-    private static Death instance;
+    private static final Death instance = new Death();
 
     public static Death getInstance() {
-        if (instance == null) {
-            instance = new Death();
-        }
         return instance;
     }
 

@@ -10,12 +10,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class DeathListeners implements Listener {
-    private static DeathListeners instance;
+    private static final DeathListeners instance = new DeathListeners();
 
     public static DeathListeners getInstance() {
-        if (instance == null) {
-            instance = new DeathListeners();
-        }
         return instance;
     }
 

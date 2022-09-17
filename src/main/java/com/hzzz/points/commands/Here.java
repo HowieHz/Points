@@ -18,12 +18,9 @@ import org.jetbrains.annotations.NotNull;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Here implements CommandExecutor {
-    private static Here instance;
+    private static final Here instance = new Here();
 
     public static Here getInstance() {
-        if (instance == null) {
-            instance = new Here();
-        }
         return instance;
     }
 
