@@ -9,17 +9,21 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 public final class PointsCommand extends BaseDisablableExecutor {
-    private final FileConfiguration config;
+//    private final FileConfiguration config;
+    private static PointsCommand instance;
 
-    public PointsCommand() {
-        config = Points.config;
+    public static PointsCommand getInstance() {
+        if (instance == null) {
+            instance = new PointsCommand();
+        }
+        return instance;
+    }
+
+    private PointsCommand() {
+//        config = Points.config;
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (disabled) {
-            return false;
-        }
-
         if (args.length == 1) {
             if (args[0].equals("help")) {
                 sender.sendMessage(text.help);

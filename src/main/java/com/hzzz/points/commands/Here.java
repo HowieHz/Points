@@ -19,17 +19,21 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 
 public final class Here extends BaseDisablableExecutor {
     private final FileConfiguration config;
+    private static Here instance;
 
-    public Here() {
+    public static Here getInstance() {
+        if (instance == null) {
+            instance = new Here();
+        }
+        return instance;
+    }
+
+    private Here() {
         config = Points.config;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (disabled) {
-            return false;
-        }
-
         // 检查执行者
         if (!(sender instanceof Player player)) {
             sender.sendMessage(text.player_only);

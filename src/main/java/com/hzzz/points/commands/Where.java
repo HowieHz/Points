@@ -15,8 +15,15 @@ import org.jetbrains.annotations.NotNull;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Where extends BaseDisablableExecutor {
-    private boolean isDisabled;
     private final FileConfiguration config;
+    private static Where instance;
+
+    public static Where getInstance() {
+        if (instance == null) {
+            instance = new Where();
+        }
+        return instance;
+    }
 
     public Where() {
         config = Points.config;
@@ -24,10 +31,6 @@ public final class Where extends BaseDisablableExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (isDisabled) {
-            return false;
-        }
-
         switch (args.length) {
             case 0 -> {
                 // /where

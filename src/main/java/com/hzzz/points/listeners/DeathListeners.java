@@ -11,8 +11,16 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 
 public final class DeathListeners implements Listener {
     private final FileConfiguration config;
+    private static DeathListeners instance;
 
-    public DeathListeners() {
+    public static DeathListeners getInstance() {
+        if (instance == null) {
+            instance = new DeathListeners();
+        }
+        return instance;
+    }
+
+    private DeathListeners() {
         config = Points.config;
     }
 

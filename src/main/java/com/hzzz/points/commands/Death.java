@@ -10,18 +10,22 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class Death extends BaseDisablableExecutor {
-    private final FileConfiguration config;
+//    private final FileConfiguration config;
+    private static Death instance;
 
-    public Death() {
-        config = Points.config;
+    public static Death getInstance() {
+        if (instance == null) {
+            instance = new Death();
+        }
+        return instance;
+    }
+
+    private Death() {
+//        config = Points.config;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (disabled) {
-            return false;
-        }
-
         switch (args.length) {
             case 0 -> {
                 // /death
