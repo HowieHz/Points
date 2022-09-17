@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-import static com.hzzz.points.commands.utils.Utils.builder_player_coordinates_message;
+import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Here implements CommandExecutor {
     private final FileConfiguration config;
@@ -39,7 +39,7 @@ public final class Here implements CommandExecutor {
         }
 
         // 生成消息并在在公屏发送
-        Bukkit.broadcast(builder_player_coordinates_message("here", config, player), Server.BROADCAST_CHANNEL_USERS);
+        Bukkit.broadcast(builderPlayerCoordinatesMessage("here", config, player), Server.BROADCAST_CHANNEL_USERS);
 
         // 给发送者附上发光效果
         if (config.getBoolean("here.glowing.enable", false)) {
