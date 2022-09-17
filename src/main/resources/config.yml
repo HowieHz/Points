@@ -3,12 +3,12 @@ version: 1
 here:
   enable: true  # 是否允许使用here
   permission: false  # 是否开启权限管理
-  voxelmap-support: true  # 是否开启Voxelmap支持
-  xaeros-support: true  # 是否开启Xaeros支持
+  voxelmap-support: false  # 是否开启Voxelmap支持
+  xaeros-support: false  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
   glowing:
     enable: true  # 是否高亮
-    time: 120  # 高亮时间，单位 秒
+    time: 20  # 高亮时间，单位 秒
 
 where:
   enable: true  # 是否允许使用where

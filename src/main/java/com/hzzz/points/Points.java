@@ -29,6 +29,8 @@ public final class Points extends JavaPlugin{
     public void onEnable() {
         _instance = this;
 
+        // relaod一遍配置文件，用于重载
+        reloadConfig();
         // 读取配置和注册指令
         config = getConfig();
 
