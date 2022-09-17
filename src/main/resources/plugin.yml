@@ -1,0 +1,24 @@
+name: Points
+#version: '${version}'
+version: 1.0
+main: com.hzzz.points.Points
+api-version: 1.19
+authors: [ Hzzz ]
+description: Some useful points
+commands:
+  where:
+    description: Get player position
+    aliases: [ whe, wh ]
+    usage: "/where <player-name>"
+  here:
+    description: Broadcast player position
+    aliases: [ he ]
+    usage: "/here"
+  death:
+    description: About death
+    aliases: [ de ]
+    usage: "/death"
+  points:
+    description: plugin commands
+    aliases: [ po ]
+    usage: "/points"

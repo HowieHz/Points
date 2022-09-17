@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Points">
+    <output-path>$PROJECT_DIR$/out/artifacts/Points</output-path>
+    <root id="archive" name="Points.jar">
+      <element id="module-output" name="Points.main" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/config.yml" />
+    </root>
+  </artifact>
+</component>

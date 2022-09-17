@@ -1,0 +1,38 @@
+version: 1
+
+here:
+  enable: true
+  permission: false
+  voxelmap-support: true
+  xaeros-support: true
+  teleport-support: false
+  glowing:
+    # 是否高亮
+    enable: true
+    # 高亮时间，单位 秒
+    time: 120
+
+where:
+  enable: true
+  permission: false
+  voxelmap-support: false
+  xaeros-support: false
+  teleport-support: false
+
+death:
+  enable: true
+  message:
+    # 当你死亡的时候会向你发送死亡地点等信息
+    enable: true
+    permission: false
+    voxelmap-support: false
+    xaeros-support: false
+    teleport-support: false
+
+  log:
+    # 使用death log记录死亡信息
+    enable: true
+    permission: false
+    limit: 5
+    # storage -> [sqlite] 没有其他选择
+    storage: sqlite
