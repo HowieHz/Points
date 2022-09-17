@@ -1,15 +1,13 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.text.text;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import static com.hzzz.points.commands.utils.Utils.builder_player_coordinates_message;
+import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class DeathListeners implements Listener {
     private final FileConfiguration config;
@@ -30,7 +28,7 @@ public final class DeathListeners implements Listener {
     //        }
 
             // 生成并发送消息给执行者
-            player.sendMessage(builder_player_coordinates_message("death.message", config, player));
+            player.sendMessage(builderPlayerCoordinatesMessage("death.message", config, player));
     }
     }
 }

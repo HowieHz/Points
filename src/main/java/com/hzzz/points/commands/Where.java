@@ -12,7 +12,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.hzzz.points.commands.utils.Utils.builder_player_coordinates_message;
+import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Where implements CommandExecutor {
     private final FileConfiguration config;
@@ -39,7 +39,7 @@ public final class Where implements CommandExecutor {
                 }
 
                 // 生成并发送消息给执行者
-                sender.sendMessage(builder_player_coordinates_message("where", config, player));
+                sender.sendMessage(builderPlayerCoordinatesMessage("where", config, player));
                 return true;
             }
             case 1 -> {
@@ -59,7 +59,7 @@ public final class Where implements CommandExecutor {
                 }
 
                 // 生成并发送消息给执行者
-                sender.sendMessage(builder_player_coordinates_message("where", config, player));
+                sender.sendMessage(builderPlayerCoordinatesMessage("where", config, player));
                 return true;
             }
             default -> {
