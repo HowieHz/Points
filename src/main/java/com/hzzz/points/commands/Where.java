@@ -16,6 +16,14 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 
 public final class Where implements CommandExecutor {
     private final FileConfiguration config;
+    private static Where instance;
+
+    public static Where getInstance() {
+        if (instance == null) {
+            instance = new Where();
+        }
+        return instance;
+    }
 
     public Where() {
         config = Points.config;

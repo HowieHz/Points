@@ -19,8 +19,16 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 
 public final class Here implements CommandExecutor {
     private final FileConfiguration config;
+    private static Here instance;
 
-    public Here() {
+    public static Here getInstance() {
+        if (instance == null) {
+            instance = new Here();
+        }
+        return instance;
+    }
+
+    private Here() {
         config = Points.config;
     }
 

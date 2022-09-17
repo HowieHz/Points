@@ -5,14 +5,19 @@ import com.hzzz.points.text.text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 public final class PointsCommand implements CommandExecutor {
-    private final FileConfiguration config;
+    private static PointsCommand instance;
 
-    public PointsCommand() {
-        config = Points.config;
+    public static PointsCommand getInstance() {
+        if (instance == null) {
+            instance = new PointsCommand();
+        }
+        return instance;
+    }
+
+    private PointsCommand() {
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
