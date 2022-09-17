@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public final class PointsCommand implements CommandExecutor {
-//    private final FileConfiguration config;
     private static PointsCommand instance;
 
     public static PointsCommand getInstance() {
@@ -19,7 +18,6 @@ public final class PointsCommand implements CommandExecutor {
     }
 
     private PointsCommand() {
-//        config = Points.config;
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {

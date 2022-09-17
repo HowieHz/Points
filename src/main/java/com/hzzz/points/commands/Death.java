@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class Death implements CommandExecutor {
-//    private final FileConfiguration config;
     private static Death instance;
 
     public static Death getInstance() {
@@ -19,7 +18,6 @@ public final class Death implements CommandExecutor {
     }
 
     private Death() {
-//        config = Points.config;
     }
 
     @Override
