@@ -3,11 +3,11 @@ package com.hzzz.points.commands;
 import java.lang.String;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.abstracts.BaseDisablableExecutor;
 import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.commands.utils.Utils.builder_player_coordinates_message;
 
-public final class Here implements CommandExecutor {
+public final class Here extends BaseDisablableExecutor {
     private final FileConfiguration config;
 
     public Here() {
@@ -26,6 +26,10 @@ public final class Here implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (disabled) {
+            return false;
+        }
+
         // 检查执行者
         if (!(sender instanceof Player player)) {
             sender.sendMessage(text.player_only);

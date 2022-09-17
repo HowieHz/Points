@@ -1,15 +1,15 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.abstracts.BaseDisablableExecutor;
 import com.hzzz.points.text.text;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class Death implements CommandExecutor {
+public final class Death extends BaseDisablableExecutor {
     private final FileConfiguration config;
 
     public Death() {
@@ -18,6 +18,10 @@ public final class Death implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (disabled) {
+            return false;
+        }
+
         switch (args.length) {
             case 0 -> {
                 // /death
