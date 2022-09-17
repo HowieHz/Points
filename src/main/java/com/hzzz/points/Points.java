@@ -32,7 +32,7 @@ public final class Points extends JavaPlugin{
         // 读取配置和注册指令
         config = getConfig();
 
-        this.getLogger().info(Boolean.toString(config.getBoolean("here.enable", false)));
+        this.getLogger().info(String.valueOf(config.getBoolean("here.enable", false)));
 
         // here
         if (config.getBoolean("here.enable", false)) {
