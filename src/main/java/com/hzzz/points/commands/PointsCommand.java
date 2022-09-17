@@ -29,8 +29,7 @@ public final class PointsCommand implements CommandExecutor {
                 }
                 // 重载的逻辑
                 Points plugin_instance = Points.getInstance();
-                plugin_instance.onDisable();
-                plugin_instance.onEnable();
+                plugin_instance.onReload();
                 sender.sendMessage(text.reload_ready);
                 return true;
             }

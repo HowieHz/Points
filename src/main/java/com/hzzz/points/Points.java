@@ -29,8 +29,6 @@ public final class Points extends JavaPlugin{
     public void onEnable() {
         _instance = this;
 
-        // relaod一遍配置文件，用于重载
-        reloadConfig();
         // 读取配置和注册指令
         config = getConfig();
 
@@ -73,10 +71,17 @@ public final class Points extends JavaPlugin{
         commands.clear();
     }
 
+    public void onReload(){
+        // relaod一遍配置文件，用于重载
+        reloadConfig();
+
+        onDisable();
+        onEnable();
+    }
+
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);  // 关闭插件时, 确保取消我调度的所有任务
-        saveConfig();  // 保存配置
         disableExecutor();  // 卸载指令
 
         // 消息
