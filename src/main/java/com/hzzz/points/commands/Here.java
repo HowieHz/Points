@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Here implements CommandExecutor {
-    private final FileConfiguration config;
     private static Here instance;
 
     public static Here getInstance() {
@@ -28,12 +27,12 @@ public final class Here implements CommandExecutor {
         return instance;
     }
 
-    private Here() {
-        config = Points.config;
-    }
+    private Here() {}
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        final FileConfiguration config = Points.config;  // 读取配置
+
         // 检查执行者
         if (!(sender instanceof Player player)) {
             sender.sendMessage(text.player_only);

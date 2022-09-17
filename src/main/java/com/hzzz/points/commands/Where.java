@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class Where implements CommandExecutor {
-    private final FileConfiguration config;
     private static Where instance;
 
     public static Where getInstance() {
@@ -25,12 +24,12 @@ public final class Where implements CommandExecutor {
         return instance;
     }
 
-    public Where() {
-        config = Points.config;
-    }
+    public Where() {}
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        final FileConfiguration config = Points.config;  // 读取配置
+
         switch (args.length) {
             case 0 -> {
                 // /where

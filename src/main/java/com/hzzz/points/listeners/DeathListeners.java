@@ -10,7 +10,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
 public final class DeathListeners implements Listener {
-    private final FileConfiguration config;
     private static DeathListeners instance;
 
     public static DeathListeners getInstance() {
@@ -20,16 +19,16 @@ public final class DeathListeners implements Listener {
         return instance;
     }
 
-    private DeathListeners() {
-        config = Points.config;
-    }
+    private DeathListeners() {}
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
+        final FileConfiguration config = Points.config;  // 读取配置
+
         if (config.getBoolean("death.message.enable", false)){
             Player player = e.getEntity();  // 获取玩家
 
-            // 权限检查
+            // 权限检查 玩家是否开启检查
     //        if (config.getBoolean("where.permission ", false) && !sender.hasPermission("points.where.self")) {
     //            sender.sendMessage(text.no_permission);
     //            return true;

@@ -17,8 +17,7 @@ public final class PointsCommand implements CommandExecutor {
         return instance;
     }
 
-    private PointsCommand() {
-    }
+    private PointsCommand() {}
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (args.length == 1) {
