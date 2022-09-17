@@ -26,7 +26,7 @@ public final class DeathListeners implements Listener {
             Player player = e.getEntity();  // 获取玩家
 
             // 权限检查 玩家是否开启检查
-    //        if (config.getBoolean("where.permission ", false) && !sender.hasPermission("points.where.self")) {
+    //        if (config.getBoolean("where.permission ", false) && !checkPermission(sender,"points.where.self")) {
     //            sender.sendMessage(text.no_permission);
     //            return true;
     //        }

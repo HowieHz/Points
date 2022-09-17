@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
+import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class Here implements CommandExecutor {
     private static final Here instance = new Here();
@@ -37,7 +38,7 @@ public final class Here implements CommandExecutor {
         }
 
         // 权限检查
-        if (config.getBoolean("here.permission", false) && !sender.hasPermission("points.here")) {
+        if (config.getBoolean("here.permission", false) && !checkPermission(sender, "points.here")) {
             sender.sendMessage(text.no_permission);
             return true;
         }

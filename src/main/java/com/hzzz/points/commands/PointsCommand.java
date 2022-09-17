@@ -5,7 +5,10 @@ import com.hzzz.points.text.text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class PointsCommand implements CommandExecutor {
     private static final PointsCommand instance = new PointsCommand();
@@ -24,14 +27,20 @@ public final class PointsCommand implements CommandExecutor {
             }
             if (args[0].equals("reload")) {
                 // 权限检查
-                if (!sender.hasPermission("points.reload")) {
+                if (!checkPermission(sender,"points.reload")) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }
                 // 重载的逻辑
                 Points plugin_instance = Points.getInstance();
                 plugin_instance.onReload();
+
+                // 发消息
                 sender.sendMessage(text.reload_ready);
+                if (sender instanceof Player) {  // 玩家重载 在控制台也输出重载结果
+                    Points.logger.info(text.reload_ready);
+
+                }
                 return true;
             }
             sender.sendMessage(text.help);

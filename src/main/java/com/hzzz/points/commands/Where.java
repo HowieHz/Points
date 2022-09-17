@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
+import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class Where implements CommandExecutor {
     private static final Where instance = new Where();
@@ -37,7 +38,7 @@ public final class Where implements CommandExecutor {
                     return true;
                 }
                 // 权限检查
-                if (config.getBoolean("where.permission", false) && !sender.hasPermission("points.where.self")) {
+                if (config.getBoolean("where.permission", false) && !checkPermission(sender,"points.where.self")) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }
@@ -49,8 +50,8 @@ public final class Where implements CommandExecutor {
             case 1 -> {
                 // 权限检查
                 if (config.getBoolean("where.permission", false)
-                        && !sender.hasPermission("points.where.other")
-                        && !sender.hasPermission(String.format("points.where.%s", args[0]))) {
+                        && !checkPermission(sender,"points.where.other")
+                        && !checkPermission(sender,String.format("points.where.%s", args[0]))) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }

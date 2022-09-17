@@ -17,9 +17,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public final class Points extends JavaPlugin{
     public static FileConfiguration config;
+    public static Logger logger = Logger.getLogger("Points");
     private static Points _instance;
     private final List<String> commands = new ArrayList<>();
 
@@ -37,7 +39,7 @@ public final class Points extends JavaPlugin{
         // 读取配置和注册指令
         config = getConfig();
 
-        this.getLogger().info(String.valueOf(config.getBoolean("here.enable", false)));
+        logger.info(String.valueOf(config.getBoolean("here.enable", false)));
 
         // here
         if (config.getBoolean("here.enable", false)) {
@@ -61,7 +63,7 @@ public final class Points extends JavaPlugin{
         registerEvents(DeathListeners.getInstance());
 
         // 启动消息
-        this.getLogger().info(BLUE +"<Points>插件启动");
+        logger.info(BLUE +"<Points>插件启动");
     }
 
     public void registerEvents(Listener listener) {
@@ -102,7 +104,7 @@ public final class Points extends JavaPlugin{
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
         // 消息
-        this.getLogger().info(BLUE +"<Points>插件关闭");
+        logger.info(BLUE +"<Points>插件关闭");
     }
 
     public static Points getInstance(){  // 获取实例的方法

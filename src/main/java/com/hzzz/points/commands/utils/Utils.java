@@ -6,10 +6,11 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class Utils {
+public final class Utils {
     public static Component builderPlayerCoordinatesMessage(String config_root, FileConfiguration config, Player player){
         Location player_location = player.getLocation();  // 获取位置
 
@@ -39,5 +40,14 @@ public class Utils {
                     .clickEvent(ClickEvent.suggestCommand(String.format(text.teleport_support_command, player_location.getX(), player_location.getY(), player_location.getZ()))));
         }
         return component;
+    }
+
+    public static boolean checkPermission(CommandSender sender, String permission_name){
+        if (sender.hasPermission(permission_name)){  // 有权限就返回true
+            return true;
+        }else{
+            StringBuilder sb = new StringBuilder(permission_name);
+            return sender.hasPermission(sb.replace(permission_name.lastIndexOf(".") + 1, permission_name.length(), "*").toString());  // 检查通配符
+        }
     }
 }
