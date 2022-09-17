@@ -3,10 +3,10 @@ package com.hzzz.points.commands;
 import java.lang.String;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.abstracts.BaseDisablableExecutor;
 import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 
-public final class Where implements CommandExecutor {
+public final class Where extends BaseDisablableExecutor {
+    private boolean isDisabled;
     private final FileConfiguration config;
 
     public Where() {
@@ -23,6 +24,10 @@ public final class Where implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if (isDisabled) {
+            return false;
+        }
+
         switch (args.length) {
             case 0 -> {
                 // /where
