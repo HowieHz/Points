@@ -37,7 +37,7 @@ public final class Here extends BaseDisablableExecutor {
         }
 
         // 权限检查
-        if (config.getBoolean("here.permission ", false) && !sender.hasPermission("points.here")) {
+        if (config.getBoolean("here.permission", false) && !sender.hasPermission("points.here")) {
             sender.sendMessage(text.no_permission);
             return true;
         }
