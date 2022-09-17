@@ -1,38 +1,35 @@
 version: 1
 
 here:
-  enable: true
-  permission: false
-  voxelmap-support: true
-  xaeros-support: true
-  teleport-support: false
+  enable: true  # 是否允许使用here
+  permission: false  # 是否开启权限管理
+  voxelmap-support: true  # 是否开启Voxelmap支持
+  xaeros-support: true  # 是否开启Xaeros支持
+  teleport-support: false  # 是否开启tp支持
   glowing:
-    # 是否高亮
-    enable: true
-    # 高亮时间，单位 秒
-    time: 120
+    enable: true  # 是否高亮
+    time: 120  # 高亮时间，单位 秒
 
 where:
-  enable: true
-  permission: false
-  voxelmap-support: false
-  xaeros-support: false
-  teleport-support: false
+  enable: true  # 是否允许使用where
+  permission: false  # 是否开启权限管理
+  voxelmap-support: false  # 是否开启Voxelmap支持
+  xaeros-support: false  # 是否开启Xaeros支持
+  teleport-support: false  # 是否开启tp支持
 
 death:
-  enable: true
+  enable: true  # 是否启用death子模块
   message:
     # 当你死亡的时候会向你发送死亡地点等信息
-    enable: true
-    permission: false
-    voxelmap-support: false
-    xaeros-support: false
-    teleport-support: false
+    enable: true  # 是否启用death message子模块
+    permission: false  # 是否开启权限管理
+    voxelmap-support: false  # 是否开启Voxelmap支持
+    xaeros-support: false  # 是否开启Xaeros支持
+    teleport-support: false  # 是否开启tp支持
 
   log:
-    # 使用death log记录死亡信息
-    enable: true
-    permission: false
-    limit: 5
-    # storage -> [sqlite] 没有其他选择
-    storage: sqlite
+    # 记录死亡信息
+    enable: true  # 是否启用death log子模块
+    permission: false  # 是否开启权限管理
+    limit: 5  # 死亡记录上限
+    storage: sqlite  # 存储方式 storage -> [sqlite] 没有其他选择

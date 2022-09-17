@@ -10,27 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b62b68c-09df-4f71-8e0a-92a3c6a5e701" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Points.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/Points.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Death.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Here.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/PointsCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Where.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/utils/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/listeners/DeathListeners.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/text/text.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Here.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Here.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Where.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hzzz/points/commands/Where.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +90,7 @@
       <workItem from="1663327962648" duration="569000" />
       <workItem from="1663328586413" duration="4585000" />
       <workItem from="1663343647394" duration="4105000" />
-      <workItem from="1663373704143" duration="20343000" />
+      <workItem from="1663373704143" duration="22262000" />
     </task>
     <servers />
   </component>

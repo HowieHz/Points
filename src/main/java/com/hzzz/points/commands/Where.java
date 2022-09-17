@@ -33,7 +33,7 @@ public final class Where implements CommandExecutor {
                     return true;
                 }
                 // 权限检查
-                if (config.getBoolean("where.permission ", false) && !sender.hasPermission("points.where.self")) {
+                if (config.getBoolean("where.permission", false) && !sender.hasPermission("points.where.self")) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }
@@ -44,7 +44,7 @@ public final class Where implements CommandExecutor {
             }
             case 1 -> {
                 // 权限检查
-                if (config.getBoolean("where.permission ", false)
+                if (config.getBoolean("where.permission", false)
                         && !sender.hasPermission("points.where.other")
                         && !sender.hasPermission(String.format("points.where.%s", args[0]))) {
                     sender.sendMessage(text.no_permission);
