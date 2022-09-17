@@ -1,14 +1,13 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.abstracts.BaseDisablableExecutor;
 import com.hzzz.points.text.text;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-public final class PointsCommand extends BaseDisablableExecutor {
+public final class PointsCommand implements CommandExecutor {
 //    private final FileConfiguration config;
     private static PointsCommand instance;
 
