@@ -6,14 +6,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
+import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class DeathListeners implements Listener {
-    private static final DeathListeners instance = new DeathListeners();
+    private static final DeathListeners INSTANCE = new DeathListeners();
 
     public static DeathListeners getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private DeathListeners() {}
@@ -25,11 +27,12 @@ public final class DeathListeners implements Listener {
         if (config.getBoolean("death.message.enable", false)){
             Player player = e.getEntity();  // 获取玩家
 
-            // 权限检查 玩家是否开启检查
-    //        if (config.getBoolean("where.permission ", false) && !checkPermission(sender,"points.where.self")) {
-    //            sender.sendMessage(text.no_permission);
-    //            return true;
-    //        }
+            // 权限检查
+            if (config.getBoolean("where.permission ", false) && !checkPermission(player ,"points.death.message")) {
+                return;
+            }
+
+            // TODO
 
             // 生成并发送消息给执行者
             player.sendMessage(builderPlayerCoordinatesMessage("death.message", config, player));

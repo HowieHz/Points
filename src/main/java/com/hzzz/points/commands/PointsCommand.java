@@ -11,20 +11,16 @@ import org.jetbrains.annotations.NotNull;
 import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class PointsCommand implements CommandExecutor {
-    private static final PointsCommand instance = new PointsCommand();
+    private static final PointsCommand INSTANCE = new PointsCommand();
 
     public static PointsCommand getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private PointsCommand() {}
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (args.length == 1) {
-            if (args[0].equals("help")) {
-                sender.sendMessage(text.help);
-                return true;
-            }
             if (args[0].equals("reload")) {
                 // 权限检查
                 if (!checkPermission(sender,"points.reload")) {
@@ -32,8 +28,7 @@ public final class PointsCommand implements CommandExecutor {
                     return true;
                 }
                 // 重载的逻辑
-                Points plugin_instance = Points.getInstance();
-                plugin_instance.onReload();
+                Points.getInstance().onReload();
 
                 // 发消息
                 sender.sendMessage(text.reload_ready);
@@ -43,6 +38,8 @@ public final class PointsCommand implements CommandExecutor {
                 }
                 return true;
             }
+
+            // args[0].equals("help")
             sender.sendMessage(text.help);
             return true;
         } else {

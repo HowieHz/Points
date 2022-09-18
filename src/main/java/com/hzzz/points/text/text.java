@@ -13,6 +13,7 @@ public final class text {
     public static final String teleport_support_hover = "§c点击以传送到 §e[%.0f, %.0f, %.0f]";
     public static final String teleport_support_command = "/tp %f %f %f";
     public static final String reload_ready = "插件已完成重载！";
+    public static final String wrong_database_type = "配置文件数据库类型错误，已启动默认数据库sqlite";
     public static final String help = """
 
 -------------------------------------------------
@@ -33,4 +34,10 @@ public final class text {
 /death log : 获取死亡日志
 -------------------------------------------------
 """;
+
+    public static final String enable_death_message = "已开启死亡信息提示";
+    public static final String disable_death_message = "已关闭死亡信息提示";
+    public static final String disable_module = "此模块被关闭";
+    public static final String sqlite_ready = "sqlite数据库 %s 已连接";
+    public static final String sqlite_not_ready = "你sqlite数据库 %s 炸了，对应的子模块将不会开启";
 }

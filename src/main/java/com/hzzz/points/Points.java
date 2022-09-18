@@ -4,9 +4,9 @@ import com.hzzz.points.commands.Death;
 import com.hzzz.points.commands.Here;
 import com.hzzz.points.commands.PointsCommand;
 import com.hzzz.points.commands.Where;
+import com.hzzz.points.data_manager.DeathSQLite;
 import com.hzzz.points.listeners.DeathListeners;
-
-import static org.bukkit.ChatColor.*;
+import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,27 +19,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-public final class Points extends JavaPlugin{
+import static org.bukkit.ChatColor.BLUE;
+
+public final class Points extends JavaPlugin {
     public static FileConfiguration config;
     public static Logger logger = Logger.getLogger("Points");
-    private static Points _instance;
+    private static Points INSTANCE;
     private final List<String> commands = new ArrayList<>();
 
     private final List<Listener> eventHandlers = new ArrayList<>();
 
     @Override
     public void onLoad() {
+        logger.info(BLUE + "<Points>插件加载");
         saveDefaultConfig();  // 如果配置文件不存在, 保存默认的配置
     }
 
     @Override
     public void onEnable() {
-        _instance = this;
+        INSTANCE = this;
 
         // 读取配置和注册指令
         config = getConfig();
-
-        logger.info(String.valueOf(config.getBoolean("here.enable", false)));
 
         // here
         if (config.getBoolean("here.enable", false)) {
@@ -53,7 +54,13 @@ public final class Points extends JavaPlugin{
 
         // death
         if (config.getBoolean("death.enable", false)) {
-            setExecutor("death", Death.getInstance());
+            // 数据库检查 启动数据库
+            if (DeathSQLite.getInstance().state()){
+                logger.info(String.format(text.sqlite_ready,"death.sqlite"));
+                setExecutor("death", Death.getInstance());
+            }else{
+                logger.info(String.format(text.sqlite_not_ready,"death.sqlite"));
+            }
         }
 
         // points
@@ -63,12 +70,12 @@ public final class Points extends JavaPlugin{
         registerEvents(DeathListeners.getInstance());
 
         // 启动消息
-        logger.info(BLUE +"<Points>插件启动");
+        logger.info(BLUE + "<Points>插件启动");
     }
 
     public void registerEvents(Listener listener) {
         eventHandlers.add(listener);
-        Bukkit.getPluginManager().registerEvents(listener,this);
+        Bukkit.getPluginManager().registerEvents(listener, this);
     }
 
     public void setExecutor(String command, CommandExecutor executor) {
@@ -76,22 +83,22 @@ public final class Points extends JavaPlugin{
         Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor);
     }
 
-    public void disableExecutor(){
-        for (String command : commands){
+    public void disableExecutor() {
+        for (String command : commands) {
             Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(null);
         }
         commands.clear();
     }
 
-    public void disableEventHandler(){
-        for (Listener listener : eventHandlers){
+    public void disableEventHandler() {
+        for (Listener listener : eventHandlers) {
             HandlerList.unregisterAll(listener);
         }
         eventHandlers.clear();
     }
 
-    public void onReload(){
-        // relaod一遍配置文件，用于重载
+    public void onReload() {
+        // reload一遍配置文件，用于重载
         reloadConfig();
 
         onDisable();
@@ -104,10 +111,10 @@ public final class Points extends JavaPlugin{
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
         // 消息
-        logger.info(BLUE +"<Points>插件关闭");
+        logger.info(BLUE + "<Points>插件关闭");
     }
 
-    public static Points getInstance(){  // 获取实例的方法
-        return _instance;
+    public static Points getInstance() {  // 获取实例的方法
+        return INSTANCE;
     }
 }

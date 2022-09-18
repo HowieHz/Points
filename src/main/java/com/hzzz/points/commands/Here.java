@@ -19,17 +19,17 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class Here implements CommandExecutor {
-    private static final Here instance = new Here();
+    private static final Here INSTANCE = new Here();
 
     public static Here getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private Here() {}
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        final FileConfiguration config = Points.config;  // 读取配置
+        final FileConfiguration CONFIG = Points.config;  // 读取配置
 
         // 检查执行者
         if (!(sender instanceof Player player)) {
@@ -38,17 +38,17 @@ public final class Here implements CommandExecutor {
         }
 
         // 权限检查
-        if (config.getBoolean("here.permission", false) && !checkPermission(sender, "points.here")) {
+        if (CONFIG.getBoolean("here.permission", false) && !checkPermission(sender, "points.here")) {
             sender.sendMessage(text.no_permission);
             return true;
         }
 
         // 生成消息并在在公屏发送
-        Bukkit.broadcast(builderPlayerCoordinatesMessage("here", config, player), Server.BROADCAST_CHANNEL_USERS);
+        Bukkit.broadcast(builderPlayerCoordinatesMessage("here", CONFIG, player), Server.BROADCAST_CHANNEL_USERS);
 
         // 给发送者附上发光效果
-        if (config.getBoolean("here.glowing.enable", false)) {
-            PotionEffect pe = new PotionEffect(PotionEffectType.GLOWING, config.getInt("here.glowing.time", 1200) * 20, 1);  // 20tick*60s=1200
+        if (CONFIG.getBoolean("here.glowing.enable", false)) {
+            PotionEffect pe = new PotionEffect(PotionEffectType.GLOWING, CONFIG.getInt("here.glowing.time", 1200) * 20, 1);  // 20tick*60s=1200
             pe.apply(player);
         }
         return true;

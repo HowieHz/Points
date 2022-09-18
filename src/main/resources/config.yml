@@ -19,6 +19,8 @@ where:
 
 death:
   enable: true  # 是否启用death子模块
+  storage:
+    db-type: sqlite # 存储方式 -> [sqlite] 没有其他选择
   message:
     # 当你死亡的时候会向你发送死亡地点等信息
     enable: true  # 是否启用death message子模块
@@ -32,4 +34,3 @@ death:
     enable: true  # 是否启用death log子模块
     permission: false  # 是否开启权限管理
     limit: 5  # 死亡记录上限
-    storage: sqlite  # 存储方式 storage -> [sqlite] 没有其他选择

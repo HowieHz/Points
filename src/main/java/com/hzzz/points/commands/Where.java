@@ -16,10 +16,10 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 import static com.hzzz.points.commands.utils.Utils.checkPermission;
 
 public final class Where implements CommandExecutor {
-    private static final Where instance = new Where();
+    private static final Where INSTANCE = new Where();
 
     public static Where getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public Where() {}
