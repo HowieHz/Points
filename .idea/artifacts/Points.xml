@@ -5,7 +5,6 @@
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/config.yml" />
       <element id="module-output" name="Points.main" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/src/main/libs/sqlite-jdbc-3.39.3.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
