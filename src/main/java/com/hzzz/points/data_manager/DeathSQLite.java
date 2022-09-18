@@ -30,14 +30,12 @@ public class DeathSQLite {
             st = con.createStatement();
             // 创建表
             st.executeUpdate("CREATE TABLE if NOT EXISTS DeathMessageConfig(" +
-                    "id BIGINT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT, "+
-                    "UUID CHAR(36) NOT NULL UNIQUE, " +
+                    "UUID CHAR(36) NOT NULL UNIQUE PRIMARY KEY, " +
                     "Name VARCHAR(255) NOT NULL, " +
                     "Enable INTEGER NOT NULL" +
                     ")");
             st.executeUpdate("CREATE TABLE if NOT EXISTS DeathLog(" +
-                    "id BIGINT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT, "+
-                    "UUID CHAR(36) NOT NULL UNIQUE, " +
+                    "UUID CHAR(36) NOT NULL UNIQUE PRIMARY KEY, " +
                     "Name VARCHAR(255) NOT NULL, " +
                     "DeathReason VARCHAR(255) NOT NULL, " +
                     "DeathTime TIMESTAMP NOT NULL" +
@@ -73,19 +71,16 @@ public class DeathSQLite {
     public final boolean IsEnableDeathMessage(Player player) {  // 检查是否开启死亡提示
         try {
             // 初始化
-            executeUpdate(String.format("insert into DeathMessageConfig(UUID, Name, Enable) values ('%s', '%s', 1) " +
-                    "where not exists (select * from DeathMessageConfig where UUID = '%s')", player.getUniqueId(), player.getName(), player.getUniqueId()));
+            st.executeUpdate(String.format("INSERT OR IGNORE INTO DeathMessageConfig(UUID, Name, Enable) VALUES ('%s', '%s', 1)", player.getUniqueId(), player.getName()));
 
             // 验证数据
+            int enable = 0;
             ResultSet rs = st.executeQuery(String.format("SELECT * FROM DeathMessageConfig WHERE UUID = '%s'", player.getUniqueId()));
-            rs.first();
-            if (rs.getInt("Enable") == 1) {
-                rs.close();
-                return true;
-            } else {
-                rs.close();
-                return false;
+            if (rs.next()) {  // 结果集第一个 没有数据(返回false) 还调用getInt就会报错java.sql.SQLException: ResultSet closed
+                enable = rs.getInt("Enable");
             }
+            rs.close();
+            return enable == 1;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -95,10 +90,18 @@ public class DeathSQLite {
     public final boolean updateDeathMessageConfig(Player player) {  // 切换是否开启死亡提示
         // 读取并翻转数据
         if (IsEnableDeathMessage(player)) {
-            executeUpdate(String.format("update DeathMessageConfig set Enable = 0 where UUID = '%s'", player.getUniqueId()));
+            try {
+                st.executeUpdate(String.format("update DeathMessageConfig set Enable = 0 where UUID = '%s'", player.getUniqueId()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return false;
         } else {
-            executeUpdate(String.format("update DeathMessageConfig set Enable = 1 where UUID = '%s'", player.getUniqueId()));
+            try {
+                st.executeUpdate(String.format("update DeathMessageConfig set Enable = 1 where UUID = '%s'", player.getUniqueId()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             return true;
         }
     }
