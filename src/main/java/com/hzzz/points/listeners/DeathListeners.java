@@ -25,19 +25,16 @@ public final class DeathListeners implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
         final FileConfiguration config = Points.config;  // 读取配置
+        Player player = e.getEntity();  // 获取玩家
 
-        if (config.getBoolean("death.message.enable", false)) {
-            Player player = e.getEntity();  // 获取玩家
+        // 权限检查
+        if (config.getBoolean("where.permission ", false) && !checkPermission(player, "points.death.message")) {
+            return;
+        }
 
-            // 权限检查
-            if (config.getBoolean("where.permission ", false) && !checkPermission(player, "points.death.message")) {
-                return;
-            }
-
-            if (DeathSQLite.getInstance().IsEnableDeathMessage(player)) {
-                // 生成并发送消息给执行者
-                player.sendMessage(builderPlayerCoordinatesMessage("death.message", config, player));
-            }
+        if (DeathSQLite.getInstance().IsEnableDeathMessage(player)) {
+            // 生成并发送消息给执行者
+            player.sendMessage(builderPlayerCoordinatesMessage("death.message", config, player));
         }
     }
 }

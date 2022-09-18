@@ -39,35 +39,40 @@ public final class Points extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
 
-        // 读取配置和注册指令
+        // 读取配置
         config = getConfig();
 
-        // here
+        // here指令
         if (config.getBoolean("here.enable", false)) {
             setExecutor("here", Here.getInstance());
         }
 
-        // where
+        // where指令
         if (config.getBoolean("here.enable", false)) {
             setExecutor("where", Where.getInstance());
         }
 
-        // death
+        // death模块
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
             if (DeathSQLite.getInstance().state()){
                 logger.info(String.format(text.sqlite_ready,"death.sqlite"));
+                // 数据库成功启动才启动death模块
+
+                // death指令
                 setExecutor("death", Death.getInstance());
+
+                // 注册监听
+                if (config.getBoolean("death.message.enable", false)) {
+                    registerEvents(DeathListeners.getInstance());
+                }
             }else{
                 logger.info(String.format(text.sqlite_not_ready,"death.sqlite"));
             }
         }
 
-        // points
+        // points指令
         Objects.requireNonNull(Bukkit.getPluginCommand("points")).setExecutor(PointsCommand.getInstance());
-
-        // 注册监听
-        registerEvents(DeathListeners.getInstance());
 
         // 启动消息
         logger.info(BLUE + "<Points>插件启动");
