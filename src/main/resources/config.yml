@@ -1,5 +1,8 @@
 version: 1
 
+log:
+  more-information: true  # 详细信息
+
 here:
   enable: true  # 是否允许使用here
   permission: false  # 是否开启权限管理

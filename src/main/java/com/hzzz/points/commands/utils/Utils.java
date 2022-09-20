@@ -1,5 +1,6 @@
 package com.hzzz.points.commands.utils;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.text.text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -9,6 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import static com.hzzz.points.Points.config;
 
 public final class Utils {
     public static Component builderPlayerCoordinatesMessage(String config_root, FileConfiguration config, Player player){
@@ -48,6 +51,16 @@ public final class Utils {
         }else{
             StringBuilder sb = new StringBuilder(permission_name);
             return sender.hasPermission(sb.replace(permission_name.lastIndexOf(".") + 1, permission_name.length(), "*").toString());  // 检查通配符
+        }
+    }
+
+    public static void logInfo(String message){
+        Points.logger.info(message);
+    }
+    public static void logDetailInfo(String message){
+        // todo 添加一些细节info
+        if (config.getBoolean("log.more-information", true)){
+            Points.logger.info(message);
         }
     }
 }

@@ -1,16 +1,15 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.Points;
 import com.hzzz.points.text.text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.commands.utils.Utils.checkPermission;
-import com.hzzz.points.data_manager.DeathSQLite;
+import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
+import static com.hzzz.points.Points.config;
 
 public final class Death implements CommandExecutor {
     private static final Death INSTANCE = new Death();
@@ -24,8 +23,6 @@ public final class Death implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        final FileConfiguration config = Points.config;  // 读取配置
-
         if (args.length == 0) {
             // /death
             sender.sendMessage(text.help_death);
@@ -50,7 +47,7 @@ public final class Death implements CommandExecutor {
                         return false;
                     }
 
-                    if (DeathSQLite.getInstance().updateDeathMessageConfig(player)) {  // 更改数据库config
+                    if (updateDeathMessageConfig(player)) {  // 更改数据库config
                         sender.sendMessage(text.enable_death_message);
                     } else {
                         sender.sendMessage(text.disable_death_message);

@@ -2,18 +2,17 @@ package com.hzzz.points.commands;
 
 import java.lang.String;
 
-import com.hzzz.points.Points;
 import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.commands.utils.Utils.checkPermission;
+import static com.hzzz.points.Points.config;
 
 public final class Where implements CommandExecutor {
     private static final Where INSTANCE = new Where();
@@ -26,8 +25,6 @@ public final class Where implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        final FileConfiguration config = Points.config;  // 读取配置
-
         switch (args.length) {
             case 0 -> {
                 // /where
