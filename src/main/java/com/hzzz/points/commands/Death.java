@@ -1,13 +1,15 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.text.text;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.hzzz.points.commands.utils.Utils.checkPermission;
+import static com.hzzz.points.data_manager.operations_set.DeathLog.outputDeathLog;
+import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
 import static com.hzzz.points.Points.config;
 
@@ -29,17 +31,17 @@ public final class Death implements CommandExecutor {
             return true;
         }
 
-        // 检查执行者
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(text.player_only);
-            return true;
-        }
-
         switch (args[0]) {
             case "message" -> {
                 if (config.getBoolean("death.message.enable", false)) {  // 检查子模块是否开启
+                    // 检查执行者
+                    if (!(sender instanceof Player player)) {
+                        sender.sendMessage(text.player_only);
+                        return true;
+                    }
                     // 权限检查
-                    if (config.getBoolean("death.message.permission", false) && !checkPermission(sender, "points.death.message")) {
+                    if (config.getBoolean("death.message.command-permission.enable", false)
+                            && !checkPermission(sender, config.getString("death.message.command-permission.node", "points.command.death.message"))) {
                         sender.sendMessage(text.no_permission);
                         return true;
                     }
@@ -60,15 +62,34 @@ public final class Death implements CommandExecutor {
             case "log" -> {
                 if (config.getBoolean("death.log.enable", false)) {  // 检查子模块是否开启
                     if (args.length == 1) {  // /death log
+                        // 检查执行者
+                        if (!(sender instanceof Player player)) {
+                            sender.sendMessage(text.player_only);
+                            return true;
+                        }
                         // 权限检查
-                        if (config.getBoolean("death.log.permission", false) && !checkPermission(sender, "points.death.log.self")) {
+                        if (config.getBoolean("death.log.permission.enable", false)
+                                && !checkPermission(sender, config.getString("death.log.permission.node.self", "points.command.death.log.self"))) {
                             sender.sendMessage(text.no_permission);
                             return true;
                         }
-                        // TODO 查看自己的log
+                        outputDeathLog(player, player);  // 查看自己的log
 
                     }else {  // /death log Howie_HzGo
-                        // TODO 查看玩家的log
+                        // 权限检查
+                        if (config.getBoolean("death.log.permission.enable", false)
+                                && !checkPermission(sender, config.getString("death.log.permission.node.other", "points.command.death.log.other"))
+                                && !checkPermission(sender, String.format(config.getString("death.log.permission.node.player", "points.command.death.log.%s"), args[0]))) {
+                            sender.sendMessage(text.no_permission);
+                            return true;
+                        }
+
+                        Player target_player = Bukkit.getPlayer(args[0]);
+                        if (target_player == null) {  // 检查是否获取到玩家
+                            sender.sendMessage(text.no_player);
+                            return true;
+                        }
+                        outputDeathLog(target_player, sender);  // 查看玩家的log
                     }
 
                 }else{

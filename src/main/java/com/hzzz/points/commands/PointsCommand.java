@@ -8,7 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.hzzz.points.commands.utils.Utils.checkPermission;
+import static com.hzzz.points.Points.config;
+import static com.hzzz.points.utils.Utils.checkPermission;
 
 public final class PointsCommand implements CommandExecutor {
     private static final PointsCommand INSTANCE = new PointsCommand();
@@ -23,7 +24,8 @@ public final class PointsCommand implements CommandExecutor {
         if (args.length == 1) {
             if (args[0].equals("reload")) {
                 // 权限检查
-                if (!checkPermission(sender,"points.reload")) {
+                if (config.getBoolean("points.reload.permission.enable", true)
+                        && !checkPermission(sender,config.getString("points.reload.permission.node", "points.reload"))) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }

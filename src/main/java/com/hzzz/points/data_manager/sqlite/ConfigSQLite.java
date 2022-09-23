@@ -1,16 +1,15 @@
-package com.hzzz.points.data_manager;
+package com.hzzz.points.data_manager.sqlite;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.data_manager.sqlite.utils.JdbcUtils;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 
 public class ConfigSQLite {
     private static final ConfigSQLite INSTANCE = new ConfigSQLite();
-//    private final FileConfiguration CONFIG = Points.config;  // 读取配置
     private Connection con;  // 连接
     private Statement st = null;  // 数据库操作接口
-    private boolean ready_flag = false;  // 是否准备好的标志
 
     public static ConfigSQLite getInstance() {
         return INSTANCE;
@@ -26,17 +25,15 @@ public class ConfigSQLite {
     private void setup() {  // 初始化数据库连接
         try {
             // 连接数据库
-            Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:plugins/Points/config.sqlite");
+            con = JdbcUtils.getConnection("jdbc:sqlite:plugins/Points/config.sqlite");
             st = con.createStatement();
             // 创建表
             st.executeUpdate("CREATE TABLE if NOT EXISTS DeathMessageConfig(" +
-                    "UUID CHAR(36) NOT NULL UNIQUE PRIMARY KEY, " +
-                    "Name VARCHAR(255) NOT NULL, " +
-                    "Enable INTEGER NOT NULL" +
+                    "uuid CHAR(36) NOT NULL UNIQUE PRIMARY KEY, " +
+                    "username VARCHAR(255) NOT NULL, " +
+                    "enable INTEGER NOT NULL" +
                     ")");
-            ready_flag = true;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -56,6 +53,6 @@ public class ConfigSQLite {
     }
 
     public boolean state() {  // 状态查询
-        return (st != null && con != null && ready_flag);
+        return (st != null && con != null);
     }
 }

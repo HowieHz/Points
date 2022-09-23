@@ -1,6 +1,15 @@
 package com.hzzz.points.text;
 
+import static org.bukkit.ChatColor.*;
+
+// TODO lang.yml
 public final class text {
+    public static final String plugin_starting = BLUE+"<Points>插件正在启动";
+    public static final String plugin_loading = BLUE+"<Points>插件正在加载";
+    public static final String plugin_disabling = BLUE+"<Points>插件正在关闭";
+    public static final String plugin_started = BLUE+"<Points>插件已启动";
+    public static final String plugin_loaded = BLUE+"<Points>插件已加载";
+    public static final String plugin_disabled = BLUE+"<Points>插件已关闭";
     public static final String player_only = "此指令仅允许玩家使用";
     public static final String no_permission = "你没有使用该指令的权限";
     public static final String no_player = "该玩家不在线";
@@ -40,4 +49,12 @@ public final class text {
     public static final String disable_module = "此模块被关闭";
     public static final String sqlite_ready = "sqlite数据库 %s 已连接";
     public static final String sqlite_not_ready = "你sqlite数据库 %s 炸了，对应的子模块将不会开启";
+    public static final String set_executor = "已注册 %s 指令";
+    public static final String already_disable_executor = "已注销 %s 指令";
+    public static final String all_executor_disabled = "已注销全部指令";
+    public static final String register_event = "已注册 %s 监听器";
+    public static final String already_disable_event = "已注销 %s 监听器";
+    public static final String all_event_disabled = "已注销全部监听器";
+    public static final String config_reloaded = "配置已重新加载";
+    public static final String insert_death_record_fail = "记录玩家 %s 的死亡信息时失败";
 }

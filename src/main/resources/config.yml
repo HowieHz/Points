@@ -1,11 +1,13 @@
 version: 1
 
 log:
-  more-information: true  # 详细信息
+  more-information: false  # 详细信息
 
 here:
   enable: true  # 是否允许使用here
-  permission: false  # 是否开启权限管理
+  permission:
+    enable: false  # 是否开启权限管理
+    node: points.command.here  # 权限节点
   voxelmap-support: false  # 是否开启Voxelmap支持
   xaeros-support: false  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
@@ -15,7 +17,12 @@ here:
 
 where:
   enable: true  # 是否允许使用where
-  permission: false  # 是否开启权限管理
+  permission:
+    enable: false  # 是否开启权限管理
+    node: # 权限节点
+      self: points.command.where.self  # where对象为玩家自己
+      other: points.command.where.other  # where对象为其他玩家
+      player: points.command.where.%s  # where对象为指定玩家 %s 为玩家名
   voxelmap-support: false  # 是否开启Voxelmap支持
   xaeros-support: false  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
@@ -27,7 +34,12 @@ death:
   message:
     # 当你死亡的时候会向你发送死亡地点等信息
     enable: true  # 是否启用death message子模块
-    permission: false  # 是否开启权限管理
+    command-permission:  # /death message 指令权限
+      enable: false  # 是否开启权限管理
+      node: points.command.death.message  # 权限节点
+    listener-permission:  # 监听器权限
+      enable: false  # 是否开启权限管理 开启权限管理后，依然可以使用指令，如无对应权限，死亡将不会发送消息
+      node: points.listener.death.message  # 权限节点
     voxelmap-support: false  # 是否开启Voxelmap支持
     xaeros-support: false  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持
@@ -35,5 +47,19 @@ death:
   log:
     # 记录死亡信息
     enable: true  # 是否启用death log子模块
-    permission: false  # 是否开启权限管理
+    permission:
+      enable: false  # 是否开启权限管理
+      node:
+        self: points.command.death.log.self  # death log对象为玩家自己
+        other: points.command.death.log.other  # death log对象为其他玩家
+        player: points.command.death.log.%s  # death log对象为指定玩家 %s 为玩家名
     limit: 5  # 死亡记录上限
+    voxelmap-support: false  # 是否开启Voxelmap支持
+    xaeros-support: false  # 是否开启Xaeros支持
+    teleport-support: false  # 是否开启tp支持
+
+points:
+  reload:
+    permission:
+      enable: true  # 是否开启权限管理
+      node: points.reload  # 权限节点
