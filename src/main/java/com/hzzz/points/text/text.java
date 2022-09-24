@@ -18,7 +18,7 @@ public final class text {
     public static final String voxelmap_support_hover = "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点";
     public static final String voxelmap_support_command = "/newWaypoint x:%.0f, y:%.0f, z:%.0f, dim:%s";
     public static final String xaeros_support_hover = "§6Xaeros Minimap§r: 点击添加路径点";
-    public static final String xaeros_support_command = "xaero_waypoint_add:%s's Location:%s:%.0f:%.0f:%.0f:6:false:0:Internal_minecraft:%s_waypoints";
+    public static final String xaeros_support_command = "xaero-waypoint:%s's Location:%s:%.0f:%.0f:%.0f:6:false:0:Internal_minecraft:%s_waypoints";
     public static final String teleport_support_hover = "§c点击以传送到 §e[%.0f, %.0f, %.0f]";
     public static final String teleport_support_command = "/tp %f %f %f";
     public static final String reload_ready = "插件已完成重载！";

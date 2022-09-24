@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.text.text.*;
+import static com.hzzz.points.utils.Utils.logDetailInfo;
 
 public class DeathLog {
     private static final Statement st = DeathLogSQLite.getInstance().getStatement();  // 获取操作接口
@@ -27,10 +28,11 @@ public class DeathLog {
         int count = countDeathLog(player);  // 获取目前记录条数
 
         try (ResultSet rs = readDeathLog(player)) {
+            logDetailInfo(String.format("%s 在数据库中记录 %d 条, 限制为 %d 条", player.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 for (int i = 0; i < count + 1 - limit; i++) {  // 删除记录 直到记录数为limit-1
                     rs.next();
-                    st.executeUpdate(String.format("DELETE FROM DeathLog WHERE uuid = '%s' AND deathTime = '%s'", rs.getString("uuid"), rs.getTimestamp("deathTime")));
+                    st.executeUpdate(String.format("DELETE FROM DeathLog WHERE uuid = '%s' AND deathTime = %d", rs.getString("uuid"), rs.getInt("deathTime")));
                 }
             }
 
@@ -81,7 +83,7 @@ public class DeathLog {
             while (rs.next()) {
                 // 编辑消息
                 Component component = Component.text("")
-                        .append(Component.text(sdf.format(rs.getTimestamp("deathTime"))).color(NamedTextColor.YELLOW))
+                        .append(Component.text(sdf.format(rs.getInt("deathTime")*1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
                         .append(Component.text(" -> ").color(NamedTextColor.WHITE))
                         .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
                         .append(Component.text(String.format(text.coordinates_format, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
