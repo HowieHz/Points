@@ -1,6 +1,22 @@
 # Points
 A paper plugin, some useful points
 
+功能
+
+    /here -> 高亮自身 公屏发坐标
+    /where -> 得到某个玩家的坐标
+    /death message -> 死亡的时候发送死亡位置
+    /death log -> 记录死亡信息
+
+防爆 anti-boom
+- 床 -> bed
+- 苦力怕 -> creeper
+- 末影水晶 -> ender-crystal
+- 恶魂 -> ghast 
+- tnt矿车 -> minecart-tnt 
+- TNT -> tnt
+- 凋零 -> wither
+
 指令和权限枚举
 
 权限支持 * 通配符

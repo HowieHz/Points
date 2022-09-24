@@ -15,15 +15,21 @@ import static com.hzzz.points.data_manager.operations_set.DeathLog.insertDeathLo
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.utils.Utils.logDetailInfo;
 
-public final class DeathListeners implements NamedListener {
-    private static final DeathListeners INSTANCE = new DeathListeners();
+public final class DeathListener implements NamedListener {
+    private static final DeathListener INSTANCE = new DeathListener();
     private static final String name = "死亡消息";
 
-    public static DeathListeners getInstance() {
+    public static DeathListener getInstance() {
         return INSTANCE;
     }
 
-    private DeathListeners() {
+
+    private DeathListener() {
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @EventHandler
@@ -51,10 +57,5 @@ public final class DeathListeners implements NamedListener {
                 logDetailInfo(String.format(insert_death_record_fail, player.getName()));  // 详细log 未成功录入死亡信息
             }
         }
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 }

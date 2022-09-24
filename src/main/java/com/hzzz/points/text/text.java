@@ -60,4 +60,5 @@ public final class text {
     public static final String no_death_record = "玩家 §e%s§f 没有已保存的死亡记录";
     public static final String read_death_record = "-------已读取 §e%d§f 条死亡记录-------";
     public static final String division_line =     "-------------------------------";
+    public static final String enter_bed_canceled = "你尝试进入梦乡，但是被未知力量阻止了";
 }

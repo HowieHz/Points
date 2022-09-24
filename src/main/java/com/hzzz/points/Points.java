@@ -8,7 +8,8 @@ import com.hzzz.points.data_manager.sqlite.ConfigSQLite;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import com.hzzz.points.data_structure.CommandInfo;
 import com.hzzz.points.interfaces.NamedListener;
-import com.hzzz.points.listeners.DeathListeners;
+import com.hzzz.points.listeners.AntiBoomListener;
+import com.hzzz.points.listeners.DeathListener;
 import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +31,7 @@ public final class Points extends JavaPlugin {
     private static Points INSTANCE;
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
 
-    private final List<NamedListener> eventHandlers = new ArrayList<>();  // 已注册的监听器
+    private final List<NamedListener> event_handlers = new ArrayList<>();  // 已注册的监听器
 
     public static Points getInstance() {  // 获取实例的方法
         return INSTANCE;
@@ -83,10 +84,16 @@ public final class Points extends JavaPlugin {
 
                 // 数据库成功启动才启动death模块
                 // 注册监听
-                registerEvents(DeathListeners.getInstance());
+                registerEvents(DeathListener.getInstance());
             } else {
                 logger.info(String.format(text.sqlite_not_ready, "config.sqlite, death_log.sqlite"));
             }
+        }
+
+        // anti-boom模块 监听器注册
+        if (config.getBoolean("anti-boom.enable", false)) {
+            // 注册监听
+            registerEvents(AntiBoomListener.getInstance());
         }
 
         logger.info(plugin_started);  // 插件已启动
@@ -104,7 +111,7 @@ public final class Points extends JavaPlugin {
     }
 
     public void registerEvents(NamedListener listener) {  // 注册监听器
-        eventHandlers.add(listener);
+        event_handlers.add(listener);
         Bukkit.getPluginManager().registerEvents(listener, this);
         logDetailInfo(String.format(register_event, listener.getName()));  // 详细log
     }
@@ -116,11 +123,11 @@ public final class Points extends JavaPlugin {
     }
 
     public void disableEventHandler() {  // 注销监听器
-        for (NamedListener listener : eventHandlers) {
+        for (NamedListener listener : event_handlers) {
             HandlerList.unregisterAll(listener);
             logDetailInfo(String.format(already_disable_event, listener.getName()));  // 详细log
         }
-        eventHandlers.clear();
+        event_handlers.clear();
         logDetailInfo(all_event_disabled);  // 详细log
     }
 

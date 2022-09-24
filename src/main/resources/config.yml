@@ -1,4 +1,4 @@
-version: 1
+version: 2
 
 log:
   more-information: false  # 详细信息
@@ -57,6 +57,57 @@ death:
     voxelmap-support: false  # 是否开启Voxelmap支持
     xaeros-support: false  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持
+
+anti-boom:
+  # 防爆
+  enable: true  # 是否启用anti-boom子模块
+  # enable 是否启用子模块
+  # world是主世界是否启用 world-nether是下界是否启用 world-the-end是末地是否启用
+  world-name:  # 世界名字，一般无需修改
+    world: world
+    world-nether: world_nether
+    world-the-end: world_the_end
+  bed:
+    enable: false  # 防止下界和末地睡觉爆炸, 本质上是阻止玩家睡觉
+    world: false
+    world-nether: false
+    world-the-end: false
+  creeper:
+    enable: false  # 防止苦力怕爆炸
+    world: false
+    world-nether: false
+    world-the-end: false
+  ender-crystal:
+    enable: false  # 防止末影水晶爆炸
+    world: false
+    world-nether: false
+    world-the-end: false
+  ghast:
+    enable: false  # 防止恶魂火球爆炸
+    world: false
+    world-nether: false
+    world-the-end: false
+  minecart-tnt:
+    enable: false  # 防止tnt矿车爆炸
+    world: false
+    world-nether: false
+    world-the-end: false
+  tnt:
+    enable: false  # 防止tnt爆炸
+    world: false
+    world-nether: false
+    world-the-end: false
+  wither:
+    skull:
+      enable: false  # 凋零飞行头颅
+      world: false
+      world-nether: false
+      world-the-end: false
+    body:
+      enable: false  # 凋零自身破坏方块
+      world: false
+      world-nether: false
+      world-the-end: false
 
 points:
   reload:

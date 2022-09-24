@@ -43,7 +43,7 @@ public class ConfigSQLite {
     }
 
 
-    private void executeUpdate(String sql) {
+    private void asyncExecuteUpdate(String sql) {
         new BukkitRunnable() {
             @Override
             public void run() {
