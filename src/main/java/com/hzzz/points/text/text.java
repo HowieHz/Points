@@ -47,14 +47,17 @@ public final class text {
     public static final String enable_death_message = "已开启死亡信息提示";
     public static final String disable_death_message = "已关闭死亡信息提示";
     public static final String disable_module = "此模块被关闭";
-    public static final String sqlite_ready = "sqlite数据库 %s 已连接";
-    public static final String sqlite_not_ready = "你sqlite数据库 %s 炸了，对应的子模块将不会开启";
-    public static final String set_executor = "已注册 %s 指令";
-    public static final String already_disable_executor = "已注销 %s 指令";
+    public static final String sqlite_ready = "sqlite数据库 §e%s§f 已连接";
+    public static final String sqlite_not_ready = "你sqlite数据库 §e%s§f 炸了，对应的子模块将不会开启";
+    public static final String set_executor = "已注册 §e%s§f 指令";
+    public static final String already_disable_executor = "已注销 §e%s§f 指令";
     public static final String all_executor_disabled = "已注销全部指令";
-    public static final String register_event = "已注册 %s 监听器";
-    public static final String already_disable_event = "已注销 %s 监听器";
+    public static final String register_event = "已注册 §e%s§f 监听器";
+    public static final String already_disable_event = "已注销 §e%s§f 监听器";
     public static final String all_event_disabled = "已注销全部监听器";
     public static final String config_reloaded = "配置已重新加载";
-    public static final String insert_death_record_fail = "记录玩家 %s 的死亡信息时失败";
+    public static final String insert_death_record_fail = "记录玩家 §e%s§f 的死亡信息时失败";
+    public static final String no_death_record = "玩家 §e%s§f 没有已保存的死亡记录";
+    public static final String read_death_record = "-------已读取 §e%d§f 条死亡记录-------";
+    public static final String division_line =     "-------------------------------";
 }

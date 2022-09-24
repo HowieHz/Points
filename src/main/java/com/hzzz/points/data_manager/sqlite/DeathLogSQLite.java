@@ -8,9 +8,9 @@ import java.sql.*;
 
 public class DeathLogSQLite {
     private static final DeathLogSQLite INSTANCE = new DeathLogSQLite();
-//    private final FileConfiguration CONFIG = Points.config;  // 读取配置
+    //    private final FileConfiguration CONFIG = Points.config;  // 读取配置
     private Connection con;  // 连接
-    private Statement st = null;  // 数据库操作接口
+    private Statement st;  // 数据库操作接口
 
     public static DeathLogSQLite getInstance() {
         return INSTANCE;
@@ -18,6 +18,10 @@ public class DeathLogSQLite {
 
     public Statement getStatement() {
         return st;
+    }
+
+    public Connection getConnection() {
+        return con;
     }
 
     private DeathLogSQLite() {
@@ -31,7 +35,6 @@ public class DeathLogSQLite {
             st = con.createStatement();
             // 创建表
             st.executeUpdate("CREATE TABLE if NOT EXISTS DeathLog(" +
-                    "id INT PRIMARY KEY NOT NULL,"+
                     "uuid CHAR(36) NOT NULL, " +
                     "username VARCHAR(255) NOT NULL, " +
                     "deathReason VARCHAR(255) NOT NULL, " +
@@ -39,10 +42,10 @@ public class DeathLogSQLite {
                     "x DOUBLE NOT NULL DEFAULT 0.0, " +
                     "y DOUBLE NOT NULL DEFAULT 0.0, " +
                     "z DOUBLE NOT NULL DEFAULT 0.0, " +
-                    "deathTime TIMESTAMP" +
+                    "deathTime TIMESTAMP NOT NULL DEFAULT (strftime('%s','now'))" +
                     ")");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -54,7 +57,7 @@ public class DeathLogSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         }.runTaskAsynchronously(Points.getInstance());

@@ -9,13 +9,17 @@ import java.sql.*;
 public class ConfigSQLite {
     private static final ConfigSQLite INSTANCE = new ConfigSQLite();
     private Connection con;  // 连接
-    private Statement st = null;  // 数据库操作接口
+    private Statement st;  // 数据库操作接口
 
     public static ConfigSQLite getInstance() {
         return INSTANCE;
     }
     public Statement getStatement() {
         return st;
+    }
+
+    public Connection getConnection() {
+        return con;
     }
 
     private ConfigSQLite() {
@@ -34,7 +38,7 @@ public class ConfigSQLite {
                     "enable INTEGER NOT NULL" +
                     ")");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -46,7 +50,7 @@ public class ConfigSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         }.runTaskAsynchronously(Points.getInstance());

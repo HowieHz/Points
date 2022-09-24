@@ -36,7 +36,7 @@ public final class DeathListeners implements NamedListener {
             return;
         }
 
-        if (IsEnableDeathMessage(player)) {
+        if (config.getBoolean("death.message.enable", false) && IsEnableDeathMessage(player)) {
             // 生成并发送消息给执行者
             player.sendMessage(builderPlayerCoordinatesMessage("death.message", config, player, " X-> ", NamedTextColor.RED));
         }
@@ -44,10 +44,10 @@ public final class DeathListeners implements NamedListener {
         // 记录死亡日志
         if (config.getBoolean("death.log.enable", false)) {
             Component deathMessage = e.deathMessage();
-            if (deathMessage == null){  // 被手动设置deathMessage才可能为null吧
+            if (deathMessage == null) {  // 被手动设置deathMessage才可能为null吧
                 return;
             }
-            if (!insertDeathLog(player, deathMessage.toString())){
+            if (!insertDeathLog(player, deathMessage.toString())) {
                 logDetailInfo(String.format(insert_death_record_fail, player.getName()));  // 详细log 未成功录入死亡信息
             }
         }

@@ -23,8 +23,7 @@ public class DeathMessageConfig {
             rs.close();
             return enable == 1;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new RuntimeException(e);
         }
     }
 
@@ -34,14 +33,14 @@ public class DeathMessageConfig {
             try {
                 st.executeUpdate(String.format("update DeathMessageConfig set enable = 0 where uuid = '%s'", player.getUniqueId()));
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             return false;
         } else {
             try {
                 st.executeUpdate(String.format("update DeathMessageConfig set enable = 1 where uuid = '%s'", player.getUniqueId()));
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             return true;
         }

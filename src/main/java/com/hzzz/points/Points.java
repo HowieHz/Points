@@ -83,9 +83,7 @@ public final class Points extends JavaPlugin {
 
                 // 数据库成功启动才启动death模块
                 // 注册监听
-                if (config.getBoolean("death.message.enable", false)) {
-                    registerEvents(DeathListeners.getInstance());
-                }
+                registerEvents(DeathListeners.getInstance());
             } else {
                 logger.info(String.format(text.sqlite_not_ready, "config.sqlite, death_log.sqlite"));
             }
