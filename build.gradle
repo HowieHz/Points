@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.hzzz.points'
-version = 'SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 
 repositories {
 //    mavenLocal()  自己电脑的缓存
