@@ -43,7 +43,7 @@ public class AntiBoomListener implements NamedListener {
     @EventHandler
     public void onBoom(EntityExplodeEvent e) {
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
-        
+
         for (AntiBoomInfo info : anti_boom_array) {  // 遍历
             if (e.getEntity().getType().equals(info.type)  // 检查类型
                     && config.getBoolean(String.format(info.config_path, "enable"), false)) {  // anti-boom.类型.enable
