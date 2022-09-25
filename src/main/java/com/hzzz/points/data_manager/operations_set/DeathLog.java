@@ -32,7 +32,7 @@ public class DeathLog {
             if (count >= limit) {  // 达到上限了
                 for (int i = 0; i < count + 1 - limit; i++) {  // 删除记录 直到记录数为limit-1
                     rs.next();
-                    // TODO 用一个数字做主键来插件，而不是用uuid和aeathtime
+                    // TODO 用一个数字做主键来插件，而不是用uuid和deathtime
                     st.executeUpdate(String.format("DELETE FROM DeathLog WHERE uuid = '%s' AND deathTime = %d", rs.getString("uuid"), rs.getInt("deathTime")));
                 }
             }
@@ -50,6 +50,7 @@ public class DeathLog {
                     player_location.getZ()));
             return true;
         } catch (SQLException e) {
+            logDetailInfo(String.format(insert_death_record_fail, player.getName()));  // 详细log 未成功录入死亡信息
             throw new RuntimeException(e);
         }
     }

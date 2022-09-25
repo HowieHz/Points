@@ -33,7 +33,7 @@ public final class DeathListener implements NamedListener {
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
+    private void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查
@@ -53,9 +53,7 @@ public final class DeathListener implements NamedListener {
             if (deathMessage == null) {  // 被手动设置deathMessage才可能为null吧
                 return;
             }
-            if (!insertDeathLog(player, deathMessage.toString())) {
-                logDetailInfo(String.format(insert_death_record_fail, player.getName()));  // 详细log 未成功录入死亡信息
-            }
+            insertDeathLog(player, deathMessage.toString());
         }
     }
 }

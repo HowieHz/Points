@@ -99,7 +99,12 @@ anti-boom:
     world-the-end: false
   wither:
     skull:
-      enable: false  # 凋零飞行头颅
+      enable: false  # 凋零发射的头颅
+      world: false
+      world-nether: false
+      world-the-end: false
+    spawn:
+      enable: false  # 凋零生成的时候爆炸
       world: false
       world-nether: false
       world-the-end: false
