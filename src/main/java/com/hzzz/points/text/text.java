@@ -2,7 +2,6 @@ package com.hzzz.points.text;
 
 import static org.bukkit.ChatColor.*;
 
-// TODO lang.yml
 public final class text {
     public static final String plugin_starting = BLUE+"<Points>插件正在启动";
     public static final String plugin_loading = BLUE+"<Points>插件正在加载";

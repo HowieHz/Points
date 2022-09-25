@@ -58,3 +58,10 @@ A paper plugin, some useful points
     重载插件
     points.reload
  
+更新计划
+
+1. 添加有爆炸伤害不破坏地形的选项
+2. 异步数据库操作
+3. lang/zh_cn.yml
+4. tab补全
+5. TODO
