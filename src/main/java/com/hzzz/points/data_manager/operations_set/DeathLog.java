@@ -22,19 +22,21 @@ import static com.hzzz.points.utils.Utils.logDetailInfo;
 public class DeathLog {
     private static final Statement st = DeathLogSQLite.getInstance().getStatement();  // 获取操作接口
 
-    public static boolean insertDeathLog(Player player, String death_reason) {
-        // 增加死亡记录的操作 返回true则为记录成功
+    public static void insertDeathLog(Player player, String death_reason) {
+        // 增加死亡记录的操作
         int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
         int count = countDeathLog(player.getName());  // 获取目前记录条数
 
-        try (ResultSet rs = readDeathLog(player.getName())) {
+        try {
             logDetailInfo(String.format("%s 在数据库中记录 %d 条, 限制为 %d 条", player.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
-                for (int i = 0; i < count + 1 - limit; i++) {  // 删除记录 直到记录数为limit-1
-                    rs.next();
-                    // TODO 用一个数字做主键来插件，而不是用uuid和deathtime
-                    st.executeUpdate(String.format("DELETE FROM DeathLog WHERE username = '%s' AND deathTime = %d", rs.getString("username"), rs.getInt("deathTime")));
-                }
+                // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
+                st.executeUpdate(String.format("DELETE FROM DeathLog WHERE rowid in (SELECT rowid FROM DeathLog " +
+                                "WHERE username = '%s'" +
+                                "ORDER BY deathTime " +
+                                "LIMIT %d)",
+                        player.getName(),
+                        count - limit + 1));
             }
 
             // 增加新的
@@ -48,7 +50,6 @@ public class DeathLog {
                     player_location.getX(),
                     player_location.getY(),
                     player_location.getZ()));
-            return true;
         } catch (SQLException e) {
             logDetailInfo(String.format(insert_death_record_fail, player.getName()));  // 详细log 未成功录入死亡信息
             throw new RuntimeException(e);
@@ -85,7 +86,7 @@ public class DeathLog {
             while (rs.next()) {
                 // 编辑消息
                 Component component = Component.text("")
-                        .append(Component.text(sdf.format(rs.getInt("deathTime")*1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
+                        .append(Component.text(sdf.format(rs.getInt("deathTime") * 1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
                         .append(Component.text(" -> ").color(NamedTextColor.WHITE))
                         .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
                         .append(Component.text(String.format(text.coordinates_format, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
