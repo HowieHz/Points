@@ -24,7 +24,7 @@ public class DeathLog {
 
     public static boolean insertDeathLog(Player player, String death_reason) {
         // 增加死亡记录的操作 返回true则为记录成功
-        int limit = config.getInt("death.log.limit", 5);  // 读取配置
+        int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
         int count = countDeathLog(player);  // 获取目前记录条数
 
         try (ResultSet rs = readDeathLog(player)) {

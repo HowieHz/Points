@@ -8,16 +8,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Objects;
 
 import static com.hzzz.points.Points.config;
-import static com.hzzz.points.utils.Utils.logDetailInfo;
 import static org.bukkit.Material.*;
 
 public class AntiBoomListener implements NamedListener {

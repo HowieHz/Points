@@ -53,7 +53,13 @@ death:
         self: points.command.death.log.self  # death log对象为玩家自己
         other: points.command.death.log.other  # death log对象为其他玩家
         player: points.command.death.log.%s  # death log对象为指定玩家 %s 为玩家名
-    limit: 5  # 死亡记录上限
+    command:
+      frequency-limit:
+        enable: false  # 是否限制玩家使用 death log 指令频率
+        # 每几秒 允许查询几次
+        second: 1  # 每n秒
+        maximum-usage: 1 # 允许查询n次
+    record-limit: 5  # 死亡记录上限
     voxelmap-support: false  # 是否开启Voxelmap支持
     xaeros-support: false  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持
