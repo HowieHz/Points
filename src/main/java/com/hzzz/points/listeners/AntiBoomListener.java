@@ -115,10 +115,10 @@ public class AntiBoomListener implements NamedListener {
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
 
-        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {  // 是不是右手
-            for (Material bed : beds) {  // 遍历
-                if (Objects.requireNonNull(e.getClickedBlock()).getType().equals(bed)) {  // 是不是床
-                    if (config.getBoolean("anti-boom.bed.enable", false)) {  // anti-boom.bed.enable
+        if (config.getBoolean("anti-boom.bed.enable", false)) {  // anti-boom.bed.enable
+            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {  // 是不是右手
+                for (Material bed : beds) {  // 遍历
+                    if (Objects.requireNonNull(e.getClickedBlock()).getType().equals(bed)) {  // 是不是床
                         if (config.getBoolean("anti-boom.bed.world", false)  // 主世界睡觉
                                 && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
                             e.setCancelled(true);
@@ -134,8 +134,36 @@ public class AntiBoomListener implements NamedListener {
                             e.setCancelled(true);
                             player.sendMessage(text.enter_bed_canceled);
                         }
+                        break;
                     }
-                    break;
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    private void onRespawnAnchor(PlayerInteractEvent e) {  // 真正阻止重生锚爆炸的 原理是玩家右键重生锚的时候 当右键成空气
+        Player player = e.getPlayer();
+        String world_name = player.getWorld().getName();
+
+        if (config.getBoolean("anti-boom.respawn-anchor.enable", false)) {  // anti-boom.respawn-anchor.enable
+            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {  // 是不是右手
+                if (Objects.requireNonNull(e.getClickedBlock()).getType().equals(RESPAWN_ANCHOR)) {  // 是不是重生锚
+                    if (config.getBoolean("anti-boom.respawn-anchor.world", false)  // 主世界使用
+                            && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
+                        e.setCancelled(true);
+                        player.sendMessage(text.use_respawn_anchor_canceled);
+
+                    } else if (config.getBoolean("anti-boom.respawn-anchor.world-nether", false)  // 下界使用
+                            && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
+                        e.setCancelled(true);
+                        player.sendMessage(text.use_respawn_anchor_canceled);
+
+                    } else if (config.getBoolean("anti-boom.respawn-anchor.world-the-end", false)  // 末地使用
+                            && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
+                        e.setCancelled(true);
+                        player.sendMessage(text.use_respawn_anchor_canceled);
+                    }
                 }
             }
         }

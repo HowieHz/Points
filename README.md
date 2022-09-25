@@ -1,4 +1,5 @@
 # Points
+
 A paper plugin, some useful points
 
 功能
@@ -8,12 +9,14 @@ A paper plugin, some useful points
     /death message -> 死亡的时候发送死亡位置
     /death log -> 记录死亡信息
 
-防爆 anti-boom
+防爆 anti-boom (对于床和重生锚来说是阻止使用)
+
 - 床 -> bed
 - 苦力怕 -> creeper
 - 末影水晶 -> ender-crystal
-- 恶魂 -> ghast 
-- tnt矿车 -> minecart-tnt 
+- 恶魂 -> ghast
+- tnt矿车 -> minecart-tnt
+- 重生锚 -> respawn-anchor
 - TNT -> tnt
 - 凋零 -> wither
 

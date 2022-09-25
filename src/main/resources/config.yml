@@ -74,7 +74,7 @@ anti-boom:
     world-nether: world_nether
     world-the-end: world_the_end
   bed:
-    enable: false  # 防止下界和末地睡觉爆炸, 本质上是阻止玩家睡觉
+    enable: false  # 防止下界和末地床爆炸, 本质上是阻止玩家使用床
     world: false
     world-nether: false
     world-the-end: false
@@ -95,6 +95,11 @@ anti-boom:
     world-the-end: false
   minecart-tnt:
     enable: false  # 防止tnt矿车爆炸
+    world: false
+    world-nether: false
+    world-the-end: false
+  respawn-anchor:
+    enable: false  # 防止重生锚爆炸, 本质上是阻止玩家使用重生锚
     world: false
     world-nether: false
     world-the-end: false

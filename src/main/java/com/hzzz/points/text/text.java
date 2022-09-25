@@ -61,5 +61,6 @@ public final class text {
     public static final String read_death_record = "-------已读取 §e%d§f 条死亡记录-------";
     public static final String division_line =     "-------------------------------";
     public static final String enter_bed_canceled = "你尝试进入梦乡，但是被未知力量阻止了";
+    public static final String use_respawn_anchor_canceled = "你尝试使用重生锚，但是被未知力量阻止了";
     public static final String command_frequency_limit = "你使用的太快了！ 请稍后再试";
 }
