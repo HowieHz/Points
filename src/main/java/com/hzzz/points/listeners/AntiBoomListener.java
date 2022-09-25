@@ -92,33 +92,6 @@ public class AntiBoomListener implements NamedListener {
     }
 
     @EventHandler
-    private void onBoom(BlockExplodeEvent e) {  // 方块爆炸 为了床 然而没软用 床爆炸的时候会触发，但是还是照样爆
-        String world_name = e.getBlock().getWorld().getName();  // 事件发生的世界
-
-        for (Material bed : beds) {  // 遍历
-            if (e.getBlock().getType().equals(bed)  // 检查类型
-                    && config.getBoolean("anti-boom.bed.enable", false)) {  // anti-boom.类型.enable
-
-                if (config.getBoolean("anti-boom.bed.world", false)  // anti-boom.类型.enable.world
-                        && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
-                    e.setCancelled(true);
-                    logDetailInfo("B");
-
-                } else if (config.getBoolean("anti-boom.bed.world-nether", false)  // anti-boom.类型.enable.world-nether
-                        && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
-                    e.setCancelled(true);
-                    logDetailInfo("B");
-
-                } else if (config.getBoolean("anti-boom.bed.world-the-end", false)  // anti-boom.类型.enable.world-the-end
-                        && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
-                    e.setCancelled(true);
-                }
-            }
-            break;
-        }
-    }
-
-    @EventHandler
     private void onWitherDestroyBlocks(EntityChangeBlockEvent e) {  // 实体破坏方块 为了凋零身体移动的破坏
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
@@ -141,32 +114,6 @@ public class AntiBoomListener implements NamedListener {
     }
 
     @EventHandler
-    private void onBad(PlayerBedEnterEvent e) {  // 阻止睡觉 真的就不让睡，但是依然爆炸
-        Player player = e.getPlayer();
-        String world_name = player.getWorld().getName();
-
-        if (config.getBoolean("anti-boom.bed.enable", false)) {  // anti-boom.bed.enable
-            if (config.getBoolean("anti-boom.bed.world", false)  // 主世界睡觉
-                    && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
-                e.setCancelled(true);
-                player.sendMessage(text.enter_bed_canceled);
-                logDetailInfo("A");
-
-            } else if (config.getBoolean("anti-boom.bed.world-nether", false)  // 下界睡觉
-                    && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
-                e.setCancelled(true);
-                player.sendMessage(text.enter_bed_canceled);
-                logDetailInfo("A");
-
-            } else if (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
-                    && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
-                e.setCancelled(true);
-                player.sendMessage(text.enter_bed_canceled);
-            }
-        }
-    }
-
-    @EventHandler
     private void onBad(PlayerInteractEvent e) {  // 真正阻止床爆炸的 原理是玩家右键床的时候 当右键成空气
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
@@ -179,13 +126,11 @@ public class AntiBoomListener implements NamedListener {
                                 && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
                             e.setCancelled(true);
                             player.sendMessage(text.enter_bed_canceled);
-                            logDetailInfo("C");
 
                         } else if (config.getBoolean("anti-boom.bed.world-nether", false)  // 下界睡觉
                                 && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
                             e.setCancelled(true);
                             player.sendMessage(text.enter_bed_canceled);
-                            logDetailInfo("C");
 
                         } else if (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
                                 && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
