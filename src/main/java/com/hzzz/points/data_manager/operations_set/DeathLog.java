@@ -25,15 +25,15 @@ public class DeathLog {
     public static boolean insertDeathLog(Player player, String death_reason) {
         // 增加死亡记录的操作 返回true则为记录成功
         int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
-        int count = countDeathLog(player);  // 获取目前记录条数
+        int count = countDeathLog(player.getName());  // 获取目前记录条数
 
-        try (ResultSet rs = readDeathLog(player)) {
+        try (ResultSet rs = readDeathLog(player.getName())) {
             logDetailInfo(String.format("%s 在数据库中记录 %d 条, 限制为 %d 条", player.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 for (int i = 0; i < count + 1 - limit; i++) {  // 删除记录 直到记录数为limit-1
                     rs.next();
                     // TODO 用一个数字做主键来插件，而不是用uuid和deathtime
-                    st.executeUpdate(String.format("DELETE FROM DeathLog WHERE uuid = '%s' AND deathTime = %d", rs.getString("uuid"), rs.getInt("deathTime")));
+                    st.executeUpdate(String.format("DELETE FROM DeathLog WHERE username = '%s' AND deathTime = %d", rs.getString("username"), rs.getInt("deathTime")));
                 }
             }
 
@@ -55,19 +55,19 @@ public class DeathLog {
         }
     }
 
-    public static ResultSet readDeathLog(Player player) {
+    public static ResultSet readDeathLog(String player_name) {
         // 查询死亡记录的操作
         try {
-            return st.executeQuery(String.format("SELECT * FROM DeathLog WHERE uuid = '%s'", player.getUniqueId()));
+            return st.executeQuery(String.format("SELECT * FROM DeathLog WHERE username = '%s'", player_name));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static int countDeathLog(Player player) {
+    public static int countDeathLog(String player_name) {
         // 查询死亡记录数量的操作
         int count = 0;  // 结果行数
-        try (ResultSet rs = readDeathLog(player)) {
+        try (ResultSet rs = readDeathLog(player_name)) {
             // 计算结果行数
             while (rs.next()) {
                 count++;
@@ -78,8 +78,8 @@ public class DeathLog {
         return count;
     }
 
-    public static void outputDeathLog(Player player, CommandSender receiver) {
-        try (ResultSet rs = readDeathLog(player)) {
+    public static void outputDeathLog(String player_name, CommandSender receiver) {
+        try (ResultSet rs = readDeathLog(player_name)) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             int count = 0;
             while (rs.next()) {
@@ -99,7 +99,7 @@ public class DeathLog {
                 if (config.getBoolean("death.log.xaeros-support", false)) {
                     component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
                             .hoverEvent(HoverEvent.showText(Component.text(text.xaeros_support_hover)))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(text.xaeros_support_command, player.getName(), player.getName().charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .clickEvent(ClickEvent.suggestCommand(String.format(text.xaeros_support_command, player_name, player_name.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.teleport-support", false)) {
@@ -112,7 +112,7 @@ public class DeathLog {
                 receiver.sendMessage(component);
             }
             if (count == 0) {  // 没有已经存储的死亡记录
-                receiver.sendMessage(String.format(no_death_record, player.getName()));
+                receiver.sendMessage(String.format(no_death_record, player_name));
             } else {
                 receiver.sendMessage(String.format(read_death_record, count));
             }

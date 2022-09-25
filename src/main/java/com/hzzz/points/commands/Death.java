@@ -82,23 +82,27 @@ public final class Death implements CommandExecutor {
 
                         // 使用频率检查
                         if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-                            if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
-                                    >= (config.getInt("death.log.command.frequency-limit.maximum-usage", 1)
-                                    / config.getInt("death.log.command.frequency-limit.second", 1)) * 1000L) {
-                                sender.sendMessage(text.command_frequency_limit);
-                                return true;
-                            } else {
+                            if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
+                                if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
+                                        < (config.getInt("death.log.command.frequency-limit.second", 1)
+                                        / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
+                                    sender.sendMessage(text.command_frequency_limit);
+                                    return true;
+                                } else {  // 更新
+                                    last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                                }
+                            } else {  // 初始化
                                 last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
                             }
                         }
 
-                        outputDeathLog(player, player);  // 查看自己的log
+                        outputDeathLog(player.getName(), player);  // 查看自己的log
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
                         if (config.getBoolean("death.log.permission.enable", false)
                                 && !checkPermission(sender, config.getString("death.log.permission.node.other", "points.command.death.log.other"))
-                                && !checkPermission(sender, String.format(config.getString("death.log.permission.node.player", "points.command.death.log.%s"), args[0]))) {
+                                && !checkPermission(sender, String.format(config.getString("death.log.permission.node.player", "points.command.death.log.%s"), args[1]))) {
                             sender.sendMessage(text.no_permission);
                             return true;
                         }
@@ -106,24 +110,22 @@ public final class Death implements CommandExecutor {
                         // 检查执行者 是玩家就进行频率检查
                         if (sender instanceof Player player) {
                             if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-                                if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
-                                        >= (config.getInt("death.log.command.frequency-limit.maximum-usage", 1)
-                                        / config.getInt("death.log.command.frequency-limit.second", 1)) * 1000L) {
-                                    sender.sendMessage(text.command_frequency_limit);
-                                    return true;
-                                } else {
+                                if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
+                                    if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
+                                            < (config.getInt("death.log.command.frequency-limit.second", 1)
+                                            / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
+                                        sender.sendMessage(text.command_frequency_limit);
+                                        return true;
+                                    } else {  // 更新
+                                        last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                                    }
+                                } else {  // 初始化
                                     last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
                                 }
                             }
                         }
 
-
-                        Player target_player = Bukkit.getPlayer(args[0]);
-                        if (target_player == null) {  // 检查是否获取到玩家
-                            sender.sendMessage(text.no_player);
-                            return true;
-                        }
-                        outputDeathLog(target_player, sender);  // 查看玩家的log
+                        outputDeathLog(args[1], sender);  // 查看玩家的log
                     }
 
                 } else {
