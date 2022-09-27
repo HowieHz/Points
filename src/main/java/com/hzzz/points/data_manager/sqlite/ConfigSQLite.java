@@ -8,12 +8,13 @@ import java.sql.*;
 
 public class ConfigSQLite {
     private static final ConfigSQLite INSTANCE = new ConfigSQLite();
-    private Connection con;  // 连接
-    private Statement st;  // 数据库操作接口
+    private final Connection con;  // 连接
+    private final Statement st;  // 数据库操作接口
 
     public static ConfigSQLite getInstance() {
         return INSTANCE;
     }
+
     public Statement getStatement() {
         return st;
     }
@@ -22,11 +23,11 @@ public class ConfigSQLite {
         return con;
     }
 
-    private ConfigSQLite() {
-        setup();
-    }
+    public final PreparedStatement ps_insert_death_config;
+    public final PreparedStatement ps_select_death_config;
+    public final PreparedStatement ps_update_death_config;
 
-    private void setup() {  // 初始化数据库连接
+    private ConfigSQLite() {
         try {
             // 连接数据库
             con = JdbcUtils.getConnection("jdbc:sqlite:plugins/Points/config.sqlite");
@@ -37,6 +38,10 @@ public class ConfigSQLite {
                     "username VARCHAR(255) NOT NULL, " +
                     "enable INTEGER NOT NULL" +
                     ")");
+
+            ps_insert_death_config = con.prepareStatement("INSERT OR IGNORE INTO DeathMessageConfig(uuid, username, enable) VALUES (?, ?, 1)");
+            ps_select_death_config = con.prepareStatement("SELECT * FROM DeathMessageConfig WHERE uuid=?");
+            ps_update_death_config = con.prepareStatement("UPDATE DeathMessageConfig SET enable=? WHERE uuid=?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

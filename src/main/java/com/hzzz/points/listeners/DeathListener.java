@@ -8,12 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
-import static com.hzzz.points.text.text.insert_death_record_fail;
 import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.IsEnableDeathMessage;
 import static com.hzzz.points.data_manager.operations_set.DeathLog.insertDeathLog;
 import static com.hzzz.points.Points.config;
-import static com.hzzz.points.utils.Utils.logDetailInfo;
 
 public final class DeathListener implements NamedListener {
     private static final DeathListener INSTANCE = new DeathListener();

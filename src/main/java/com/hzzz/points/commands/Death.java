@@ -1,7 +1,6 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.text.text;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -96,7 +95,7 @@ public final class Death implements CommandExecutor {
                             }
                         }
 
-                        outputDeathLog(player.getName(), player);  // 查看自己的log
+                        outputDeathLog(player, player);  // 查看自己的log
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查

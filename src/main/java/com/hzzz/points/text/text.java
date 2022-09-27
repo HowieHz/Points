@@ -3,12 +3,12 @@ package com.hzzz.points.text;
 import static org.bukkit.ChatColor.*;
 
 public final class text {
-    public static final String plugin_starting = BLUE+"<Points>插件正在启动";
-    public static final String plugin_loading = BLUE+"<Points>插件正在加载";
-    public static final String plugin_disabling = BLUE+"<Points>插件正在关闭";
-    public static final String plugin_started = BLUE+"<Points>插件已启动";
-    public static final String plugin_loaded = BLUE+"<Points>插件已加载";
-    public static final String plugin_disabled = BLUE+"<Points>插件已关闭";
+    public static final String plugin_starting = BLUE + "<Points>插件正在启动";
+    public static final String plugin_loading = BLUE + "<Points>插件正在加载";
+    public static final String plugin_disabling = BLUE + "<Points>插件正在关闭";
+    public static final String plugin_started = BLUE + "<Points>插件已启动";
+    public static final String plugin_loaded = BLUE + "<Points>插件已加载";
+    public static final String plugin_disabled = BLUE + "<Points>插件已关闭";
     public static final String player_only = "此指令仅允许玩家使用";
     public static final String no_permission = "你没有使用该指令的权限";
     public static final String no_player = "该玩家不在线";
@@ -58,8 +58,9 @@ public final class text {
     public static final String insert_death_record_fail = "记录玩家 §e%s§f 的死亡信息时失败";
     public static final String no_death_record = "玩家 §e%s§f 没有已保存的死亡记录";
     public static final String read_death_record = "-------已读取 §e%d§f 条死亡记录-------";
-    public static final String division_line =     "-------------------------------";
+    public static final String division_line = "-------------------------------";
     public static final String enter_bed_canceled = "你尝试进入梦乡，但是被未知力量阻止了";
     public static final String use_respawn_anchor_canceled = "你尝试使用重生锚，但是被未知力量阻止了";
     public static final String command_frequency_limit = "你使用的太快了！ 请稍后再试";
+    public static final String read_death_log_result = "%s 在数据库中记录 %d 条, 限制为 %d 条";
 }

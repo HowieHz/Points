@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.utils.Utils.logInfo;
 
 public final class PointsCommand implements CommandExecutor {
     private static final PointsCommand INSTANCE = new PointsCommand();
@@ -35,7 +36,7 @@ public final class PointsCommand implements CommandExecutor {
                 // 发消息
                 sender.sendMessage(text.reload_ready);
                 if (sender instanceof Player) {  // 玩家重载 在控制台也输出重载结果
-                    Points.logger.info(text.reload_ready);
+                    logInfo(text.reload_ready);
 
                 }
                 return true;
