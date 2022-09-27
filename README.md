@@ -1,5 +1,9 @@
 # Points
 
+![GitHub](https://img.shields.io/github/license/HowieHz/Points)
+![GitHub all releases](https://img.shields.io/github/downloads/HowieHz/Points/total)
+![GitHub repo size](https://img.shields.io/github/repo-size/HowieHz/Points)
+
 A paper plugin, some useful points
 
 功能
