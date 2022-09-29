@@ -53,7 +53,8 @@ public final class Death implements TabExecutor {
                         return true;
                     }
                     if (args.length > 1) {  // 参数过多语法错误
-                        return false;
+                        sender.sendMessage(text.help_death);
+                        return true;
                     }
 
                     if (updateDeathMessageConfig(player)) {  // 更改数据库config

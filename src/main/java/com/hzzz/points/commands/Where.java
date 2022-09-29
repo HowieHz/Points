@@ -70,7 +70,7 @@ public final class Where implements TabExecutor {
             }
             default -> {
                 sender.sendMessage(text.help_where);
-                return false;
+                return true;
             }
         }
     }
