@@ -1,23 +1,24 @@
 package com.hzzz.points.commands;
 
-import java.lang.String;
-
 import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
+
+import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.Points.config;
 
-public final class Here implements CommandExecutor {
+public final class Here implements TabExecutor {
     private static final Here INSTANCE = new Here();
 
     public static Here getInstance() {
@@ -50,5 +51,17 @@ public final class Here implements CommandExecutor {
             pe.apply(player);
         }
         return true;
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            // 控制台不注册
+            return null;
+        }
+        /* here
+         */
+        return null;
     }
 }

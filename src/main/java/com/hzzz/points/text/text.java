@@ -22,26 +22,6 @@ public final class text {
     public static final String teleport_support_command = "/tp %f %f %f";
     public static final String reload_ready = "插件已完成重载！";
     public static final String wrong_database_type = "配置文件数据库类型错误，已启动默认数据库sqlite";
-    public static final String help = """
-
--------------------------------------------------
-/points : 显示此消息
-/points reload : 重载插件
-/points help : 显示此消息
-/here : 广播自己的坐标并且获得高亮
-/where : 获取自己的坐标
-/where <player_name> : 获取他人的坐标
-/death : 死亡模块相关的指令帮助
--------------------------------------------------
-""";
-    public static final String help_death = """
-
--------------------------------------------------
-/death : 显示此消息
-/death message : 切换是否在死亡的时候发送死亡坐标
-/death log : 获取死亡日志
--------------------------------------------------
-""";
 
     public static final String enable_death_message = "已开启死亡信息提示";
     public static final String disable_death_message = "已关闭死亡信息提示";
@@ -63,4 +43,25 @@ public final class text {
     public static final String use_respawn_anchor_canceled = "你尝试使用重生锚，但是被未知力量阻止了";
     public static final String command_frequency_limit = "你使用的太快了！ 请稍后再试";
     public static final String read_death_log_result = "%s 在数据库中记录 %d 条, 限制为 %d 条";
+    public static final String help = """
+
+            -------------------------------------------------
+            /points : 显示此消息
+            /points reload : 重载插件
+            /points help : 显示此消息
+            /here : 广播自己的坐标并且获得高亮
+            /where : 获取自己的坐标
+            /where <player_name> : 获取他人的坐标
+            /death : 死亡模块相关的指令帮助
+            -------------------------------------------------
+            """;
+    public static final String help_death = """
+
+            -------------------------------------------------
+            /death : 显示此消息
+            /death message : 切换是否在死亡的时候发送死亡坐标
+            /death log : 获取死亡日志
+            -------------------------------------------------
+            """;
+    public static final String help_where = "使用方法: /where 玩家名 或 /where";
 }

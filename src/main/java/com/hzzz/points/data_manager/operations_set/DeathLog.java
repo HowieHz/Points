@@ -90,7 +90,7 @@ public class DeathLog {
     }
 
     public static void outputDeathLog(String player_name, CommandSender receiver) {
-        Player target_player = Bukkit.getPlayer(player_name);
+        Player target_player = Bukkit.getPlayerExact(player_name);
 
         if (target_player == null) {  // 检查是否获取到玩家
             receiver.sendMessage(text.no_player);

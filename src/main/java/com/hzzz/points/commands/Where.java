@@ -1,20 +1,21 @@
 package com.hzzz.points.commands;
 
-import java.lang.String;
-
 import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
+
+import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.Points.config;
 
-public final class Where implements CommandExecutor {
+public final class Where implements TabExecutor {
     private static final Where INSTANCE = new Where();
 
     public static Where getInstance() {
@@ -56,7 +57,7 @@ public final class Where implements CommandExecutor {
                     return true;
                 }
 
-                Player target_player = Bukkit.getPlayer(args[0]);
+                Player target_player = Bukkit.getPlayerExact(args[0]);
 
                 if (target_player == null) {  // 检查是否获取到玩家
                     sender.sendMessage(text.no_player);
@@ -68,9 +69,24 @@ public final class Where implements CommandExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage("使用方法: /where 玩家名 或 /where");
+                sender.sendMessage(text.help_where);
                 return false;
             }
         }
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            // 控制台不注册
+            return null;
+        }
+        /* where
+         * where <player_name>
+         */
+        // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
+        // 前一个参数已经输入完成，不继续提示
+        return null;
     }
 }
