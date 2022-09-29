@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.List;
 
 import static com.hzzz.points.Points.config;
@@ -85,8 +86,15 @@ public final class Where implements TabExecutor {
         /* where
          * where <player_name>
          */
-        // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
-        // 前一个参数已经输入完成，不继续提示
-        return null;
+        switch (args.length) {
+            case 0, 1 -> {
+                // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
+                return null;  // 提示玩家名
+            }
+            default -> {
+                // 前两个参数已经输入完成，不继续提示
+                return Collections.singletonList("");
+            }
+        }
     }
 }

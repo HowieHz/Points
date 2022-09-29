@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.List;
 
 import static com.hzzz.points.Points.config;
@@ -62,6 +63,7 @@ public final class Here implements TabExecutor {
         }
         /* here
          */
-        return null;
+        // 不提示
+        return Collections.singletonList("");
     }
 }

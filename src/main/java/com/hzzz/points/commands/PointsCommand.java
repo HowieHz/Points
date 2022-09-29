@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.hzzz.points.Points.config;
@@ -75,7 +76,7 @@ public final class PointsCommand implements TabExecutor {
             }
             default -> {
                 // 前一个参数已经输入完成，不继续提示
-                return null;
+                return Collections.singletonList("");
             }
         }
     }
