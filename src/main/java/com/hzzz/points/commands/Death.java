@@ -15,11 +15,19 @@ import static com.hzzz.points.data_manager.operations_set.DeathLog.outputDeathLo
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
 import static com.hzzz.points.utils.Utils.checkPermission;
 
+/**
+ * death指令的执行器以及tab补全
+ */
 public final class Death implements TabExecutor {
     private static final Death INSTANCE = new Death();
 
     private static final HashMap<UUID, Long> last_success_get_death_log_timestamp = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
 
+    /**
+     * 获取实例
+     *
+     * @return Instance of executor
+     */
     public static Death getInstance() {
         return INSTANCE;
     }

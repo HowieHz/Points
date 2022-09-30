@@ -54,8 +54,8 @@ public final class Points extends JavaPlugin {
     }
 
     /**
-     * 获取在线玩家名称列表
-     * <p>开销爆炸 小心使用</p>
+     * 获取在线玩家名称列表<br>
+     * 开销爆炸 小心使用
      *
      * @return 在线玩家名称列表
      */
@@ -87,7 +87,7 @@ public final class Points extends JavaPlugin {
                 new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
                 new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
                 new CommandInfo("death", Death.getInstance(), "death.enable",
-                        DeathLogSQLite.getInstance().state() && ConfigSQLite.getInstance().state())  // death指令
+                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady())  // death指令
         };
 
         for (CommandInfo info : command_info) {
@@ -105,7 +105,7 @@ public final class Points extends JavaPlugin {
         // death模块 监听器注册
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
-            if (ConfigSQLite.getInstance().state() && DeathLogSQLite.getInstance().state()) {
+            if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
                 logger.info(String.format(text.sqlite_ready, "config.sqlite, death_log.sqlite"));
 
                 // 数据库成功启动才启动death模块
@@ -137,8 +137,8 @@ public final class Points extends JavaPlugin {
     }
 
     /**
-     * <p>注册监听器</p>
-     * <p>替代Bukkit.getPluginManager().registerEvents(listener_instance, this)</p>
+     * 注册监听器<br>
+     * 替代Bukkit.getPluginManager().registerEvents(listener_instance, this)<br>
      *
      * @param listener_instance 需要注册的监听器的实例
      */
@@ -149,8 +149,8 @@ public final class Points extends JavaPlugin {
     }
 
     /**
-     * <p>注册指令执行器(以及tab补全)</p>
-     * <p>替代需要Bukkit.getPluginManager().registerEvents(listener_inen, this)</p>
+     * 注册指令执行器(以及tab补全)<br>
+     * 替代需要Bukkit.getPluginManager().registerEvents(listener_inen, this)<br>
      *
      * @param command           根指令
      * @param executor_instance 执行器实例
