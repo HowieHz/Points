@@ -19,42 +19,56 @@ import static com.hzzz.points.Points.config;
 import static com.hzzz.points.text.text.*;
 import static com.hzzz.points.utils.Utils.logDetailInfo;
 
+/**
+ * 有关DeathLog的数据库操作
+ */
 public class DeathLog {
     private static final PreparedStatement ps_delete_death_log = DeathLogSQLite.getInstance().ps_delete_death_log;
     private static final PreparedStatement ps_insert_death_log = DeathLogSQLite.getInstance().ps_insert_death_log;
     private static final PreparedStatement ps_select_death_log = DeathLogSQLite.getInstance().ps_select_death_log;
 
-    public static void insertDeathLog(Player player, String death_reason) {
-        // 增加死亡记录的操作
+    /**
+     * 增加死亡记录的操作
+     *
+     * @param target_player 目标玩家对象
+     * @param death_reason  死亡原因
+     */
+    public static void insertDeathLog(Player target_player, String death_reason) {
         int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
-        int count = countDeathLog(player.getUniqueId());  // 获取目前记录条数
+        int count = countDeathLog(target_player.getUniqueId());  // 获取目前记录条数
 
         try {
-            logDetailInfo(String.format(read_death_log_result, player.getName(), count, limit));
+            logDetailInfo(String.format(read_death_log_result, target_player.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
-                ps_delete_death_log.setString(1,player.getUniqueId().toString());
-                ps_delete_death_log.setInt(2,count - limit + 1);
+                ps_delete_death_log.setString(1, target_player.getUniqueId().toString());
+                ps_delete_death_log.setInt(2, count - limit + 1);
                 ps_delete_death_log.execute();
             }
 
             // 增加新的
-            Location player_location = player.getLocation();  // 获取位置
+            Location player_location = target_player.getLocation();  // 获取位置
 
-            ps_insert_death_log.setString(1,player.getUniqueId().toString());
-            ps_insert_death_log.setString(2,player.getName());
-            ps_insert_death_log.setString(3,death_reason);
-            ps_insert_death_log.setString(4,player.getWorld().getName());
-            ps_insert_death_log.setDouble(5,player_location.getX());
-            ps_insert_death_log.setDouble(6,player_location.getY());
-            ps_insert_death_log.setDouble(7,player_location.getZ());
+            ps_insert_death_log.setString(1, target_player.getUniqueId().toString());
+            ps_insert_death_log.setString(2, target_player.getName());
+            ps_insert_death_log.setString(3, death_reason);
+            ps_insert_death_log.setString(4, target_player.getWorld().getName());
+            ps_insert_death_log.setDouble(5, player_location.getX());
+            ps_insert_death_log.setDouble(6, player_location.getY());
+            ps_insert_death_log.setDouble(7, player_location.getZ());
             ps_insert_death_log.execute();
         } catch (SQLException e) {
-            logDetailInfo(String.format(insert_death_record_fail, player.getName()));  // 详细log 未成功录入死亡信息
+            logDetailInfo(String.format(insert_death_record_fail, target_player.getName()));  // 详细log 未成功录入死亡信息
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * 读取目标玩家的死亡日志
+     *
+     * @param uuid 目标玩家的uuid
+     * @return 读取到的记录集
+     */
     public static ResultSet readDeathLog(UUID uuid) {
         // 查询死亡记录的操作
         try {
@@ -65,6 +79,12 @@ public class DeathLog {
         }
     }
 
+    /**
+     * 计算目标玩家在数据库中的死亡记录数
+     *
+     * @param uuid 目标玩家的uuid
+     * @return 记录数
+     */
     public static int countDeathLog(UUID uuid) {
         // 查询死亡记录数量的操作
         int count = 0;  // 结果行数
@@ -79,6 +99,12 @@ public class DeathLog {
         return count;
     }
 
+    /**
+     * 向接受者发送目标玩家玩家的死亡日志
+     *
+     * @param uuid     目标玩家的uuid
+     * @param receiver 接受者
+     */
     public static void outputDeathLog(UUID uuid, CommandSender receiver) {
         Player target_player = Bukkit.getPlayer(uuid);
 
@@ -89,6 +115,12 @@ public class DeathLog {
         outputDeathLog(target_player, receiver);
     }
 
+    /**
+     * 向接受者发送目标玩家玩家的死亡日志
+     *
+     * @param player_name 目标玩家的用户名
+     * @param receiver    接受者
+     */
     public static void outputDeathLog(String player_name, CommandSender receiver) {
         Player target_player = Bukkit.getPlayerExact(player_name);
 
@@ -99,6 +131,12 @@ public class DeathLog {
         outputDeathLog(target_player, receiver);
     }
 
+    /**
+     * 向接受者发送目标玩家玩家的死亡日志
+     *
+     * @param target_player 目标玩家对象
+     * @param receiver      接受者
+     */
     public static void outputDeathLog(Player target_player, CommandSender receiver) {
         String player_name = target_player.getName();
         UUID uuid = target_player.getUniqueId();

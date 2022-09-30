@@ -28,6 +28,13 @@ import java.util.stream.Collectors;
 import static com.hzzz.points.text.text.*;
 import static com.hzzz.points.utils.Utils.logDetailInfo;
 
+/**
+ * <p>插件主类</p>
+ *
+ * @author <a href="https://github.com/HowieHz/">HowieHz</a>
+ * @version 0.2.0
+ * @since 2022-09-12 12:31
+ */
 public final class Points extends JavaPlugin {
     public static FileConfiguration config;  // Points.config
     public static final Logger logger = Logger.getLogger("Points");  // Points.logger
@@ -37,11 +44,23 @@ public final class Points extends JavaPlugin {
     private final List<NamedListener> event_handlers = new ArrayList<>();  // 已注册的监听器
     private final Collection<? extends Player> online_players = getServer().getOnlinePlayers();  // 在线玩家列表
 
-    public static Points getInstance() {  // 获取实例的方法
+    /**
+     * 获取插件实例
+     *
+     * @return Points实例
+     */
+    public static Points getInstance() {
         return INSTANCE;
     }
-    public static List<String> getOnlinePlayersName() {  // 在线玩家列表
-        return  getInstance().online_players.stream().map(Player::getName).collect(Collectors.toList());
+
+    /**
+     * 获取在线玩家名称列表<br>
+     * 开销爆炸 小心使用
+     *
+     * @return 在线玩家名称列表
+     */
+    public static List<String> getOnlinePlayersName() {
+        return getInstance().online_players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
     @Override
@@ -68,7 +87,7 @@ public final class Points extends JavaPlugin {
                 new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
                 new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
                 new CommandInfo("death", Death.getInstance(), "death.enable",
-                        DeathLogSQLite.getInstance().state() && ConfigSQLite.getInstance().state())  // death指令
+                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady())  // death指令
         };
 
         for (CommandInfo info : command_info) {
@@ -86,7 +105,7 @@ public final class Points extends JavaPlugin {
         // death模块 监听器注册
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
-            if (ConfigSQLite.getInstance().state() && DeathLogSQLite.getInstance().state()) {
+            if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
                 logger.info(String.format(text.sqlite_ready, "config.sqlite, death_log.sqlite"));
 
                 // 数据库成功启动才启动death模块
@@ -117,19 +136,35 @@ public final class Points extends JavaPlugin {
         logger.info(plugin_disabled);  // 插件已关闭
     }
 
-    public void registerEvents(NamedListener listener) {  // 注册监听器
-        event_handlers.add(listener);
-        Bukkit.getPluginManager().registerEvents(listener, this);
-        logDetailInfo(String.format(register_event, listener.getName()));  // 详细log
+    /**
+     * 注册监听器<br>
+     * 替代Bukkit.getPluginManager().registerEvents(listener_instance, this)<br>
+     *
+     * @param listener_instance 需要注册的监听器的实例
+     */
+    public void registerEvents(NamedListener listener_instance) {
+        event_handlers.add(listener_instance);
+        Bukkit.getPluginManager().registerEvents(listener_instance, this);
+        logDetailInfo(String.format(register_event, listener_instance.getName()));  // 详细log
     }
 
-    public void setExecutor(String command, CommandExecutor executor) {  // 注册指令执行器
+    /**
+     * 注册指令执行器(以及tab补全)<br>
+     * 替代需要Bukkit.getPluginManager().registerEvents(listener_inen, this)<br>
+     *
+     * @param command           根指令
+     * @param executor_instance 执行器实例
+     */
+    public void setExecutor(String command, CommandExecutor executor_instance) {
         commands.add(command);
-        Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor);
+        Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor_instance);
         logDetailInfo(String.format(set_executor, command));  // 详细log
     }
 
-    public void disableEventHandler() {  // 注销监听器
+    /**
+     * 注销{@link #registerEvents}注册的监听器
+     */
+    public void disableEventHandler() {
         for (NamedListener listener : event_handlers) {
             HandlerList.unregisterAll(listener);
             logDetailInfo(String.format(already_disable_event, listener.getName()));  // 详细log
@@ -138,7 +173,10 @@ public final class Points extends JavaPlugin {
         logDetailInfo(all_event_disabled);  // 详细log
     }
 
-    public void disableExecutor() {  // 注销指令执行器
+    /**
+     * 注销{@link #setExecutor}注册的指令执行器
+     */
+    public void disableExecutor() {
         for (String command : commands) {
             Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(null);
             logDetailInfo(String.format(already_disable_executor, command));  // 详细log
@@ -147,6 +185,9 @@ public final class Points extends JavaPlugin {
         logDetailInfo(all_executor_disabled);  // 详细log
     }
 
+    /**
+     * 重启插件(重载配置文件)
+     */
     public void onReload() {
         onDisable();
 

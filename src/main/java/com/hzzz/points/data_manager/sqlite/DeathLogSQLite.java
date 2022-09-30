@@ -6,19 +6,37 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 
+/**
+ * 管理death_log.sqlite
+ */
 public class DeathLogSQLite {
     private static final DeathLogSQLite INSTANCE = new DeathLogSQLite();
     private final Connection con;  // 连接
     private final Statement st;  // 数据库操作接口
 
+    /**
+     * 获取数据库实例
+     *
+     * @return statement of database
+     */
     public static DeathLogSQLite getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * 获取操作接口Statement
+     *
+     * @return statement of sqlite
+     */
     public Statement getStatement() {
         return st;
     }
 
+    /**
+     * 获取操作接口Connection
+     *
+     * @return Connection of sqlite
+     */
     public Connection getConnection() {
         return con;
     }
@@ -30,7 +48,7 @@ public class DeathLogSQLite {
     private DeathLogSQLite() {
         try {
             // 连接数据库
-            con = JdbcUtils.getConnection("jdbc:sqlite:plugins/Points/death_log.sqlite");
+            con = JdbcUtils.getConnection("jdbc:sqlite:plugins/Points/database/death_log.sqlite");
             st = con.createStatement();
             // 创建表
             st.executeUpdate("CREATE TABLE if NOT EXISTS DeathLog(" +
@@ -58,6 +76,11 @@ public class DeathLogSQLite {
         }
     }
 
+    /**
+     * 异步执行sql语句
+     *
+     * @param sql sql语句
+     */
     private void asyncExecuteUpdate(String sql) {
         new BukkitRunnable() {
             @Override
@@ -71,7 +94,13 @@ public class DeathLogSQLite {
         }.runTaskAsynchronously(Points.getInstance());
     }
 
-    public boolean state() {  // 状态查询
+    /**
+     * 检查数据库状态是否准备好<br>（检查Statement和Connection是否调用过close方法）<br>
+     * 准备好则返回true
+     *
+     * @return 是否可用
+     */
+    public boolean isReady() {  // 状态查询
         return (st != null && con != null);
     }
 }

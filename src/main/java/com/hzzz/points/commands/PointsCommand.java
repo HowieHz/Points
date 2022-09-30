@@ -17,9 +17,17 @@ import static com.hzzz.points.Points.config;
 import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.utils.Utils.logInfo;
 
+/**
+ * points指令的执行器以及tab补全
+ */
 public final class PointsCommand implements TabExecutor {
     private static final PointsCommand INSTANCE = new PointsCommand();
 
+    /**
+     * 获取实例
+     *
+     * @return Instance of executor
+     */
     public static PointsCommand getInstance() {
         return INSTANCE;
     }

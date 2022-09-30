@@ -17,10 +17,12 @@ import java.util.Objects;
 import static com.hzzz.points.Points.config;
 import static org.bukkit.Material.*;
 
+/**
+ * 防爆监听器
+ */
 public class AntiBoomListener implements NamedListener {
     private static final AntiBoomListener INSTANCE = new AntiBoomListener();
     private static final String name = "防爆";
-
     private static final AntiBoomInfo[] anti_boom_info = {
             new AntiBoomInfo(EntityType.ENDER_CRYSTAL, "anti-boom.ender-crystal.%s"),
             new AntiBoomInfo(EntityType.PRIMED_TNT, "anti-boom.tnt.%s"),
@@ -52,10 +54,20 @@ public class AntiBoomListener implements NamedListener {
             BLACK_BED,
     };
 
+    /**
+     * 获取监听器实例
+     *
+     * @return 监听器实例
+     */
     public static AntiBoomListener getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * 获取监听器名字
+     *
+     * @return 监听器名字
+     */
     @Override
     public String getName() {
         return name;
@@ -64,8 +76,20 @@ public class AntiBoomListener implements NamedListener {
     private AntiBoomListener() {
     }
 
+    /**
+     * <p>实体爆炸监听器(EntityExplodeEvent)</p>
+     * 末影水晶
+     * tnt
+     * 矿车tnt
+     * 苦力怕
+     * 凋零生成的爆炸
+     * 凋零骷髅头
+     * 恶魂发射的火球
+     *
+     * @param e 事件
+     */
     @EventHandler
-    private void onBoom(EntityExplodeEvent e) {  // 实体爆炸
+    private void onBoom(EntityExplodeEvent e) {
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         for (AntiBoomInfo info : anti_boom_info) {  // 遍历
@@ -88,8 +112,14 @@ public class AntiBoomListener implements NamedListener {
         }
     }
 
+    /**
+     * <p>实体破坏方块(EntityChangeBlockEvent)</p>
+     * <p>防止凋零身体移动的破坏</p>
+     *
+     * @param e 事件
+     */
     @EventHandler
-    private void onWitherDestroyBlocks(EntityChangeBlockEvent e) {  // 实体破坏方块 为了凋零身体移动的破坏
+    private void onWitherDestroyBlocks(EntityChangeBlockEvent e) {
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         if (e.getEntity().getType().equals(EntityType.WITHER)  // 检查类型
@@ -110,8 +140,13 @@ public class AntiBoomListener implements NamedListener {
         }
     }
 
+    /**
+     * <p>阻止床爆炸(玩家右键床的时候 当右键点的到方块换成null)</p>
+     *
+     * @param e 事件
+     */
     @EventHandler
-    private void onBad(PlayerInteractEvent e) {  // 真正阻止床爆炸的 原理是玩家右键床的时候 当右键成空气
+    private void onBad(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
 
@@ -141,8 +176,13 @@ public class AntiBoomListener implements NamedListener {
         }
     }
 
+    /**
+     * <p>阻止重生锚爆炸(玩家右键重生锚的时候 当右键点的到方块换成null)</p>
+     *
+     * @param e 事件
+     */
     @EventHandler
-    private void onRespawnAnchor(PlayerInteractEvent e) {  // 真正阻止重生锚爆炸的 原理是玩家右键重生锚的时候 当右键成空气
+    private void onRespawnAnchor(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
 

@@ -19,14 +19,23 @@ import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
 
+/**
+ * here指令的执行器以及tab补全
+ */
 public final class Here implements TabExecutor {
     private static final Here INSTANCE = new Here();
 
+    /**
+     * 获取实例
+     *
+     * @return Instance of executor
+     */
     public static Here getInstance() {
         return INSTANCE;
     }
 
-    private Here() {}
+    private Here() {
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {

@@ -7,13 +7,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * 有关DeathMessage的数据库操作
+ */
 public class DeathMessageConfig {
     private static final PreparedStatement ps_insert_death_config = ConfigSQLite.getInstance().ps_insert_death_config;
     private static final PreparedStatement ps_select_death_config = ConfigSQLite.getInstance().ps_select_death_config;
     private static final PreparedStatement ps_update_death_config = ConfigSQLite.getInstance().ps_update_death_config;
 
-
-    public static boolean IsEnableDeathMessage(Player player) {  // 检查是否开启死亡提示
+    /**
+     * 检查是否开启了死亡提示
+     *
+     * @param player 目标玩家对象
+     * @return 是否开启
+     */
+    public static boolean IsEnableDeathMessage(Player player) {
         try {
             // 初始化
             ps_insert_death_config.setString(1, player.getUniqueId().toString());
@@ -34,7 +42,14 @@ public class DeathMessageConfig {
         }
     }
 
-    public static boolean updateDeathMessageConfig(Player player) {  // 切换是否开启死亡提示
+    /**
+     * 翻转 目标玩家 是否开启死亡提示
+     * （切换是否开启死亡提示）
+     *
+     * @param player 目标玩家对象
+     * @return 翻转后的开启状态，如true则为开启
+     */
+    public static boolean updateDeathMessageConfig(Player player) {
         // 读取并翻转数据
         if (IsEnableDeathMessage(player)) {
             try {

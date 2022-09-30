@@ -13,10 +13,18 @@ import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.IsE
 import static com.hzzz.points.data_manager.operations_set.DeathLog.insertDeathLog;
 import static com.hzzz.points.Points.config;
 
-public final class DeathListener implements NamedListener {
+/**
+ * 玩家死亡事件监听器
+ */
+public final class DeathListener implements NamedListener { // TODO NamedListener改继承
     private static final DeathListener INSTANCE = new DeathListener();
-    private static final String name = "死亡消息";
+    private static final String name = "玩家死亡事件";
 
+    /**
+     * 获取监听器实例
+     *
+     * @return 监听器实例
+     */
     public static DeathListener getInstance() {
         return INSTANCE;
     }
@@ -25,11 +33,21 @@ public final class DeathListener implements NamedListener {
     private DeathListener() {
     }
 
+    /**
+     * 获取监听器名字
+     *
+     * @return 监听器名字
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * 玩家死亡事件监听(PlayerDeathEvent)
+     *
+     * @param e 事件
+     */
     @EventHandler
     private void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();  // 获取玩家
