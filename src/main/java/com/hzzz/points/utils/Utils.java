@@ -39,7 +39,7 @@ public class Utils {
      *
      * @param message 消息内容
      */
-    public static void logDetailInfo(String message) {
+    public static void logDetailedInfo(String message) {
         if (config.getBoolean("log.more-information", false)) {
             Points.logger.info(message);
         }

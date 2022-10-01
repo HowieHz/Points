@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.hzzz.points.text.text.*;
-import static com.hzzz.points.utils.Utils.logDetailInfo;
+import static com.hzzz.points.utils.Utils.logDetailedInfo;
 
 /**
  * <p>插件主类</p>
@@ -155,7 +155,7 @@ public final class Points extends JavaPlugin {
     public void registerEvents(NamedListener listener_instance) {
         event_handlers.add(listener_instance);
         Bukkit.getPluginManager().registerEvents(listener_instance, this);
-        logDetailInfo(String.format(register_event, listener_instance.getName()));  // 详细log
+        logDetailedInfo(String.format(register_event, listener_instance.getName()));  // 详细log
     }
 
     /**
@@ -168,7 +168,7 @@ public final class Points extends JavaPlugin {
     public void setExecutor(String command, CommandExecutor executor_instance) {
         commands.add(command);
         Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor_instance);
-        logDetailInfo(String.format(set_executor, command));  // 详细log
+        logDetailedInfo(String.format(set_executor, command));  // 详细log
     }
 
     /**
@@ -177,10 +177,10 @@ public final class Points extends JavaPlugin {
     public void disableEventHandler() {
         for (NamedListener listener : event_handlers) {
             HandlerList.unregisterAll(listener);
-            logDetailInfo(String.format(already_disable_event, listener.getName()));  // 详细log
+            logDetailedInfo(String.format(already_disable_event, listener.getName()));  // 详细log
         }
         event_handlers.clear();
-        logDetailInfo(all_event_disabled);  // 详细log
+        logDetailedInfo(all_event_disabled);  // 详细log
     }
 
     /**
@@ -189,10 +189,10 @@ public final class Points extends JavaPlugin {
     public void disableExecutor() {
         for (String command : commands) {
             Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(null);
-            logDetailInfo(String.format(already_disable_executor, command));  // 详细log
+            logDetailedInfo(String.format(already_disable_executor, command));  // 详细log
         }
         commands.clear();
-        logDetailInfo(all_executor_disabled);  // 详细log
+        logDetailedInfo(all_executor_disabled);  // 详细log
     }
 
     /**
@@ -203,7 +203,7 @@ public final class Points extends JavaPlugin {
 
         // reload一遍配置文件，用于重载 这个和onDisable谁先都一样
         reloadConfig();
-        logDetailInfo(config_reloaded);  // 详细log
+        logDetailedInfo(config_reloaded);  // 详细log
 
         onEnable();
     }

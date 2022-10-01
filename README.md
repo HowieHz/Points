@@ -8,19 +8,19 @@ A paper plugin, some useful points
 
 ## 主要功能
 
-1. 高亮自身 公屏发坐标 (/here指令)
-2. 得到某个玩家的坐标 (/where指令)
-3. 死亡的时候发送死亡位置 (/death指令)
-4. 记录死亡信息 (/death指令)
-5. 随身开启末影箱 (/enderchest指令)
-6. 防爆
+1.  高亮自身 公屏发坐标 (/here指令)
+2.  得到某个玩家的坐标 (/where指令)
+3.  死亡的时候发送死亡位置 (/death指令)
+4.  记录死亡信息 (/death指令)
+5.  随身开启末影箱 (/enderchest指令)
+6.  防爆
 
 **其他**
 
-1. 高可配置
-2. 权限支持 * 通配符
-3. 开箱即用 -> 默认配置文件: 作用于自身的指令无需权限，作用于他人的权限和reload指令需要权限
-4. tab补全根据 模块是否开启 和 是否有权限 可自动隐藏
+1.  高可配置
+2.  权限支持 * 通配符
+3.  开箱即用 -> 默认配置文件: 作用于自身的指令无需权限，作用于他人的权限和reload指令需要权限
+4.  tab补全根据 模块是否开启 和 是否有权限 可自动隐藏
 
 ## 功能介绍
 
@@ -28,14 +28,14 @@ A paper plugin, some useful points
 
 (对于床和重生锚来说是阻止使用)
 
-- 床 -> bed
-- 苦力怕 -> creeper
-- 末影水晶 -> ender-crystal
-- 恶魂 -> ghast
-- tnt矿车 -> minecart-tnt
-- 重生锚 -> respawn-anchor
-- TNT -> tnt
-- 凋零 -> wither
+*   床 -> bed
+*   苦力怕 -> creeper
+*   末影水晶 -> ender-crystal
+*   恶魂 -> ghast
+*   tnt矿车 -> minecart-tnt
+*   重生锚 -> respawn-anchor
+*   TNT -> tnt
+*   凋零 -> wither
 
 ### 指令和权限枚举
 
@@ -94,6 +94,6 @@ A paper plugin, some useful points
 
 ## 更新计划
 
-1. 添加床和重生锚有爆炸伤害但不破坏地形的选项
-2. 异步数据库操作
-3. lang/zh_cn.yml
+1.  添加床和重生锚有爆炸伤害但不破坏地形的选项
+2.  异步数据库操作
+3.  lang/zh_cn.yml

@@ -38,7 +38,7 @@ public class DeathMessageConfig {
             rs.close();
             return enable == 1;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -57,7 +57,7 @@ public class DeathMessageConfig {
                 ps_update_death_config.setString(2, player.getUniqueId().toString());
                 ps_update_death_config.execute();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             return false;
         } else {
@@ -66,7 +66,7 @@ public class DeathMessageConfig {
                 ps_update_death_config.setString(2, player.getUniqueId().toString());
                 ps_update_death_config.execute();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             return true;
         }

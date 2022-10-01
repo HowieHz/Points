@@ -1,7 +1,6 @@
 package com.hzzz.points.data_manager.operations_set;
 
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
-import com.hzzz.points.text.text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -17,7 +16,7 @@ import java.util.UUID;
 
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.text.text.*;
-import static com.hzzz.points.utils.Utils.logDetailInfo;
+import static com.hzzz.points.utils.Utils.logDetailedInfo;
 
 /**
  * 有关DeathLog的数据库操作
@@ -38,7 +37,7 @@ public class DeathLog {
         int count = countDeathLog(target_player.getUniqueId());  // 获取目前记录条数
 
         try {
-            logDetailInfo(String.format(read_death_log_result, target_player.getName(), count, limit));
+            logDetailedInfo(String.format(read_death_log_result, target_player.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
                 ps_delete_death_log.setString(1, target_player.getUniqueId().toString());
@@ -58,8 +57,8 @@ public class DeathLog {
             ps_insert_death_log.setDouble(7, player_location.getZ());
             ps_insert_death_log.execute();
         } catch (SQLException e) {
-            logDetailInfo(String.format(insert_death_record_fail, target_player.getName()));  // 详细log 未成功录入死亡信息
-            throw new RuntimeException(e);
+            logDetailedInfo(String.format(insert_death_record_fail, target_player.getName()));  // 详细log 未成功录入死亡信息
+            e.printStackTrace();
         }
     }
 
@@ -75,7 +74,7 @@ public class DeathLog {
             ps_select_death_log.setString(1, uuid.toString());
             return ps_select_death_log.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -94,7 +93,7 @@ public class DeathLog {
                 count++;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return count;
     }
@@ -109,7 +108,7 @@ public class DeathLog {
         Player target_player = Bukkit.getPlayer(uuid);  // 使用uuid获取
 
         if (target_player == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(text.no_player);
+            receiver.sendMessage(no_player);
             return;
         }
         outputDeathLog(target_player, receiver);
@@ -125,7 +124,7 @@ public class DeathLog {
         Player target_player = Bukkit.getPlayerExact(player_name);  // 使用玩家名获取
 
         if (target_player == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(text.no_player);
+            receiver.sendMessage(no_player);
             return;
         }
         outputDeathLog(target_player, receiver);
@@ -150,25 +149,25 @@ public class DeathLog {
                         .append(Component.text(sdf.format(rs.getInt("deathTime") * 1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
                         .append(Component.text(" -> ").color(NamedTextColor.WHITE))
                         .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
-                        .append(Component.text(String.format(text.coordinates_format, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
+                        .append(Component.text(String.format(coordinates_format, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
 
                 if (config.getBoolean("death.log.voxelmap-support", false)) {
                     component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                            .hoverEvent(HoverEvent.showText(Component.text(text.voxelmap_support_hover)))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(text.voxelmap_support_command, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .hoverEvent(HoverEvent.showText(Component.text(voxelmap_support_hover)))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(voxelmap_support_command, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.xaeros-support", false)) {
                     component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                            .hoverEvent(HoverEvent.showText(Component.text(text.xaeros_support_hover)))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(text.xaeros_support_command, player_name, player_name.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .hoverEvent(HoverEvent.showText(Component.text(xaeros_support_hover)))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(xaeros_support_command, player_name, player_name.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.teleport-support", false)) {
                     component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                             .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(text.teleport_support_hover, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
-                                    .clickEvent(ClickEvent.suggestCommand(String.format(text.teleport_support_command, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
+                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(teleport_support_hover, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
+                                    .clickEvent(ClickEvent.suggestCommand(String.format(teleport_support_command, rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
                 }
                 count++;
                 receiver.sendMessage(component);
@@ -179,7 +178,7 @@ public class DeathLog {
                 receiver.sendMessage(String.format(read_death_record, count));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

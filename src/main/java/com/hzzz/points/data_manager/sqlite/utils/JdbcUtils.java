@@ -10,7 +10,7 @@ public class JdbcUtils {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 	}
 
