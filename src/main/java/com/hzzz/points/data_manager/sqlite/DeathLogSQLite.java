@@ -2,17 +2,20 @@ package com.hzzz.points.data_manager.sqlite;
 
 import com.hzzz.points.Points;
 import com.hzzz.points.data_manager.sqlite.utils.JdbcUtils;
+import com.hzzz.points.text.text;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
+
+import static com.hzzz.points.utils.Utils.logError;
 
 /**
  * 管理death_log.sqlite
  */
 public class DeathLogSQLite {
     private static final DeathLogSQLite INSTANCE = new DeathLogSQLite();
-    private final Connection con;  // 连接
-    private final Statement st;  // 数据库操作接口
+    private Connection con;  // 连接
+    private Statement st;  // 数据库操作接口
 
     /**
      * 获取数据库实例
@@ -41,9 +44,9 @@ public class DeathLogSQLite {
         return con;
     }
 
-    public final PreparedStatement ps_delete_death_log;
-    public final PreparedStatement ps_insert_death_log;
-    public final PreparedStatement ps_select_death_log;
+    public PreparedStatement ps_delete_death_log;
+    public PreparedStatement ps_insert_death_log;
+    public PreparedStatement ps_select_death_log;
 
     private DeathLogSQLite() {
         try {
@@ -72,6 +75,7 @@ public class DeathLogSQLite {
 
             ps_select_death_log = con.prepareStatement("SELECT * FROM DeathLog WHERE uuid=?");
         } catch (SQLException e) {
+            logError(text.database_setup_error);
             e.printStackTrace();
         }
     }
@@ -88,6 +92,7 @@ public class DeathLogSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
+                    logError(text.database_error);
                     e.printStackTrace();
                 }
             }

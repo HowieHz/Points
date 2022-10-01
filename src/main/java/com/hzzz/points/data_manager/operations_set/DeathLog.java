@@ -1,6 +1,7 @@
 package com.hzzz.points.data_manager.operations_set;
 
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
+import com.hzzz.points.text.text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -10,13 +11,15 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.text.text.*;
-import static com.hzzz.points.utils.Utils.logDetailedInfo;
+import static com.hzzz.points.utils.Utils.*;
 
 /**
  * 有关DeathLog的数据库操作
@@ -34,7 +37,14 @@ public class DeathLog {
      */
     public static void insertDeathLog(Player target_player, String death_reason) {
         int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
-        int count = countDeathLog(target_player.getUniqueId());  // 获取目前记录条数
+        int count;  // 目前记录条数
+        try {
+            count = countDeathLog(target_player.getUniqueId());  // 获取目前记录条数
+        } catch (SQLException e) {
+            logError(text.database_error);
+            e.printStackTrace();
+            return;
+        }
 
         try {
             logDetailedInfo(String.format(read_death_log_result, target_player.getName(), count, limit));
@@ -57,7 +67,7 @@ public class DeathLog {
             ps_insert_death_log.setDouble(7, player_location.getZ());
             ps_insert_death_log.execute();
         } catch (SQLException e) {
-            logDetailedInfo(String.format(insert_death_record_fail, target_player.getName()));  // 详细log 未成功录入死亡信息
+            logError(String.format(insert_death_record_fail, target_player.getName()));  // 未成功录入死亡信息
             e.printStackTrace();
         }
     }
@@ -68,14 +78,10 @@ public class DeathLog {
      * @param uuid 目标玩家的uuid
      * @return 读取到的记录集
      */
-    public static ResultSet readDeathLog(UUID uuid) {
+    public static ResultSet readDeathLog(UUID uuid) throws SQLException {
         // 查询死亡记录的操作
-        try {
-            ps_select_death_log.setString(1, uuid.toString());
-            return ps_select_death_log.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        ps_select_death_log.setString(1, uuid.toString());
+        return ps_select_death_log.executeQuery();
     }
 
     /**
@@ -84,7 +90,7 @@ public class DeathLog {
      * @param uuid 目标玩家的uuid
      * @return 记录数
      */
-    public static int countDeathLog(UUID uuid) {
+    public static int countDeathLog(UUID uuid) throws SQLException {
         // 查询死亡记录数量的操作
         int count = 0;  // 结果行数
         try (ResultSet rs = readDeathLog(uuid)) {
@@ -92,8 +98,6 @@ public class DeathLog {
             while (rs.next()) {
                 count++;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return count;
     }
@@ -178,6 +182,8 @@ public class DeathLog {
                 receiver.sendMessage(String.format(read_death_record, count));
             }
         } catch (SQLException e) {
+            logInfo(database_error);
+            receiver.sendMessage(database_error);
             e.printStackTrace();
         }
     }

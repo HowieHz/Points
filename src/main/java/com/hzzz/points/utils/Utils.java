@@ -35,6 +35,15 @@ public class Utils {
     }
 
     /**
+     * 向控制台发送错误
+     *
+     * @param message 消息内容
+     */
+    public static void logError(String message) {
+        Points.logger.warning(message);
+    }
+
+    /**
      * 向控制台发送消息(需要config.yml -> log.more-information 为true)
      *
      * @param message 消息内容

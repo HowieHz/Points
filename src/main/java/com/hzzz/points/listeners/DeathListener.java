@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.sql.SQLException;
+
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.IsEnableDeathMessage;
@@ -58,9 +60,13 @@ public final class DeathListener implements NamedListener { // TODO NamedListene
             return;
         }
 
-        if (config.getBoolean("death.message.enable", false) && IsEnableDeathMessage(player)) {
-            // 生成并发送消息给执行者
-            player.sendMessage(builderPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
+        try {
+            if (config.getBoolean("death.message.enable", false) && IsEnableDeathMessage(player)) {  // 出现错误默认不发送死亡消息
+                // 生成并发送消息给执行者
+                player.sendMessage(builderPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
 
         // 记录死亡日志

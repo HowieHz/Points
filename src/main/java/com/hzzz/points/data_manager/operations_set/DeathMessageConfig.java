@@ -21,25 +21,21 @@ public class DeathMessageConfig {
      * @param player 目标玩家对象
      * @return 是否开启
      */
-    public static boolean IsEnableDeathMessage(Player player) {
-        try {
-            // 初始化
-            ps_insert_death_config.setString(1, player.getUniqueId().toString());
-            ps_insert_death_config.setString(2, player.getName());
-            ps_insert_death_config.execute();
+    public static boolean IsEnableDeathMessage(Player player) throws SQLException {
+        // 初始化
+        ps_insert_death_config.setString(1, player.getUniqueId().toString());
+        ps_insert_death_config.setString(2, player.getName());
+        ps_insert_death_config.execute();
 
-            // 验证数据
-            int enable = 0;
-            ps_select_death_config.setString(1, player.getUniqueId().toString());
-            ResultSet rs = ps_select_death_config.executeQuery();
-            if (rs.next()) {  // 结果集第一个 没有数据(返回false) 还调用getInt就会报错java.sql.SQLException: ResultSet closed
-                enable = rs.getInt("enable");
-            }
-            rs.close();
-            return enable == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        // 验证数据
+        int enable = 0;
+        ps_select_death_config.setString(1, player.getUniqueId().toString());
+        ResultSet rs = ps_select_death_config.executeQuery();
+        if (rs.next()) {  // 结果集第一个 没有数据(返回false) 还调用getInt就会报错java.sql.SQLException: ResultSet closed
+            enable = rs.getInt("enable");
         }
+        rs.close();
+        return enable == 1;
     }
 
     /**
@@ -49,25 +45,17 @@ public class DeathMessageConfig {
      * @param player 目标玩家对象
      * @return 翻转后的开启状态，如true则为开启
      */
-    public static boolean updateDeathMessageConfig(Player player) {
+    public static boolean updateDeathMessageConfig(Player player) throws SQLException{
         // 读取并翻转数据
         if (IsEnableDeathMessage(player)) {
-            try {
-                ps_update_death_config.setInt(1, 0);
-                ps_update_death_config.setString(2, player.getUniqueId().toString());
-                ps_update_death_config.execute();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            ps_update_death_config.setInt(1, 0);
+            ps_update_death_config.setString(2, player.getUniqueId().toString());
+            ps_update_death_config.execute();
             return false;
         } else {
-            try {
-                ps_update_death_config.setInt(1, 1);
-                ps_update_death_config.setString(2, player.getUniqueId().toString());
-                ps_update_death_config.execute();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            ps_update_death_config.setInt(1, 1);
+            ps_update_death_config.setString(2, player.getUniqueId().toString());
+            ps_update_death_config.execute();
             return true;
         }
     }

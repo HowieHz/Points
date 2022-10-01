@@ -2,14 +2,17 @@ package com.hzzz.points.data_manager.sqlite;
 
 import com.hzzz.points.Points;
 import com.hzzz.points.data_manager.sqlite.utils.JdbcUtils;
+import com.hzzz.points.text.text;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 
+import static com.hzzz.points.utils.Utils.logError;
+
 public class ConfigSQLite {
     private static final ConfigSQLite INSTANCE = new ConfigSQLite();
-    private final Connection con;  // 连接
-    private final Statement st;  // 数据库操作接口
+    private Connection con;  // 连接
+    private Statement st;  // 数据库操作接口
 
     /**
      * 获取数据库实例
@@ -38,9 +41,9 @@ public class ConfigSQLite {
         return con;
     }
 
-    public final PreparedStatement ps_insert_death_config;
-    public final PreparedStatement ps_select_death_config;
-    public final PreparedStatement ps_update_death_config;
+    public PreparedStatement ps_insert_death_config;
+    public PreparedStatement ps_select_death_config;
+    public PreparedStatement ps_update_death_config;
 
     private ConfigSQLite() {
         try {
@@ -58,6 +61,7 @@ public class ConfigSQLite {
             ps_select_death_config = con.prepareStatement("SELECT * FROM DeathMessageConfig WHERE uuid=?");
             ps_update_death_config = con.prepareStatement("UPDATE DeathMessageConfig SET enable=? WHERE uuid=?");
         } catch (SQLException e) {
+            logError(text.database_setup_error);
             e.printStackTrace();
         }
     }
@@ -74,6 +78,7 @@ public class ConfigSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
+                    logError(text.database_error);
                     e.printStackTrace();
                 }
             }

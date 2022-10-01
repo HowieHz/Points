@@ -48,6 +48,9 @@ public final class text {
     public static final String use_respawn_anchor_canceled = "你尝试使用重生锚，但是被未知力量阻止了";
     public static final String command_frequency_limit = "你使用的太快了！ 请稍后再试";
     public static final String read_death_log_result = "%s 在数据库中记录 %d 条, 限制为 %d 条";
+    public static final String database_error = RED + "数据库发生错误";
+    public static final String database_setup_error = RED + "数据库初始化发生错误";
+    public static final String database_driver_error = RED + "数据库驱动加载发生错误";
     public static final String help = """
 
             -------------------------------------------------

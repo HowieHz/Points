@@ -8,13 +8,14 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.sql.SQLException;
 import java.util.*;
 
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
-import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.utils.Utils.*;
 
 /**
  * death指令的执行器以及tab补全
@@ -63,10 +64,17 @@ public final class Death implements TabExecutor {
                         return true;
                     }
 
-                    if (updateDeathMessageConfig(player)) {  // 更改数据库config
-                        sender.sendMessage(text.enable_death_message);
-                    } else {
+                    try {
+                        if (updateDeathMessageConfig(player)) {  // 更改数据库config
+                            sender.sendMessage(text.enable_death_message);
+                        } else {
+                            sender.sendMessage(text.disable_death_message);
+                        }
+                    } catch (SQLException e) {
+                        sender.sendMessage(text.database_error);
                         sender.sendMessage(text.disable_death_message);
+                        logError(text.database_error);
+                        e.printStackTrace();
                     }
 
                 } else {
