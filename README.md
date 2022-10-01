@@ -3,6 +3,8 @@
 ![GitHub](https://img.shields.io/github/license/HowieHz/Points)
 ![GitHub all releases](https://img.shields.io/github/downloads/HowieHz/Points/total)
 ![GitHub repo size](https://img.shields.io/github/repo-size/HowieHz/Points)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6514d15bcda04c4db6ef136204282a46)](https://www.codacy.com/gh/HowieHz/Points/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=HowieHz/Points&amp;utm_campaign=Badge_Grade)
+[![DeepSource](https://deepsource.io/gh/HowieHz/Points.svg/?label=active+issues&show_trend=true&token=BsdaFuwaOvvqaAa8w-r7YmmN)](https://deepsource.io/gh/HowieHz/Points/?ref=repository-badge)
 
 A paper plugin, some useful points
 
