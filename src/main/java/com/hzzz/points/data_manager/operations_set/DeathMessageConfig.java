@@ -21,7 +21,7 @@ public class DeathMessageConfig {
      * @param player 目标玩家对象
      * @return 是否开启
      */
-    public static boolean IsEnableDeathMessage(Player player) throws SQLException {
+    public static boolean isEnableDeathMessage(Player player) throws SQLException {
         // 初始化
         ps_insert_death_config.setString(1, player.getUniqueId().toString());
         ps_insert_death_config.setString(2, player.getName());
@@ -47,7 +47,7 @@ public class DeathMessageConfig {
      */
     public static boolean updateDeathMessageConfig(Player player) throws SQLException{
         // 读取并翻转数据
-        if (IsEnableDeathMessage(player)) {
+        if (isEnableDeathMessage(player)) {
             ps_update_death_config.setInt(1, 0);
             ps_update_death_config.setString(2, player.getUniqueId().toString());
             ps_update_death_config.execute();

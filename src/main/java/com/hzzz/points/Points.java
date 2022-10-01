@@ -7,7 +7,6 @@ import com.hzzz.points.data_structure.CommandInfo;
 import com.hzzz.points.interfaces.NamedListener;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
-import com.hzzz.points.text.text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,7 +22,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.hzzz.points.text.text.*;
+import static com.hzzz.points.text.Text.*;
 import static com.hzzz.points.utils.Utils.logDetailedInfo;
 
 /**
@@ -84,9 +83,9 @@ public final class Points extends JavaPlugin {
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {
             if (file.mkdirs()) {
-                logger.info(text.create_database_folder_successfully);
+                logger.info(create_database_folder_successfully);
             } else {
-                logger.info(text.fail_to_create_database_folder);
+                logger.info(fail_to_create_database_folder);
             }
         }
 
@@ -116,13 +115,13 @@ public final class Points extends JavaPlugin {
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
             if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
-                logger.info(String.format(text.sqlite_ready, "config.sqlite, death_log.sqlite"));
+                logger.info(String.format(sqlite_ready, "config.sqlite, death_log.sqlite"));
 
                 // 数据库成功启动才启动death模块
                 // 注册监听
                 registerEvents(DeathListener.getInstance());
             } else {
-                logger.info(String.format(text.sqlite_not_ready, "config.sqlite, death_log.sqlite"));
+                logger.info(String.format(sqlite_not_ready, "config.sqlite, death_log.sqlite"));
             }
         }
 

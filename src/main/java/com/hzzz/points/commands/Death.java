@@ -1,6 +1,6 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -44,7 +44,7 @@ public final class Death implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (args.length == 0) {
             // /death
-            sender.sendMessage(text.help_death);
+            sender.sendMessage(Text.help_death);
             return true;
         }
 
@@ -53,35 +53,35 @@ public final class Death implements TabExecutor {
                 if (config.getBoolean("death.message.enable", false)) {  // 检查子模块是否开启
                     // 检查执行者
                     if (!(sender instanceof Player player)) {
-                        sender.sendMessage(text.player_only);
+                        sender.sendMessage(Text.player_only);
                         return true;
                     }
                     // 权限检查
                     if (config.getBoolean("death.message.command-permission.enable", false)
                             && !checkPermission(sender, config.getString("death.message.command-permission.node", "points.command.death.message"))) {
-                        sender.sendMessage(text.no_permission);
+                        sender.sendMessage(Text.no_permission);
                         return true;
                     }
                     if (args.length > 1) {  // 参数过多语法错误
-                        sender.sendMessage(text.help_death);
+                        sender.sendMessage(Text.help_death);
                         return true;
                     }
 
                     try {
                         if (updateDeathMessageConfig(player)) {  // 更改数据库config
-                            sender.sendMessage(text.enable_death_message);
+                            sender.sendMessage(Text.enable_death_message);
                         } else {
-                            sender.sendMessage(text.disable_death_message);
+                            sender.sendMessage(Text.disable_death_message);
                         }
                     } catch (SQLException e) {
-                        sender.sendMessage(text.database_error);
-                        sender.sendMessage(text.disable_death_message);
-                        logError(text.database_error);
+                        sender.sendMessage(Text.database_error);
+                        sender.sendMessage(Text.disable_death_message);
+                        logError(Text.database_error);
                         e.printStackTrace();
                     }
 
                 } else {
-                    sender.sendMessage(text.disable_module);
+                    sender.sendMessage(Text.disable_module);
                 }
             }
             case "log" -> {
@@ -91,19 +91,19 @@ public final class Death implements TabExecutor {
                         if (!specialCheckPermission("death.log",
                                 sender,
                                 "points.command.death.log.self")) {
-                            sender.sendMessage(text.no_permission);
+                            sender.sendMessage(Text.no_permission);
                             return true;
                         }
 
                         // 检查执行者
                         if (!(sender instanceof Player player)) {
-                            sender.sendMessage(text.player_only);
+                            sender.sendMessage(Text.player_only);
                             return true;
                         }
 
                         // 使用频率检查
                         if (checkCommandFrequencyLimit(player)) {
-                            player.sendMessage(text.command_frequency_limit);
+                            player.sendMessage(Text.command_frequency_limit);
                             return true;
                         }
 
@@ -117,14 +117,14 @@ public final class Death implements TabExecutor {
                                 "points.command.death.log.other.%s",
                                 args[1])
                         ) {
-                            sender.sendMessage(text.no_permission);
+                            sender.sendMessage(Text.no_permission);
                             return true;
                         }
 
                         // 检查执行者 是玩家就进行频率检查
                         if (sender instanceof Player player) {
                             if (checkCommandFrequencyLimit(player)) {
-                                player.sendMessage(text.command_frequency_limit);
+                                player.sendMessage(Text.command_frequency_limit);
                                 return true;
                             }
                         }
@@ -133,10 +133,10 @@ public final class Death implements TabExecutor {
                     }
 
                 } else {
-                    sender.sendMessage(text.disable_module);
+                    sender.sendMessage(Text.disable_module);
                 }
             }
-            default -> sender.sendMessage(text.help_death);
+            default -> sender.sendMessage(Text.help_death);
         }
         return true;
     }

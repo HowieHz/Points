@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.IsEnableDeathMessage;
+import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.isEnableDeathMessage;
 import static com.hzzz.points.data_manager.operations_set.DeathLog.insertDeathLog;
 import static com.hzzz.points.Points.config;
 
@@ -63,7 +63,7 @@ public final class DeathListener implements NamedListener { // TODO NamedListene
         }
 
         try {
-            if (config.getBoolean("death.message.enable", false) && IsEnableDeathMessage(player)) {  // 出现错误默认不发送死亡消息
+            if (config.getBoolean("death.message.enable", false) && isEnableDeathMessage(player)) {  // 出现错误默认不发送死亡消息
                 // 生成并发送消息给执行者
                 player.sendMessage(builderPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
             }

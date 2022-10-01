@@ -1,7 +1,7 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -43,26 +43,26 @@ public final class PointsCommand implements TabExecutor {
             if (args[0].equals("reload")) {
                 // 权限检查
                 if (!commonCheckPermission("points.reload", sender, "points.reload")) {
-                    sender.sendMessage(text.no_permission);
+                    sender.sendMessage(Text.no_permission);
                     return true;
                 }
                 // 重载的逻辑
                 Points.getInstance().onReload();
 
                 // 发消息
-                sender.sendMessage(text.reload_ready);
+                sender.sendMessage(Text.reload_ready);
                 if (sender instanceof Player) {  // 玩家重载 在控制台也输出重载结果
-                    logInfo(text.reload_ready);
+                    logInfo(Text.reload_ready);
 
                 }
                 return true;
             }
 
             // args[0].equals("help")
-            sender.sendMessage(text.help);
+            sender.sendMessage(Text.help);
             return true;
         } else {
-            sender.sendMessage(text.help);
+            sender.sendMessage(Text.help);
         }
         return true;
     }

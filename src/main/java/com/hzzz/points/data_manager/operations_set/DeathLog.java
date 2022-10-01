@@ -1,7 +1,6 @@
 package com.hzzz.points.data_manager.operations_set;
 
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
-import com.hzzz.points.text.text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -18,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import static com.hzzz.points.Points.config;
-import static com.hzzz.points.text.text.*;
+import static com.hzzz.points.text.Text.*;
 import static com.hzzz.points.utils.Utils.*;
 
 /**
@@ -41,7 +40,7 @@ public class DeathLog {
         try {
             count = countDeathLog(target_player.getUniqueId());  // 获取目前记录条数
         } catch (SQLException e) {
-            logError(text.database_error);
+            logError(database_error);
             e.printStackTrace();
             return;
         }

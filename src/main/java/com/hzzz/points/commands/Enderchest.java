@@ -1,6 +1,6 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -43,7 +43,7 @@ public final class Enderchest implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(text.player_only);
+            sender.sendMessage(Text.player_only);
             return true;
         }
         switch (args.length) {
@@ -52,7 +52,7 @@ public final class Enderchest implements TabExecutor {
                 if (!specialCheckPermission("enderchest",
                         sender,
                         "points.command.enderchest.self")) {
-                    sender.sendMessage(text.no_permission);
+                    sender.sendMessage(Text.no_permission);
                     return true;
                 }
 
@@ -68,14 +68,14 @@ public final class Enderchest implements TabExecutor {
                         "points.command.enderchest.other.%s",
                         args[0])
                 ) {
-                    sender.sendMessage(text.no_permission);
+                    sender.sendMessage(Text.no_permission);
                     return true;
                 }
 
                 Player target_player = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (target_player == null) {  // 检查是否获取到玩家
-                    player.sendMessage(text.no_player);
+                    player.sendMessage(Text.no_player);
                     return true;
                 }
 
@@ -83,7 +83,7 @@ public final class Enderchest implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(text.help_enderchest);
+                sender.sendMessage(Text.help_enderchest);
                 return true;
             }
         }

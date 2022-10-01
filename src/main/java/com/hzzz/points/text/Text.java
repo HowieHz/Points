@@ -5,7 +5,7 @@ import static org.bukkit.ChatColor.*;
 /**
  * 文字枚举
  */
-public final class text {
+public final class Text {
     public static final String plugin_starting = BLUE + "<Points>插件正在启动";
     public static final String plugin_loading = BLUE + "<Points>插件正在加载";
     public static final String plugin_disabling = BLUE + "<Points>插件正在关闭";

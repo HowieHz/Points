@@ -1,6 +1,6 @@
 package com.hzzz.points.commands.utils;
 
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -33,26 +33,26 @@ public final class Utils {
                 .append(Component.text(target_player.getName()).color(NamedTextColor.YELLOW))
                 .append(Component.text(separator).color(separator_color))
                 .append(Component.text(target_player.getWorld().getName()).color(NamedTextColor.YELLOW))
-                .append(Component.text(String.format(text.coordinates_format, player_location.getX(), player_location.getY(), player_location.getZ())).color(NamedTextColor.YELLOW));
+                .append(Component.text(String.format(Text.coordinates_format, player_location.getX(), player_location.getY(), player_location.getZ())).color(NamedTextColor.YELLOW));
 
         // 根据配置文件在末尾追加一些信息
         if (config.getBoolean(String.format("%s.voxelmap-support", config_root), false)) {
             component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                    .hoverEvent(HoverEvent.showText(Component.text(text.voxelmap_support_hover)))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(text.voxelmap_support_command, player_location.getX(), player_location.getY(), player_location.getZ(), target_player.getWorld().getName()))));
+                    .hoverEvent(HoverEvent.showText(Component.text(Text.voxelmap_support_hover)))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(Text.voxelmap_support_command, player_location.getX(), player_location.getY(), player_location.getZ(), target_player.getWorld().getName()))));
         }
 
         if (config.getBoolean(String.format("%s.xaeros-support", config_root), false)) {
             component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                    .hoverEvent(HoverEvent.showText(Component.text(text.xaeros_support_hover)))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(text.xaeros_support_command, target_player.getName(), target_player.getName().charAt(0), player_location.getX(), player_location.getY(), player_location.getZ(), target_player.getWorld().getName()))));
+                    .hoverEvent(HoverEvent.showText(Component.text(Text.xaeros_support_hover)))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(Text.xaeros_support_command, target_player.getName(), target_player.getName().charAt(0), player_location.getX(), player_location.getY(), player_location.getZ(), target_player.getWorld().getName()))));
         }
 
         if (config.getBoolean(String.format("%s.teleport-support", config_root), false)) {
             component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                     .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                            .hoverEvent(HoverEvent.showText(Component.text(String.format(text.teleport_support_hover, player_location.getX(), player_location.getY(), player_location.getZ()))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(text.teleport_support_command, player_location.getX(), player_location.getY(), player_location.getZ()))));
+                            .hoverEvent(HoverEvent.showText(Component.text(String.format(Text.teleport_support_hover, player_location.getX(), player_location.getY(), player_location.getZ()))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(Text.teleport_support_command, player_location.getX(), player_location.getY(), player_location.getZ()))));
         }
 
         return component;
@@ -79,7 +79,7 @@ public final class Utils {
      * @param args           格式化参数
      * @return 格式化完毕之后的字符串
      */
-    public static String StringFormatEnd(String string, String end_string, String default_string, Object... args) {
+    public static String stringFormatEnd(String string, String end_string, String default_string, Object... args) {
         if (string == null) {
             return String.format(default_string, args);
         }
@@ -115,7 +115,7 @@ public final class Utils {
                 config.getBoolean(String.format("%s.permission.other.enable", config_root), true))
                 && !(checkPermission(sender, config.getString(String.format("%s.permission.other.node-other-player", config_root), default_other_player_node))  // 玩家权限检查 目标为其他玩家
                 || checkPermission(sender,
-                StringFormatEnd(config.getString(String.format("%s.permission.other.node-target-player", config_root)),
+                stringFormatEnd(config.getString(String.format("%s.permission.other.node-target-player", config_root)),
                         "%s", default_target_player_node, target_player_name))));  // 玩家权限检查 目标为指定玩家
     }
 

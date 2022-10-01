@@ -1,8 +1,10 @@
 package com.hzzz.points.data_manager.sqlite.utils;
 
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import static com.hzzz.points.utils.Utils.logError;
 
@@ -17,7 +19,7 @@ public class JdbcUtils {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
-            logError(text.database_driver_error);
+            logError(Text.database_driver_error);
             e.printStackTrace();
         }
     }
@@ -28,11 +30,7 @@ public class JdbcUtils {
      * @param url 地址
      * @return connection of database
      */
-    public static Connection getConnection(String url) {
-        try {
-            return DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static Connection getConnection(String url) throws SQLException {
+        return DriverManager.getConnection(url);
     }
 }

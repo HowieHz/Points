@@ -1,6 +1,6 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -44,13 +44,13 @@ public final class Here implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(text.player_only);
+            sender.sendMessage(Text.player_only);
             return true;
         }
 
         // 权限检查
         if (!specialCheckPermission("here", player, "points.command.here")) {
-            sender.sendMessage(text.no_permission);
+            sender.sendMessage(Text.no_permission);
             return true;
         }
 

@@ -1,6 +1,6 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.text.text;
+import com.hzzz.points.text.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -45,14 +45,14 @@ public final class Where implements TabExecutor {
 
                 // 检查执行者
                 if (!(sender instanceof Player player)) {
-                    sender.sendMessage(text.player_only);
+                    sender.sendMessage(Text.player_only);
                     return true;
                 }
                 // 权限检查
                 if (!specialCheckPermission("where",
                         sender,
                         "points.command.where.self")) {
-                    sender.sendMessage(text.no_permission);
+                    sender.sendMessage(Text.no_permission);
                     return true;
                 }
 
@@ -68,14 +68,14 @@ public final class Where implements TabExecutor {
                         "points.command.where.other.%s",
                         args[0])
                 ) {
-                    sender.sendMessage(text.no_permission);
+                    sender.sendMessage(Text.no_permission);
                     return true;
                 }
 
                 Player target_player = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (target_player == null) {  // 检查是否获取到玩家
-                    sender.sendMessage(text.no_player);
+                    sender.sendMessage(Text.no_player);
                     return true;
                 }
 
@@ -84,7 +84,7 @@ public final class Where implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(text.help_where);
+                sender.sendMessage(Text.help_where);
                 return true;
             }
         }
