@@ -83,7 +83,11 @@ public final class Points extends JavaPlugin {
         File file = new File("./plugins/Points/database");
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {
-            file.mkdir();
+            if (file.mkdirs()) {
+                logger.info(text.create_database_folder_successfully);
+            } else {
+                logger.info(text.fail_to_create_database_folder);
+            }
         }
 
         // 注册指令
@@ -156,7 +160,7 @@ public final class Points extends JavaPlugin {
 
     /**
      * 注册指令执行器(以及tab补全)<br>
-     * 替代需要Bukkit.getPluginManager().registerEvents(listener_inen, this)<br>
+     * 替代需要Bukkit.getPluginManager().registerEvents(listener_instance, this)<br>
      *
      * @param command           根指令
      * @param executor_instance 执行器实例

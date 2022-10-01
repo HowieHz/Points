@@ -99,4 +99,3 @@ A paper plugin, some useful points
 1. 添加床和重生锚有爆炸伤害但不破坏地形的选项
 2. 异步数据库操作
 3. lang/zh_cn.yml
-5. TODO

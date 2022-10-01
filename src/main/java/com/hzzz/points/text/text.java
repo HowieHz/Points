@@ -12,6 +12,8 @@ public final class text {
     public static final String plugin_started = BLUE + "<Points>插件已启动";
     public static final String plugin_loaded = BLUE + "<Points>插件已加载";
     public static final String plugin_disabled = BLUE + "<Points>插件已关闭";
+    public static final String create_database_folder_successfully = "用于存放数据库的文件夹已初始化";
+    public static final String fail_to_create_database_folder = "用于存放数据库的文件夹创建失败";
     public static final String player_only = "此指令仅允许玩家使用";
     public static final String no_permission = "你没有使用该指令的权限";
     public static final String no_player = "该玩家不在线";
