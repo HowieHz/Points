@@ -30,7 +30,10 @@ public final class Where implements TabExecutor {
         return INSTANCE;
     }
 
-    public Where() {
+    /**
+     * 单例 无参数
+     */
+    private Where() {
     }
 
     @Override

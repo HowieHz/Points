@@ -31,6 +31,9 @@ public final class PointsCommand implements TabExecutor {
         return INSTANCE;
     }
 
+    /**
+     * 单例 无参数
+     */
     private PointsCommand() {
     }
 
