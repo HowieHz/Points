@@ -185,13 +185,13 @@ public final class Death implements TabExecutor {
             case 2 -> {
                 // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））
                 if ("log".equals(args[0])) {
-                    if (config.getBoolean("death.log.enable", false)) {
+                    if (config.getBoolean("death.log.enable", false)) {  // 是否开启模块
                         if (specialCheckPermission("death.log",
                                 sender,
                                 "points.command.death.log.other",
                                 "points.command.death.log.other.%s",
                                 args[1])) {
-                            // 模块开启了 有权限或者无需权限 提示
+                            // 过权限检查
                             return null;  // death log Ho……提示玩家名
                         }
                         // 没权限 不继续提示

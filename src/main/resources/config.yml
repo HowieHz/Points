@@ -6,7 +6,6 @@ log:
 here:
   enable: true  # 是否允许使用here
   permission:
-    enable: true  # 是否开启权限管理
     self: # here对象为玩家自己
       enable: false  # 是否开启此项的权限管理
       node: points.command.here
@@ -20,7 +19,6 @@ here:
 where:
   enable: true  # 是否允许使用where
   permission:
-    enable: true  # 是否开启权限管理
     self: # where对象为玩家自己
       enable: false  # 是否开启此项的权限管理
       node: points.command.where.self
@@ -53,7 +51,6 @@ death:
     # 记录死亡信息
     enable: true  # 是否启用death log子模块
     permission:
-      enable: true  # 是否开启权限管理
       self: # death log对象为玩家自己
         enable: false  # 是否开启此项的权限管理
         node: points.command.death.log.self
@@ -63,7 +60,7 @@ death:
         node-target-player: points.command.death.log.other.%s  # 指定玩家 %s为玩家名的占位符
     command:
       frequency-limit:
-        enable: false  # 是否限制玩家使用 death log 指令频率
+        enable: true  # 是否限制玩家使用 death log 指令频率
         # 每几秒 允许查询几次
         second: 1  # 每n秒
         maximum-usage: 1 # 允许查询n次
@@ -76,7 +73,6 @@ enderchest:
   # 随身末影箱
   enable: true  # 是否启用enderchest随身末影箱
   permission:
-    enable: true  # 是否开启权限管理
     self:  # enderchest对象为玩家自己
       enable: false  # 是否开启此项的权限管理
       node: points.command.enderchest.self

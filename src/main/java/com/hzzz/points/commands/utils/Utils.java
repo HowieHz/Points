@@ -107,17 +107,11 @@ public final class Utils {
                                                  String default_target_player_node,
                                                  String target_player_name) {
         return !((// 检查是否启用了权限检查
-                config.getBoolean(String.format("%s.permission.enable", config_root), true)
-                        && config.getBoolean(String.format("%s.permission.other.enable", config_root), true))
-                // 玩家权限检查
-                && !(checkPermission(sender,
-                config.getString(String.format("%s.permission.other.node-other-player", config_root),
-                        default_other_player_node))  // 玩家权限检查 目标为其他玩家
+                config.getBoolean(String.format("%s.permission.other.enable", config_root), true))
+                && !(checkPermission(sender, config.getString(String.format("%s.permission.other.node-other-player", config_root), default_other_player_node))  // 玩家权限检查 目标为其他玩家
                 || checkPermission(sender,
                 StringFormatEnd(config.getString(String.format("%s.permission.other.node-target-player", config_root)),
-                        "%s",
-                        default_target_player_node,
-                        target_player_name))));  // 玩家权限检查 目标为指定玩家
+                        "%s", default_target_player_node, target_player_name))));  // 玩家权限检查 目标为指定玩家
     }
 
     /**
@@ -131,22 +125,22 @@ public final class Utils {
     public static boolean specialCheckPermission(String config_root,
                                                  CommandSender sender,
                                                  String default_self_node) {
-        return !(config.getBoolean(String.format("%s.permission.enable", config_root), true)  // 总项权限管理
-                && config.getBoolean(String.format("%s.permission.self.enable", config_root), true)  // 子项权限管理
+        return !(config.getBoolean(String.format("%s.permission.self.enable", config_root), true)  // 子项权限管理
                 && !checkPermission(sender, config.getString(String.format("%s.permission.self.node", config_root),   // 玩家权限检查
                 default_self_node)));
     }
 
     /**
      * 普通的权限检查<br>(enable节点如读取失败默认为true)
-     * @param config_root 配置文件根节点 要求此节点下一节点为permission permission.node permission.enable
-     * @param sender 发送者(被进行权限检查的对象)
+     *
+     * @param config_root  配置文件根节点 要求此节点下一节点为permission permission.node permission.enable
+     * @param sender       发送者(被进行权限检查的对象)
      * @param default_node 默认权限节点
      * @return 是否通过权限检查 (通过为true)
      */
     public static boolean commonCheckPermission(String config_root,
-                                                 CommandSender sender,
-                                                 String default_node) {
+                                                CommandSender sender,
+                                                String default_node) {
         return !(config.getBoolean(String.format("%s.permission.enable", config_root), true)  // 总项权限管理
                 && !checkPermission(sender, config.getString(String.format("%s.permission.node", config_root), default_node)));
     }
