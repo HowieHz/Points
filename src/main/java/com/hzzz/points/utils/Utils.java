@@ -40,7 +40,7 @@ public class Utils {
      * @param message 消息内容
      */
     public static void logError(String message) {
-        Points.logger.warning(message);
+        Points.logger.severe(message);
     }
 
     /**
