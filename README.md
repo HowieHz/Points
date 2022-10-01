@@ -12,7 +12,8 @@ A paper plugin, some useful points
 2. 得到某个玩家的坐标 (/where指令)
 3. 死亡的时候发送死亡位置 (/death指令)
 4. 记录死亡信息 (/death指令)
-5. 防爆
+5. 随身开启末影箱 (/enderchest指令)
+6. 防爆
 
 **其他**
 
