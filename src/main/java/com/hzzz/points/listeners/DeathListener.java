@@ -31,7 +31,9 @@ public final class DeathListener implements NamedListener { // TODO NamedListene
         return INSTANCE;
     }
 
-
+    /**
+     * 单例 无参数
+     */
     private DeathListener() {
     }
 
@@ -51,7 +53,7 @@ public final class DeathListener implements NamedListener { // TODO NamedListene
      * @param e 事件
      */
     @EventHandler
-    private void onPlayerDeath(PlayerDeathEvent e) {
+    public void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查

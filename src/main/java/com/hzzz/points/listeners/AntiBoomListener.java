@@ -73,6 +73,9 @@ public class AntiBoomListener implements NamedListener {
         return name;
     }
 
+    /**
+     * 单例 无参数
+     */
     private AntiBoomListener() {
     }
 
@@ -89,23 +92,19 @@ public class AntiBoomListener implements NamedListener {
      * @param e 事件
      */
     @EventHandler
-    private void onBoom(EntityExplodeEvent e) {
+    public void onBoom(EntityExplodeEvent e) {
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         for (AntiBoomInfo info : anti_boom_info) {  // 遍历
             if (e.getEntity().getType().equals(info.type)  // 检查类型
                     && config.getBoolean(String.format(info.config_path, "enable"), false)) {  // anti-boom.类型.enable
 
-                if (config.getBoolean(String.format(info.config_path, "world"), false)  // anti-boom.类型.enable.world
-                        && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
-                    e.setCancelled(true);
-
-                } else if (config.getBoolean(String.format(info.config_path, "world-nether"), false)  // anti-boom.类型.enable.world-nether
-                        && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
-                    e.setCancelled(true);
-
-                } else if (config.getBoolean(String.format(info.config_path, "world-the-end"), false)  // anti-boom.类型.enable.world-the-end
-                        && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
+                if ((config.getBoolean(String.format(info.config_path, "world"), false)  // anti-boom.类型.enable.world
+                        && world_name.equals(config.getString("anti-boom.world-name.world", "world")))
+                        || (config.getBoolean(String.format(info.config_path, "world-nether"), false)  // anti-boom.类型.enable.world-nether
+                        && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
+                        || (config.getBoolean(String.format(info.config_path, "world-the-end"), false)  // anti-boom.类型.enable.world-the-end
+                        && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                     e.setCancelled(true);
                 }
             }
@@ -119,23 +118,20 @@ public class AntiBoomListener implements NamedListener {
      * @param e 事件
      */
     @EventHandler
-    private void onWitherDestroyBlocks(EntityChangeBlockEvent e) {
+    public void onWitherDestroyBlocks(EntityChangeBlockEvent e) {
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         if (e.getEntity().getType().equals(EntityType.WITHER)  // 检查类型
                 && config.getBoolean("anti-boom.wither.body.enable", false)) {  // anti-boom.类型.enable
 
-            if (config.getBoolean("anti-boom.wither.body.world", false)  // anti-boom.类型.enable.world
-                    && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
+            if ((config.getBoolean("anti-boom.wither.body.world", false)  // anti-boom.类型.enable.world
+                    && world_name.equals(config.getString("anti-boom.world-name.world", "world")))
+                    || (config.getBoolean("anti-boom.wither.body.world-nether", false)  // anti-boom.类型.enable.world-nether
+                    && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
+                    || (config.getBoolean("anti-boom.wither.body.world-the-end", false)  // anti-boom.类型.enable.world-the-end
+                    && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                 e.setCancelled(true);
 
-            } else if (config.getBoolean("anti-boom.wither.body.world-nether", false)  // anti-boom.类型.enable.world-nether
-                    && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
-                e.setCancelled(true);
-
-            } else if (config.getBoolean("anti-boom.wither.body.world-the-end", false)  // anti-boom.类型.enable.world-the-end
-                    && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
-                e.setCancelled(true);
             }
         }
     }
@@ -146,7 +142,7 @@ public class AntiBoomListener implements NamedListener {
      * @param e 事件
      */
     @EventHandler
-    private void onBad(PlayerInteractEvent e) {
+    public void onBad(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
 
@@ -154,18 +150,12 @@ public class AntiBoomListener implements NamedListener {
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {  // 是不是右手
                 for (Material bed : beds) {  // 遍历
                     if (Objects.requireNonNull(e.getClickedBlock()).getType().equals(bed)) {  // 是不是床
-                        if (config.getBoolean("anti-boom.bed.world", false)  // 主世界睡觉
-                                && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
-                            e.setCancelled(true);
-                            player.sendMessage(text.enter_bed_canceled);
-
-                        } else if (config.getBoolean("anti-boom.bed.world-nether", false)  // 下界睡觉
-                                && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
-                            e.setCancelled(true);
-                            player.sendMessage(text.enter_bed_canceled);
-
-                        } else if (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
-                                && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
+                        if ((config.getBoolean("anti-boom.bed.world", false)  // 主世界睡觉
+                                && world_name.equals(config.getString("anti-boom.world-name.world", "world")))
+                                || (config.getBoolean("anti-boom.bed.world-nether", false)  // 下界睡觉
+                                && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
+                                || (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
+                                && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                             e.setCancelled(true);
                             player.sendMessage(text.enter_bed_canceled);
                         }
@@ -182,7 +172,7 @@ public class AntiBoomListener implements NamedListener {
      * @param e 事件
      */
     @EventHandler
-    private void onRespawnAnchor(PlayerInteractEvent e) {
+    public void onRespawnAnchor(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
 
@@ -190,17 +180,11 @@ public class AntiBoomListener implements NamedListener {
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {  // 是不是右手
                 if (Objects.requireNonNull(e.getClickedBlock()).getType().equals(RESPAWN_ANCHOR)) {  // 是不是重生锚
                     if (config.getBoolean("anti-boom.respawn-anchor.world", false)  // 主世界使用
-                            && world_name.equals(config.getString("anti-boom.world-name.world", "world"))) {
-                        e.setCancelled(true);
-                        player.sendMessage(text.use_respawn_anchor_canceled);
-
-                    } else if (config.getBoolean("anti-boom.respawn-anchor.world-nether", false)  // 下界使用
-                            && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether"))) {
-                        e.setCancelled(true);
-                        player.sendMessage(text.use_respawn_anchor_canceled);
-
-                    } else if (config.getBoolean("anti-boom.respawn-anchor.world-the-end", false)  // 末地使用
-                            && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))) {
+                            && world_name.equals(config.getString("anti-boom.world-name.world", "world"))
+                            || (config.getBoolean("anti-boom.respawn-anchor.world-nether", false)  // 下界使用
+                            && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
+                            || (config.getBoolean("anti-boom.respawn-anchor.world-the-end", false)  // 末地使用
+                            && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                         e.setCancelled(true);
                         player.sendMessage(text.use_respawn_anchor_canceled);
                     }

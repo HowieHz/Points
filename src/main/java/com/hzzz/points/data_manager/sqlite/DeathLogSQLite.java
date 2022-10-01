@@ -48,6 +48,9 @@ public class DeathLogSQLite {
     public PreparedStatement ps_insert_death_log;
     public PreparedStatement ps_select_death_log;
 
+    /**
+     * 单例 无参数 初始化数据库
+     */
     private DeathLogSQLite() {
         try {
             // 连接数据库

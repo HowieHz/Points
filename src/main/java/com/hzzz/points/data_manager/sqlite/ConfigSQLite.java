@@ -9,6 +9,9 @@ import java.sql.*;
 
 import static com.hzzz.points.utils.Utils.logError;
 
+/**
+ * 管理config.sqlite
+ */
 public class ConfigSQLite {
     private static final ConfigSQLite INSTANCE = new ConfigSQLite();
     private Connection con;  // 连接
@@ -45,6 +48,9 @@ public class ConfigSQLite {
     public PreparedStatement ps_select_death_config;
     public PreparedStatement ps_update_death_config;
 
+    /**
+     * 单例 无参数 初始化数据库
+     */
     private ConfigSQLite() {
         try {
             // 连接数据库

@@ -34,6 +34,9 @@ public final class Death implements TabExecutor {
         return INSTANCE;
     }
 
+    /**
+     * 单例 无参数
+     */
     private Death() {
     }
 
