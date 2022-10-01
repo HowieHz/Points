@@ -39,7 +39,7 @@ public final class PointsCommand implements TabExecutor {
         if (args.length == 1) {
             if (args[0].equals("reload")) {
                 // 权限检查
-                if (commonCheckPermission("points.reload", sender, "points.reload")) {
+                if (!commonCheckPermission("points.reload", sender, "points.reload")) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }

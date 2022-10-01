@@ -46,7 +46,7 @@ public final class Enderchest implements TabExecutor {
         switch (args.length) {
             case 0 -> {
                 // 权限检查
-                if (specialCheckPermission("enderchest",
+                if (!specialCheckPermission("enderchest",
                         sender,
                         "points.command.enderchest.self")) {
                     sender.sendMessage(text.no_permission);
@@ -59,7 +59,7 @@ public final class Enderchest implements TabExecutor {
             }
             case 1 -> {
                 // 权限检查
-                if (specialCheckPermission("enderchest",
+                if (!specialCheckPermission("enderchest",
                         sender,
                         "points.command.enderchest.other",
                         "points.command.enderchest.other.%s",

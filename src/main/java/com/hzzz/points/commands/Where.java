@@ -46,7 +46,7 @@ public final class Where implements TabExecutor {
                     return true;
                 }
                 // 权限检查
-                if (specialCheckPermission("where",
+                if (!specialCheckPermission("where",
                         sender,
                         "points.command.where.self")) {
                     sender.sendMessage(text.no_permission);
@@ -59,7 +59,7 @@ public final class Where implements TabExecutor {
             }
             case 1 -> {
                 // 权限检查
-                if (specialCheckPermission("where",
+                if (!specialCheckPermission("where",
                         sender,
                         "points.command.where.other",
                         "points.command.where.other.%s",

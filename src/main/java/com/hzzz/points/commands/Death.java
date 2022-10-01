@@ -77,7 +77,7 @@ public final class Death implements TabExecutor {
                 if (config.getBoolean("death.log.enable", false)) {  // 检查子模块是否开启
                     if (args.length == 1) {  // /death log
                         // 权限检查
-                        if (specialCheckPermission("death.log",
+                        if (!specialCheckPermission("death.log",
                                 sender,
                                 "points.command.death.log.self")) {
                             sender.sendMessage(text.no_permission);
@@ -100,7 +100,7 @@ public final class Death implements TabExecutor {
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
-                        if (specialCheckPermission("death.log",
+                        if (!specialCheckPermission("death.log",
                                 sender,
                                 "points.command.death.log.other",
                                 "points.command.death.log.other.%s",
@@ -191,11 +191,11 @@ public final class Death implements TabExecutor {
                                 "points.command.death.log.other",
                                 "points.command.death.log.other.%s",
                                 args[1])) {
-                            // 没权限 不继续提示
-                            return Collections.singletonList("");
+                            // 模块开启了 有权限或者无需权限 提示
+                            return null;  // death log Ho……提示玩家名
                         }
-                        // 模块开启了 有权限或者无需权限 提示
-                        return null;  // death log Ho……提示玩家名
+                        // 没权限 不继续提示
+                        return Collections.singletonList("");
                     }
                     // 没开启模块 不继续提示
                     return Collections.singletonList("");

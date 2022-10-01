@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -77,6 +78,13 @@ public final class Points extends JavaPlugin {
 
         // 读取配置
         config = getConfig();
+
+        // 初始化数据库存放的文件夹
+        File file = new File("./plugins/Points/database");
+        //文件夹不存在则创建
+        if (!file.exists() && !file.isDirectory()) {
+            file.mkdir();
+        }
 
         // 注册指令
         CommandInfo[] command_info = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断

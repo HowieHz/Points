@@ -46,7 +46,7 @@ public final class Here implements TabExecutor {
         }
 
         // 权限检查
-        if (specialCheckPermission("here", player, "points.command.here")) {
+        if (!specialCheckPermission("here", player, "points.command.here")) {
             sender.sendMessage(text.no_permission);
             return true;
         }
