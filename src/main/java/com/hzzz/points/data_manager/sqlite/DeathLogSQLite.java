@@ -88,7 +88,7 @@ public class DeathLogSQLite {
      *
      * @param sql sql语句
      */
-    private void asyncExecuteUpdate(String sql) {
+    public void asyncExecuteUpdate(String sql) {
         new BukkitRunnable() {
             @Override
             public void run() {
