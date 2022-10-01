@@ -122,11 +122,10 @@ public final class Death implements TabExecutor {
                         }
 
                         // 检查执行者 是玩家就进行频率检查
-                        if (sender instanceof Player player) {
-                            if (checkCommandFrequencyLimit(player)) {
-                                player.sendMessage(Text.command_frequency_limit);
-                                return true;
-                            }
+                        if (sender instanceof Player player
+                                && checkCommandFrequencyLimit(player)) {
+                            player.sendMessage(Text.command_frequency_limit);
+                            return true;
                         }
 
                         outputDeathLog(args[1], sender);  // 查看玩家的log
@@ -184,16 +183,15 @@ public final class Death implements TabExecutor {
                 if (config.getBoolean("death.message.enable", false)) {
                     complete_arrays.add("message");
                 }
-                if (config.getBoolean("death.log.enable", false)) {
-                    if (specialCheckPermission("death.log",
-                            sender,
-                            "points.command.death.log.self")
-                            || specialCheckPermission("death.log",
-                            sender,
-                            "points.command.death.log.other",
-                            "other")) {
-                        complete_arrays.add("log");
-                    }
+                if (config.getBoolean("death.log.enable", false)
+                        && (specialCheckPermission("death.log",
+                        sender,
+                        "points.command.death.log.self")
+                        || specialCheckPermission("death.log",
+                        sender,
+                        "points.command.death.log.other",
+                        "other"))) {
+                    complete_arrays.add("log");
                 }
                 return complete_arrays;
             }
