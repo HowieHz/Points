@@ -67,4 +67,5 @@ public final class text {
             -------------------------------------------------
             """;
     public static final String help_where = "使用方法: /where 玩家名 或 /where";
+    public static final String help_enderchest = "使用方法: /enderchest 玩家名 或 /enderchest";
 }

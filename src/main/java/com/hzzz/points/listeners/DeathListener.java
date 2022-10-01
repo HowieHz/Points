@@ -60,7 +60,7 @@ public final class DeathListener implements NamedListener { // TODO NamedListene
 
         if (config.getBoolean("death.message.enable", false) && IsEnableDeathMessage(player)) {
             // 生成并发送消息给执行者
-            player.sendMessage(builderPlayerCoordinatesMessage("death.message", config, player, " X-> ", NamedTextColor.RED));
+            player.sendMessage(builderPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
         }
 
         // 记录死亡日志

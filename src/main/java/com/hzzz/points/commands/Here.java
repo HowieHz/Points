@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
-import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
 
 /**
  * here指令的执行器以及tab补全
@@ -46,14 +46,13 @@ public final class Here implements TabExecutor {
         }
 
         // 权限检查
-        if (config.getBoolean("here.permission.enable", false)
-                && !checkPermission(sender, config.getString("here.permission.node", "points.command.here"))) {
+        if (specialCheckPermission("here", player, "points.command.here")) {
             sender.sendMessage(text.no_permission);
             return true;
         }
 
         // 生成消息并在在公屏发送
-        Bukkit.broadcast(builderPlayerCoordinatesMessage("here", config, player), Server.BROADCAST_CHANNEL_USERS);
+        Bukkit.broadcast(builderPlayerCoordinatesMessage("here", player), Server.BROADCAST_CHANNEL_USERS);
 
         // 给发送者附上发光效果
         if (config.getBoolean("here.glowing.enable", false)) {

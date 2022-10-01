@@ -1,9 +1,6 @@
 package com.hzzz.points;
 
-import com.hzzz.points.commands.Death;
-import com.hzzz.points.commands.Here;
-import com.hzzz.points.commands.PointsCommand;
-import com.hzzz.points.commands.Where;
+import com.hzzz.points.commands.*;
 import com.hzzz.points.data_manager.sqlite.ConfigSQLite;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import com.hzzz.points.data_structure.CommandInfo;
@@ -87,7 +84,8 @@ public final class Points extends JavaPlugin {
                 new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
                 new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
                 new CommandInfo("death", Death.getInstance(), "death.enable",
-                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady())  // death指令
+                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady()),  // death指令
+                new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
         };
 
         for (CommandInfo info : command_info) {

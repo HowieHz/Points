@@ -6,8 +6,10 @@ log:
 here:
   enable: true  # 是否允许使用here
   permission:
-    enable: false  # 是否开启权限管理
-    node: points.command.here  # 权限节点
+    enable: true  # 是否开启权限管理
+    self: # here对象为玩家自己
+      enable: false  # 是否开启此项的权限管理
+      node: points.command.here
   voxelmap-support: false  # 是否开启Voxelmap支持
   xaeros-support: false  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
@@ -18,11 +20,14 @@ here:
 where:
   enable: true  # 是否允许使用where
   permission:
-    enable: false  # 是否开启权限管理
-    node: # 权限节点
-      self: points.command.where.self  # where对象为玩家自己
-      other: points.command.where.other  # where对象为其他玩家
-      player: points.command.where.%s  # where对象为指定玩家 %s 为玩家名
+    enable: true  # 是否开启权限管理
+    self: # where对象为玩家自己
+      enable: false  # 是否开启此项的权限管理
+      node: points.command.where.self
+    other: # where对象为其他玩家
+      enable: true  # 是否开启此项的权限管理
+      node-other-player: points.command.where.other  # 其他玩家
+      node-target-player: points.command.where.other.%s  # 指定玩家 %s为玩家名的占位符
   voxelmap-support: false  # 是否开启Voxelmap支持
   xaeros-support: false  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
@@ -34,10 +39,10 @@ death:
   message:
     # 当你死亡的时候会向你发送死亡地点等信息
     enable: true  # 是否启用death message子模块
-    command-permission:  # /death message 指令权限
+    command-permission: # /death message 指令权限
       enable: false  # 是否开启权限管理
       node: points.command.death.message  # 权限节点
-    listener-permission:  # 监听器权限
+    listener-permission: # 监听器权限
       enable: false  # 是否开启权限管理 开启权限管理后，依然可以使用指令，如无对应权限，死亡将不会发送消息
       node: points.listener.death.message  # 权限节点
     voxelmap-support: false  # 是否开启Voxelmap支持
@@ -48,11 +53,14 @@ death:
     # 记录死亡信息
     enable: true  # 是否启用death log子模块
     permission:
-      enable: false  # 是否开启权限管理
-      node:
-        self: points.command.death.log.self  # death log对象为玩家自己
-        other: points.command.death.log.other  # death log对象为其他玩家
-        player: points.command.death.log.%s  # death log对象为指定玩家 %s 为玩家名
+      enable: true  # 是否开启权限管理
+      self: # death log对象为玩家自己
+        enable: false  # 是否开启此项的权限管理
+        node: points.command.death.log.self
+      other: # death log对象为其他玩家
+        enable: true  # 是否开启此项的权限管理
+        node-other-player: points.command.death.log.other  # 其他玩家
+        node-target-player: points.command.death.log.other.%s  # 指定玩家 %s为玩家名的占位符
     command:
       frequency-limit:
         enable: false  # 是否限制玩家使用 death log 指令频率
@@ -64,12 +72,25 @@ death:
     xaeros-support: false  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持
 
+enderchest:
+  # 随身末影箱
+  enable: true  # 是否启用enderchest随身末影箱
+  permission:
+    enable: true  # 是否开启权限管理
+    self:  # enderchest对象为玩家自己
+      enable: false  # 是否开启此项的权限管理
+      node: points.command.enderchest.self
+    other: # enderchest对象为其他玩家
+      enable: true  # 是否开启此项的权限管理
+      node-other-player: points.command.enderchest.other  # 其他玩家
+      node-target-player: points.command.enderchest.other.%s  # 指定玩家 %s为玩家名的占位符
+
 anti-boom:
   # 防爆
   enable: true  # 是否启用anti-boom子模块
   # enable 是否启用子模块
   # world是主世界是否启用 world-nether是下界是否启用 world-the-end是末地是否启用
-  world-name:  # 世界名字，一般无需修改
+  world-name: # 世界名字，一般无需修改
     world: world
     world-nether: world_nether
     world-the-end: world_the_end

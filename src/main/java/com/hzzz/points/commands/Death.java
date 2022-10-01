@@ -11,6 +11,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 
 import static com.hzzz.points.Points.config;
+import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
 import static com.hzzz.points.utils.Utils.checkPermission;
@@ -76,8 +77,9 @@ public final class Death implements TabExecutor {
                 if (config.getBoolean("death.log.enable", false)) {  // 检查子模块是否开启
                     if (args.length == 1) {  // /death log
                         // 权限检查
-                        if (config.getBoolean("death.log.permission.enable", false)
-                                && !checkPermission(sender, config.getString("death.log.permission.node.self", "points.command.death.log.self"))) {
+                        if (specialCheckPermission("death.log",
+                                sender,
+                                "points.command.death.log.self")) {
                             sender.sendMessage(text.no_permission);
                             return true;
                         }
@@ -89,47 +91,30 @@ public final class Death implements TabExecutor {
                         }
 
                         // 使用频率检查
-                        if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-                            if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
-                                if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
-                                        < (config.getInt("death.log.command.frequency-limit.second", 1)
-                                        / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
-                                    sender.sendMessage(text.command_frequency_limit);
-                                    return true;
-                                } else {  // 更新
-                                    last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
-                                }
-                            } else {  // 初始化
-                                last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
-                            }
+                        if (checkCommandFrequencyLimit(player)) {
+                            player.sendMessage(text.command_frequency_limit);
+                            return true;
                         }
 
                         outputDeathLog(player, player);  // 查看自己的log
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
-                        if (config.getBoolean("death.log.permission.enable", false)
-                                && !checkPermission(sender, config.getString("death.log.permission.node.other", "points.command.death.log.other"))
-                                && !checkPermission(sender, String.format(config.getString("death.log.permission.node.player", "points.command.death.log.%s"), args[1]))) {
+                        if (specialCheckPermission("death.log",
+                                sender,
+                                "points.command.death.log.other",
+                                "points.command.death.log.other.%s",
+                                args[1])
+                        ) {
                             sender.sendMessage(text.no_permission);
                             return true;
                         }
 
                         // 检查执行者 是玩家就进行频率检查
                         if (sender instanceof Player player) {
-                            if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-                                if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
-                                    if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
-                                            < (config.getInt("death.log.command.frequency-limit.second", 1)
-                                            / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
-                                        sender.sendMessage(text.command_frequency_limit);
-                                        return true;
-                                    } else {  // 更新
-                                        last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
-                                    }
-                                } else {  // 初始化
-                                    last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
-                                }
+                            if (checkCommandFrequencyLimit(player)) {
+                                player.sendMessage(text.command_frequency_limit);
+                                return true;
                             }
                         }
 
@@ -145,6 +130,29 @@ public final class Death implements TabExecutor {
         return true;
     }
 
+    /**
+     * 检查指令使用频率是否超过上限
+     *
+     * @param player 使用该指令的玩家
+     * @return 超限返回true
+     */
+    private static boolean checkCommandFrequencyLimit(Player player) {
+        if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
+            if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
+                if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
+                        < (config.getInt("death.log.command.frequency-limit.second", 1)
+                        / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
+                    return true;
+                } else {  // 更新
+                    last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                }
+            } else {  // 初始化
+                last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
+            }
+        }
+        return false;
+    }
+
     @Override
     @ParametersAreNonnullByDefault
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
@@ -152,21 +160,47 @@ public final class Death implements TabExecutor {
             // 控制台不注册
             return null;
         }
-        /* death         *  message
-         * death log         *  <player_name>
+        /* death message
+         * death log <player_name>
          */
+        // 检查模块 - 检查权限
         switch (args.length) {
             case 0, 1 -> {
                 // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
-                return Arrays.asList("message", "log");
+                // 交叉检测，开启哪个模块有哪个模块的补全提示
+                if (config.getBoolean("death.message.enable", false)) {
+                    if (config.getBoolean("death.log.enable", false)) {
+                        return Arrays.asList("message", "log");
+                    } else {
+                        return Collections.singletonList("message");
+                    }
+                } else {
+                    if (config.getBoolean("death.log.enable", false)) {
+                        return Collections.singletonList("log");
+                    } else {
+                        return Collections.singletonList("");
+                    }
+                }
             }
             case 2 -> {
                 // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））
-                if (args[0].equals("message")) {
-                    // 不继续提示
+                if ("log".equals(args[0])) {
+                    if (config.getBoolean("death.log.enable", false)) {
+                        if (specialCheckPermission("death.log",
+                                sender,
+                                "points.command.death.log.other",
+                                "points.command.death.log.other.%s",
+                                args[1])) {
+                            // 没权限 不继续提示
+                            return Collections.singletonList("");
+                        }
+                        // 模块开启了 有权限或者无需权限 提示
+                        return null;  // death log Ho……提示玩家名
+                    }
+                    // 没开启模块 不继续提示
                     return Collections.singletonList("");
-                }
-                return null;  // death log Ho……提示玩家名
+                } // 第一个参数是message或者其他什么奇奇怪怪的东西 不提示
+                return Collections.singletonList("");
             }
             default -> {
                 // 前两个参数已经输入完成，不继续提示

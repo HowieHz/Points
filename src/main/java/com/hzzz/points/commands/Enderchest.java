@@ -12,57 +12,57 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
 
 /**
- * where指令的执行器以及tab补全
+ * <p>随身潜影箱</p>
+ *
+ * @author <a href="https://github.com/HowieHz/">HowieHz</a>
+ * @version 0.2.0
+ * @since 2022-10-01 09:24
  */
-public final class Where implements TabExecutor {
-    private static final Where INSTANCE = new Where();
+public final class Enderchest implements TabExecutor {
+    private static final Enderchest INSTANCE = new Enderchest();
 
     /**
      * 获取实例
      *
      * @return Instance of executor
      */
-    public static Where getInstance() {
+    public static Enderchest getInstance() {
         return INSTANCE;
     }
 
-    public Where() {
+    private Enderchest() {
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        // 检查执行者
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(text.player_only);
+            return true;
+        }
         switch (args.length) {
             case 0 -> {
-                // /where
-                // 此处sender就是player，只是一个是CommandSender类型一个强转成了Player类型
-
-                // 检查执行者
-                if (!(sender instanceof Player player)) {
-                    sender.sendMessage(text.player_only);
-                    return true;
-                }
                 // 权限检查
-                if (specialCheckPermission("where",
+                if (specialCheckPermission("enderchest",
                         sender,
-                        "points.command.where.self")) {
+                        "points.command.enderchest.self")) {
                     sender.sendMessage(text.no_permission);
                     return true;
                 }
 
-                // 生成并发送消息给执行者
-                sender.sendMessage(builderPlayerCoordinatesMessage("where", player));
+                // 开启此玩家的末影箱
+                player.openInventory(player.getEnderChest());
                 return true;
             }
             case 1 -> {
                 // 权限检查
-                if (specialCheckPermission("where",
+                if (specialCheckPermission("enderchest",
                         sender,
-                        "points.command.where.other",
-                        "points.command.where.other.%s",
+                        "points.command.enderchest.other",
+                        "points.command.enderchest.other.%s",
                         args[0])
                 ) {
                     sender.sendMessage(text.no_permission);
@@ -72,16 +72,15 @@ public final class Where implements TabExecutor {
                 Player target_player = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (target_player == null) {  // 检查是否获取到玩家
-                    sender.sendMessage(text.no_player);
+                    player.sendMessage(text.no_player);
                     return true;
                 }
 
-                // 生成并发送消息给执行者
-                sender.sendMessage(builderPlayerCoordinatesMessage("where", target_player));
+                player.openInventory(target_player.getEnderChest());  // 开启目标玩家的潜影箱
                 return true;
             }
             default -> {
-                sender.sendMessage(text.help_where);
+                sender.sendMessage(text.help_enderchest);
                 return true;
             }
         }
@@ -94,16 +93,16 @@ public final class Where implements TabExecutor {
             // 控制台不注册
             return null;
         }
-        /* where
-         * where <player_name>
+        /* enderchest
+         * enderchest <player_name>
          */
         switch (args.length) {
             case 0, 1 -> {
                 // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
-                if (specialCheckPermission("where",
+                if (specialCheckPermission("enderchest",
                         sender,
-                        "points.command.where.other",
-                        "points.command.where.other.%s",
+                        "points.command.enderchest.other",
+                        "points.command.enderchest.other.%s",
                         args[0])
                 ) {
                     return null;  // 提示玩家名

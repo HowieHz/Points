@@ -106,7 +106,7 @@ public class DeathLog {
      * @param receiver 接受者
      */
     public static void outputDeathLog(UUID uuid, CommandSender receiver) {
-        Player target_player = Bukkit.getPlayer(uuid);
+        Player target_player = Bukkit.getPlayer(uuid);  // 使用uuid获取
 
         if (target_player == null) {  // 检查是否获取到玩家
             receiver.sendMessage(text.no_player);
@@ -122,7 +122,7 @@ public class DeathLog {
      * @param receiver    接受者
      */
     public static void outputDeathLog(String player_name, CommandSender receiver) {
-        Player target_player = Bukkit.getPlayerExact(player_name);
+        Player target_player = Bukkit.getPlayerExact(player_name);  // 使用玩家名获取
 
         if (target_player == null) {  // 检查是否获取到玩家
             receiver.sendMessage(text.no_player);

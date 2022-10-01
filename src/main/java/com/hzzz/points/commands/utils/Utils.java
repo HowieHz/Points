@@ -6,8 +6,11 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import static com.hzzz.points.Points.config;
+import static com.hzzz.points.utils.Utils.checkPermission;
 
 /**
  * 指令执行器工具集
@@ -17,13 +20,12 @@ public final class Utils {
      * 生成一条消息 用于指示位置
      *
      * @param config_root     配置文件根节点
-     * @param config          配置文件实例
      * @param target_player   目标玩家对象
      * @param separator       分隔符
      * @param separator_color 分隔符颜色
      * @return 生成的消息
      */
-    public static Component builderPlayerCoordinatesMessage(String config_root, FileConfiguration config, Player target_player, String separator, NamedTextColor separator_color) {
+    public static Component builderPlayerCoordinatesMessage(String config_root, Player target_player, String separator, NamedTextColor separator_color) {
         Location player_location = target_player.getLocation();  // 获取位置
 
         // 编辑消息
@@ -33,6 +35,7 @@ public final class Utils {
                 .append(Component.text(target_player.getWorld().getName()).color(NamedTextColor.YELLOW))
                 .append(Component.text(String.format(text.coordinates_format, player_location.getX(), player_location.getY(), player_location.getZ())).color(NamedTextColor.YELLOW));
 
+        // 根据配置文件在末尾追加一些信息
         if (config.getBoolean(String.format("%s.voxelmap-support", config_root), false)) {
             component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
                     .hoverEvent(HoverEvent.showText(Component.text(text.voxelmap_support_hover)))
@@ -51,45 +54,100 @@ public final class Utils {
                             .hoverEvent(HoverEvent.showText(Component.text(String.format(text.teleport_support_hover, player_location.getX(), player_location.getY(), player_location.getZ()))))
                             .clickEvent(ClickEvent.suggestCommand(String.format(text.teleport_support_command, player_location.getX(), player_location.getY(), player_location.getZ()))));
         }
+
         return component;
     }
 
     /**
-     * 生成一条消息 用于指示位置
+     * 生成一条消息 用于指示位置<br>
+     * 白色箭头分隔符
      *
      * @param config_root   配置文件根节点
-     * @param config        配置文件实例
      * @param target_player 目标玩家对象
      * @return 生成的消息
      */
-    public static Component builderPlayerCoordinatesMessage(String config_root, FileConfiguration config, Player target_player) {
-        Location player_location = target_player.getLocation();  // 获取位置
+    public static Component builderPlayerCoordinatesMessage(String config_root, Player target_player) {
+        return builderPlayerCoordinatesMessage(config_root, target_player, " -> ", NamedTextColor.WHITE);
+    }
 
-        // 编辑消息
-        Component component = Component.text("")
-                .append(Component.text(target_player.getName()).color(NamedTextColor.YELLOW))
-                .append(Component.text(" -> ").color(NamedTextColor.WHITE))
-                .append(Component.text(target_player.getWorld().getName()).color(NamedTextColor.YELLOW))
-                .append(Component.text(String.format(text.coordinates_format, player_location.getX(), player_location.getY(), player_location.getZ())).color(NamedTextColor.YELLOW));
-
-        if (config.getBoolean(String.format("%s.voxelmap-support", config_root), false)) {
-            component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                    .hoverEvent(HoverEvent.showText(Component.text(text.voxelmap_support_hover)))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(text.voxelmap_support_command, player_location.getX(), player_location.getY(), player_location.getZ(), target_player.getWorld().getName()))));
+    /**
+     * 检查一段字符串末尾是否是指定字符串<br>如果是就格式化，不是就使用默认字符串进行格式化
+     *
+     * @param string         一段字符串
+     * @param end_string     检查结尾是否是此字符串
+     * @param default_string 默认字符串
+     * @param args           格式化参数
+     * @return 格式化完毕之后的字符串
+     */
+    public static String StringFormatEnd(String string, String end_string, String default_string, Object... args) {
+        if (string == null) {
+            return String.format(default_string, args);
         }
 
-        if (config.getBoolean(String.format("%s.xaeros-support", config_root), false)) {
-            component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                    .hoverEvent(HoverEvent.showText(Component.text(text.xaeros_support_hover)))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(text.xaeros_support_command, target_player.getName(), target_player.getName().charAt(0), player_location.getX(), player_location.getY(), player_location.getZ(), target_player.getWorld().getName()))));
+        if (string.endsWith(end_string)) {
+            return String.format(string, args);
+        } else {
+            return String.format(default_string, args);
         }
+    }
 
-        if (config.getBoolean(String.format("%s.teleport-support", config_root), false)) {
-            component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
-                    .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                            .hoverEvent(HoverEvent.showText(Component.text(String.format(text.teleport_support_hover, player_location.getX(), player_location.getY(), player_location.getZ()))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(text.teleport_support_command, player_location.getX(), player_location.getY(), player_location.getZ()))));
-        }
-        return component;
+    /**
+     * 特殊的权限检查<br>指令目标为指定玩家<br>(enable节点如读取失败默认为true)
+     *
+     * @param config_root                配置文件根节点 要求此节点下一节点为permission
+     * @param sender                     发送者(被进行权限检查的对象)
+     * @param default_other_player_node  默认权限节点(其他玩家)
+     * @param default_target_player_node 默认权限节点(指定玩家) 要求结尾为%s
+     * @param target_player_name         目标玩家(用于权限检查)
+     * @return 是否通过权限检查 (未通过为true)
+     */
+    public static boolean specialCheckPermission(String config_root,
+                                                 CommandSender sender,
+                                                 String default_other_player_node,
+                                                 String default_target_player_node,
+                                                 String target_player_name) {
+        return (// 检查是否启用了权限检查
+                config.getBoolean(String.format("%s.permission.enable", config_root), true)
+                        && config.getBoolean("%s.permission.other.enable", true))
+                // 玩家权限检查
+                && !(checkPermission(sender,
+                config.getString(String.format("%s.permission.other.node-other-player", config_root),
+                        default_other_player_node))  // 玩家权限检查 目标为其他玩家
+                || checkPermission(sender,
+                StringFormatEnd(config.getString("%s.permission.other.node-target-player"),
+                        "%s",
+                        default_target_player_node,
+                        target_player_name)));  // 玩家权限检查 目标为指定玩家
+    }
+
+    /**
+     * 特殊的权限检查<br>指令目标为自身<br>(enable节点如读取失败默认为true)
+     *
+     * @param config_root       配置文件根节点 要求此节点下一节点为permission
+     * @param sender            发送者(被进行权限检查的对象)
+     * @param default_self_node 默认权限节点(目标为自己)
+     * @return 是否通过权限检查 (未通过为true)
+     */
+    public static boolean specialCheckPermission(String config_root,
+                                                 CommandSender sender,
+                                                 String default_self_node) {
+        return config.getBoolean(String.format("%s.permission.enable", config_root), true)  // 总项权限管理
+                && config.getBoolean(String.format("%s.permission.self.enable", config_root), true)  // 子项权限管理
+                && !checkPermission(sender, config.getString(String.format("%s.permission.self.node", config_root),   // 玩家权限检查
+                default_self_node));
+    }
+
+    /**
+     * 普通的权限检查<br>(enable节点如读取失败默认为true)
+     * @param config_root 配置文件根节点 要求此节点下一节点为permission permission.node permission.enable
+     * @param sender 发送者(被进行权限检查的对象)
+     * @param default_node 默认权限节点
+     * @return 是否通过权限检查 (未通过为true)
+     */
+    public static boolean commonCheckPermission(String config_root,
+                                                 CommandSender sender,
+                                                 String default_node) {
+        return config.getBoolean(String.format("%s.permission.enable", config_root), true)  // 总项权限管理
+                && !checkPermission(sender, config.getString(String.format("%s.permission.node", config_root), default_node));
     }
 }

@@ -17,6 +17,10 @@ commands:
     description: About death
     aliases: [ de ]
     usage: "/death"
+  enderchest:
+    description: About enderchest
+    aliases: [ ec ]
+    usage: "/enderchest"
   points:
     description: plugin commands
     aliases: [ po ]
