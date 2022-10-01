@@ -168,19 +168,23 @@ public final class Death implements TabExecutor {
             case 0, 1 -> {
                 // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
                 // 交叉检测，开启哪个模块有哪个模块的补全提示
+                // 因为没有第二个参数，所以没法检测 points.command.death.log.other.玩家名 的权限
+                List<String> complete_arrays = new ArrayList<>();
                 if (config.getBoolean("death.message.enable", false)) {
-                    if (config.getBoolean("death.log.enable", false)) {
-                        return Arrays.asList("message", "log");
-                    } else {
-                        return Collections.singletonList("message");
-                    }
-                } else {
-                    if (config.getBoolean("death.log.enable", false)) {
-                        return Collections.singletonList("log");
-                    } else {
-                        return Collections.singletonList("");
+                    complete_arrays.add("message");
+                }
+                if (config.getBoolean("death.log.enable", false)) {
+                    if (specialCheckPermission("death.log",
+                            sender,
+                            "points.command.death.log.self")
+                            || specialCheckPermission("death.log",
+                            sender,
+                            "points.command.death.log.other",
+                            "other")) {
+                        complete_arrays.add("log");
                     }
                 }
+                return complete_arrays;
             }
             case 2 -> {
                 // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））

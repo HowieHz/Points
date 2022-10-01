@@ -22,8 +22,6 @@ A paper plugin, some useful points
 3. 开箱即用 -> 默认配置文件: 作用于自身的指令无需权限，作用于他人的权限和reload指令需要权限
 4. tab补全根据 模块是否开启 和 是否有权限 可自动隐藏
 
-    (/death log Howie_HzGo 中 death是根指令，log是子模块，Howie_HzGo是第二个参数
-    根指令和子模块的补全提示看是否开启了对应模块，第二个参数的补全提示看是否有权限)
 ## 功能介绍
 
 ### 防爆 anti-boom

@@ -93,11 +93,16 @@ public final class Utils {
 
     /**
      * 特殊的权限检查<br>指令目标为指定玩家<br>(enable节点如读取失败默认为true)
+     * 特殊的权限检查<br>
+     * 检查 config_root.permission.other.enable <br>
+     * 读取配置文件 config_root.permission.other.node-other-player 作为权限节点<br>
+     * 读取配置文件 config_root.permission.other.node-target-player 作为权限节点<br>
+     * (enable节点如读取失败默认为true)
      *
      * @param config_root                配置文件根节点 要求此节点下一节点为permission
      * @param sender                     发送者(被进行权限检查的对象)
-     * @param default_other_player_node  默认权限节点(其他玩家)
-     * @param default_target_player_node 默认权限节点(指定玩家) 要求结尾为%s
+     * @param default_other_player_node  默认权限节点(其他玩家)(文件读取失败的使用值)
+     * @param default_target_player_node 默认权限节点(指定玩家)(要求结尾为%s)(文件读取失败的使用值)
      * @param target_player_name         目标玩家(用于权限检查)
      * @return 是否通过权限检查 (通过为true)
      */
@@ -115,11 +120,35 @@ public final class Utils {
     }
 
     /**
-     * 特殊的权限检查<br>指令目标为自身<br>(enable节点如读取失败默认为true)
+     * 特殊的权限检查<br>
+     * 检查config_root.permission.config_middle_node.enable<br>
+     * 读取配置文件 config_root.permission.config_middle_node.node 作为权限节点<br>
+     * (enable节点如读取失败默认为true)
+     *
+     * @param config_root             配置文件根节点 要求此节点下一节点为permission
+     * @param sender                  发送者(被进行权限检查的对象)
+     * @param default_permission_node 默认权限节点(文件读取失败的使用值)
+     * @param config_middle_node      配置文件中间节点
+     * @return 是否通过权限检查 (通过为true)
+     */
+    public static boolean specialCheckPermission(String config_root,
+                                                 CommandSender sender,
+                                                 String default_permission_node,
+                                                 String config_middle_node) {
+        return !(config.getBoolean(String.format("%s.permission.%s.enable", config_root, config_middle_node), true)  // 子项权限管理
+                && !checkPermission(sender, config.getString(String.format("%s.permission.%s.node", config_root, config_middle_node),   // 玩家权限检查
+                default_permission_node)));
+    }
+
+    /**
+     * 特殊的权限检查<br>
+     * 检查 config_root.permission.self.enable<br>
+     * 读取配置文件 config_root.permission.self.node 作为权限节点<br>
+     * (enable节点如读取失败默认为true)
      *
      * @param config_root       配置文件根节点 要求此节点下一节点为permission
      * @param sender            发送者(被进行权限检查的对象)
-     * @param default_self_node 默认权限节点(目标为自己)
+     * @param default_self_node 默认权限节点(目标为自己)(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
     public static boolean specialCheckPermission(String config_root,
@@ -131,11 +160,14 @@ public final class Utils {
     }
 
     /**
-     * 普通的权限检查<br>(enable节点如读取失败默认为true)
+     * 普通的权限检查<br>
+     * 检查 config_root.permission.enable<br>
+     * 读取配置文件 config_root.permission.node 作为权限节点<br>
+     * (enable节点如读取失败默认为true)
      *
      * @param config_root  配置文件根节点 要求此节点下一节点为permission permission.node permission.enable
      * @param sender       发送者(被进行权限检查的对象)
-     * @param default_node 默认权限节点
+     * @param default_node 默认权限节点(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
     public static boolean commonCheckPermission(String config_root,
