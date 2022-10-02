@@ -94,6 +94,9 @@ A paper plugin, some useful points
     /points help
     获取帮助
 
+## 构建
+使用了 gradle 的com.github.johnrengelman.shadow 7.1.2 插件进行构建jar
+
 ## 更新计划
 
 1.  添加床和重生锚有爆炸伤害但不破坏地形的选项
