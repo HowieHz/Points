@@ -75,15 +75,15 @@ public final class Points extends JavaPlugin {
         INSTANCE = this;
 
         logger.info(plugin_starting);  // 插件正在启动
+        
+        // 读取配置
+        config = getConfig();
 
         // 开启bstats
         if (config.getBoolean("bStats.enable", true)) {  // 默认开启
             int pluginId = 16544;
             Metrics metrics = new Metrics(this, pluginId);
         }
-
-        // 读取配置
-        config = getConfig();
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
