@@ -7,6 +7,7 @@ import com.hzzz.points.data_structure.CommandInfo;
 import com.hzzz.points.interfaces.NamedListener;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -74,6 +75,12 @@ public final class Points extends JavaPlugin {
         INSTANCE = this;
 
         logger.info(plugin_starting);  // 插件正在启动
+
+        // 开启bstats
+        if (config.getBoolean("bStats.enable", true)) {  // 默认开启
+            int pluginId = 16544;
+            Metrics metrics = new Metrics(this, pluginId);
+        }
 
         // 读取配置
         config = getConfig();
