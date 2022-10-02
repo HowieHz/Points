@@ -75,7 +75,7 @@ public final class Points extends JavaPlugin {
         INSTANCE = this;
 
         logger.info(plugin_starting);  // 插件正在启动
-        
+
         // 读取配置
         config = getConfig();
 
