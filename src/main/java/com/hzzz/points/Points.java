@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.hzzz.points.text.Text.*;
-import static com.hzzz.points.utils.Utils.logDetailedInfo;
+import static com.hzzz.points.utils.Utils.*;
 
 /**
  * <p>插件主类</p>
@@ -62,18 +62,18 @@ public final class Points extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        logger.info(plugin_loading);  // 插件正在加载
+        logInfo(plugin_loading);  // 插件正在加载
 
         saveDefaultConfig();  // 如果配置文件不存在, 保存默认的配置
 
-        logger.info(plugin_loaded);  // 插件已加载
+        logInfo(plugin_loaded);  // 插件已加载
     }
 
     @Override
     public void onEnable() {
         INSTANCE = this;
 
-        logger.info(plugin_starting);  // 插件正在启动
+        logInfo(plugin_starting);  // 插件正在启动
 
         // 读取配置
         config = getConfig();
@@ -81,7 +81,7 @@ public final class Points extends JavaPlugin {
         // 开启bstats
         if (config.getBoolean("bStats.enable", true)) {  // 默认开启
             int pluginId = 16544;
-            Metrics metrics = new Metrics(this, pluginId);
+            new Metrics(this, pluginId);
         }
 
         // 初始化数据库存放的文件夹
@@ -89,9 +89,9 @@ public final class Points extends JavaPlugin {
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {
             if (file.mkdirs()) {
-                logger.info(create_database_folder_successfully);
+                logDetailedInfo(create_database_folder_successfully);
             } else {
-                logger.info(fail_to_create_database_folder);
+                logError(fail_to_create_database_folder);
             }
         }
 
@@ -121,13 +121,13 @@ public final class Points extends JavaPlugin {
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
             if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
-                logger.info(String.format(sqlite_ready, "config.sqlite, death_log.sqlite"));
+                logDetailedInfo(String.format(sqlite_ready, "config.sqlite, death_log.sqlite"));
 
                 // 数据库成功启动才启动death模块
                 // 注册监听
                 registerEvents(DeathListener.getInstance());
             } else {
-                logger.info(String.format(sqlite_not_ready, "config.sqlite, death_log.sqlite"));
+                logError(String.format(sqlite_not_ready, "config.sqlite, death_log.sqlite"));
             }
         }
 
@@ -137,18 +137,18 @@ public final class Points extends JavaPlugin {
             registerEvents(AntiBoomListener.getInstance());
         }
 
-        logger.info(plugin_started);  // 插件已启动
+        logInfo(plugin_started);  // 插件已启动
     }
 
     @Override
     public void onDisable() {
-        logger.info(plugin_disabling);  // 插件正在关闭
+        logInfo(plugin_disabling);  // 插件正在关闭
 
         Bukkit.getScheduler().cancelTasks(this);  // 关闭插件时, 确保取消我调度的所有任务
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
 
-        logger.info(plugin_disabled);  // 插件已关闭
+        logInfo(plugin_disabled);  // 插件已关闭
     }
 
     /**
