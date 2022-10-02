@@ -30,7 +30,6 @@ import static com.hzzz.points.utils.Utils.logDetailedInfo;
  * <p>插件主类</p>
  *
  * @author <a href="https://github.com/HowieHz/">HowieHz</a>
- * @version 0.2.0
  * @since 2022-09-12 12:31
  */
 public final class Points extends JavaPlugin {
