@@ -2,6 +2,7 @@ package com.hzzz.points.text;
 
 import com.hzzz.points.Points;
 
+import static com.hzzz.points.utils.Utils.logError;
 import static org.bukkit.ChatColor.*;
 
 /**
@@ -66,12 +67,18 @@ public final class Text {
      * @return 读取出的文字
      */
     private static String getLang(String path, String default_text) {
-//        if (default_text.equals(Points.getInstance().getLangConfig().getString(path))) {
-//            return Points.getInstance().getLangConfig().getString(path, default_text);
-//        } else {
-//            return "???";
-//        }
-        return Points.getInstance().getLangConfig().getString(path, default_text);
+        if (Points.getInstance().getConfig().getBoolean("debug.enable", false)) {  // debug模式
+            if (default_text.equals(Points.getInstance().getLangConfig().getString(path))) {
+                return Points.getInstance().getLangConfig().getString(path, default_text);
+            } else {
+                logError(String.format("读取%s发生错误", path));
+                logError(String.format("默认为%s", default_text));
+                logError(String.format("读取为%s", Points.getInstance().getLangConfig().getString(path)));
+                return Points.getInstance().getLangConfig().getString(path);
+            }
+        } else {
+            return Points.getInstance().getLangConfig().getString(path, default_text);
+        }
     }
 
     /**

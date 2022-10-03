@@ -1,7 +1,7 @@
 version: 2
 
-log:
-  more-information: false  # 详细信息
+language:
+  file_name: zh_cn # 语言文件名 **.yml 语言文件存储于lang文件夹下面
 
 bStats:
   enable: true  # 开启bStats
@@ -150,3 +150,9 @@ points:
     permission:
       enable: true  # 是否开启权限管理
       node: points.reload  # 权限节点
+
+debug:  # debug模式
+  enable: false
+
+log:  # 详细信息
+  more-information: false

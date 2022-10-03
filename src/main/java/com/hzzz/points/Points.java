@@ -69,17 +69,14 @@ public final class Points extends JavaPlugin {
     public void onLoad() {
         INSTANCE = this;
 
-        // 加载语言文件
-        // lang/zh_cn.yml
-        saveLangConfig();
-        // 读取配置，加载文字
-        loadText();
-
-        logInfo(plugin_loading);  // 插件正在加载
-
         // 如果配置文件不存在, 保存默认的配置
         // config.yml
         saveDefaultConfig();
+
+        // 读取并加载语言文件 要在加载配置文件之后，因为要读取配置文件中language.file_name项
+        saveLangConfig();
+
+        logInfo(plugin_loading);  // 插件正在加载
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
@@ -108,8 +105,7 @@ public final class Points extends JavaPlugin {
     public void onEnable() {
         logInfo(plugin_starting);  // 插件正在启动
 
-        // 读取配置
-        // Points.config
+        // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
 
         // 注册指令
@@ -174,7 +170,7 @@ public final class Points extends JavaPlugin {
      *
      * @param listener_instance 需要注册的监听器的实例
      */
-    public void registerEvents(NamedListener listener_instance) {
+    private void registerEvents(NamedListener listener_instance) {
         event_handlers.add(listener_instance);
         Bukkit.getPluginManager().registerEvents(listener_instance, this);
         logDetailedInfo(String.format(register_listeners, listener_instance.getName()));  // 详细log
@@ -187,7 +183,7 @@ public final class Points extends JavaPlugin {
      * @param command           根指令
      * @param executor_instance 执行器实例
      */
-    public void setExecutor(String command, CommandExecutor executor_instance) {
+    private void setExecutor(String command, CommandExecutor executor_instance) {
         commands.add(command);
         Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor_instance);
         logDetailedInfo(String.format(set_executor, command));  // 详细log
@@ -196,7 +192,7 @@ public final class Points extends JavaPlugin {
     /**
      * 注销{@link #registerEvents}注册的监听器
      */
-    public void disableEventHandler() {
+    private void disableEventHandler() {
         for (NamedListener listener : event_handlers) {
             HandlerList.unregisterAll(listener);
             logDetailedInfo(String.format(already_disable_listeners, listener.getName()));  // 详细log
@@ -208,7 +204,7 @@ public final class Points extends JavaPlugin {
     /**
      * 注销{@link #setExecutor}注册的指令执行器
      */
-    public void disableExecutor() {
+    private void disableExecutor() {
         for (String command : commands) {
             Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(null);
             logDetailedInfo(String.format(already_disable_executor, command));  // 详细log
@@ -225,6 +221,7 @@ public final class Points extends JavaPlugin {
 
         // reload一遍配置文件，用于重载 这个和onDisable谁先都一样
         reloadConfig();
+        // 读取配置，加载文字
         reloadLangConfig();
 
         logDetailedInfo(config_reloaded);  // 详细log
@@ -252,12 +249,17 @@ public final class Points extends JavaPlugin {
             saveResource("lang/zh_cn.yml", false);
         }
 
-        // 读取配置文件
+        // 读取配置文件, 加载文字
         reloadLangConfig();
     }
 
-    public void reloadLangConfig() {
+    /**
+     * 重新读取语言配置文件，加载文字
+     */
+    private void reloadLangConfig() {
         // 读取配置文件
         langConfig = YamlConfiguration.loadConfiguration(langConfigFile);
+        // 加载文字
+        loadText();
     }
 }
