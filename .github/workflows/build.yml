@@ -34,6 +34,13 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
+      - name: Cache .gradle/wrapper
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle-wrapper-
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -45,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ 8, 11, 13 ]
+        java: [ 8, 11, 13, 17 ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
@@ -67,10 +74,10 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-wrapper-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew clean build -s
+#      - name: Build with Gradle
+#        run: ./gradlew clean build -s
 
-      - name: Build with gradle
+      - name: Build with Gradle shadowJar
         run: ./gradlew build shadowJar --info
 
       - name: Upload Paper Build Target
