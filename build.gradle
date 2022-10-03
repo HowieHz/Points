@@ -41,7 +41,7 @@ dependencies {
 //    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
 }
 
-def targetJavaVersion = 8
+def targetJavaVersion = 17  // 因为paper api是1.19 所以这里需要17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
