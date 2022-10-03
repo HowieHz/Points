@@ -57,6 +57,14 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectKey", "HowieHz_Points"
+        property "sonar.organization", "howiehz"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
 processResources {
     def props = [version: version]
     inputs.properties props
