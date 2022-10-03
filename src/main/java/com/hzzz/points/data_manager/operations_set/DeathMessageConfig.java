@@ -16,6 +16,13 @@ public class DeathMessageConfig {
     private static final PreparedStatement ps_update_death_config = ConfigSQLite.getInstance().ps_update_death_config;
 
     /**
+     * 工具类禁止实例化
+     */
+    private DeathMessageConfig() {
+        throw new IllegalStateException("工具类");
+    }
+
+    /**
      * 检查是否开启了死亡提示
      *
      * @param player 目标玩家对象
@@ -45,7 +52,7 @@ public class DeathMessageConfig {
      * @param player 目标玩家对象
      * @return 翻转后的开启状态，如true则为开启
      */
-    public static boolean updateDeathMessageConfig(Player player) throws SQLException{
+    public static boolean updateDeathMessageConfig(Player player) throws SQLException {
         // 读取并翻转数据
         if (isEnableDeathMessage(player)) {
             ps_update_death_config.setInt(1, 0);

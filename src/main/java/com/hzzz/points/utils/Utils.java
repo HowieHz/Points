@@ -8,6 +8,13 @@ import org.bukkit.command.CommandSender;
  */
 public class Utils {
     /**
+     * 工具类禁止实例化
+     */
+    private Utils() {
+        throw new IllegalStateException("工具类");
+    }
+
+    /**
      * 检查是否对象有权限(支持*通配符)
      *
      * @param sender          被检查权限的对象

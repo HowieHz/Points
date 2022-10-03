@@ -18,6 +18,13 @@ import static com.hzzz.points.utils.Utils.checkPermission;
  */
 public final class Utils {
     /**
+     * 工具类禁止实例化
+     */
+    private Utils() {
+        throw new IllegalStateException("工具类");
+    }
+
+    /**
      * 生成一条消息 用于指示位置
      *
      * @param config_root     配置文件根节点

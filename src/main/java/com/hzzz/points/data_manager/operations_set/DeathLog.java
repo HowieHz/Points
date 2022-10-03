@@ -30,6 +30,13 @@ public class DeathLog {
     private static final PreparedStatement ps_select_death_log = DeathLogSQLite.getInstance().ps_select_death_log;
 
     /**
+     * 工具类禁止实例化
+     */
+    private DeathLog() {
+        throw new IllegalStateException("工具类");
+    }
+
+    /**
      * 增加死亡记录的操作
      *
      * @param target_player 目标玩家对象
