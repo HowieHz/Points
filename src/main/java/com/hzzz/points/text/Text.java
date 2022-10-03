@@ -116,8 +116,8 @@ public final class Text {  // TODO 重构这个类 可以是map
         config_reloaded = getLang("message.reloaded.config", "配置已重新加载");
         insert_death_record_fail = getLang("commands.death.log.insert_death_record_fail", "记录玩家 §e%s§f 的死亡信息时失败");
         no_death_record = getLang("commands.death.log.no_death_record", "玩家 §e%s§f 没有已保存的死亡记录");
-        read_death_record = getLang("commands.death.log.read_death_record", "-------已读取 §e%d§f 条死亡记录-------");
-        division_line = getLang("division_line", "-------------------------------");
+        read_death_record = getLang("commands.death.log.read_death_record", "§6========§f已读取 §e%d §f条死亡记录§6========");
+        division_line = getLang("division_line", "§6================================");
         enter_bed_canceled = getLang("message.canceled.enter_bed", "你尝试进入梦乡，但是被未知力量阻止了");
         use_respawn_anchor_canceled = getLang("message.canceled.use_respawn_anchor", "你尝试使用重生锚，但是被未知力量阻止了");
         command_frequency_limit = getLang("commands.global.frequency_limit", "你使用的太快了！ 请稍后再试");
@@ -126,24 +126,22 @@ public final class Text {  // TODO 重构这个类 可以是map
         database_setup_error = getLang("message.database.setup_error", "数据库初始化发生错误");
         database_driver_error = getLang("message.database.driver_error", "数据库驱动加载发生错误");
         help_points = getLang("commands.points.help", """
-
-                -------------------------------------------------
-                /points : 显示此消息
-                /points reload : 重载插件
-                /points help : 显示此消息
-                /here : 广播自己的坐标并且获得高亮
-                /where : 获取自己的坐标
-                /where <player_name> : 获取他人的坐标
-                /death : 死亡模块相关的指令帮助
-                -------------------------------------------------
+                §6================================
+                §e/points §f: 显示此消息
+                §e/points reload §f: 重载插件
+                §e/points help §f: 显示此消息
+                §e/here §f: 广播自己的坐标并且获得高亮
+                §e/where §f: 获取自己的坐标
+                §e/where <player_name> §f: 获取他人的坐标
+                §e/death §f: 死亡模块相关的指令帮助
+                §6================================
                 """);
         help_death = getLang("commands.death.help", """
-
-                -------------------------------------------------
-                /death : 显示此消息
-                /death message : 切换是否在死亡的时候发送死亡坐标
-                /death log : 获取死亡日志
-                -------------------------------------------------
+                §6================================
+                §e/death §f: 显示此消息
+                §e/death message §f: 切换是否在死亡的时候发送死亡坐标
+                §e/death log §f: 获取死亡日志
+                §6================================
                 """);
         help_where = getLang("commands.where.help", "使用方法: /where 玩家名 或 /where");
         help_enderchest = getLang("commands.enderchest.help", "使用方法: /enderchest 玩家名 或 /enderchest");
