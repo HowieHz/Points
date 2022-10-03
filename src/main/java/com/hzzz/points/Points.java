@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import static com.hzzz.points.text.Text.*;
 import static com.hzzz.points.utils.Utils.*;
@@ -50,16 +49,6 @@ public final class Points extends JavaPlugin {
      */
     public static Points getInstance() {
         return INSTANCE;
-    }
-
-    /**
-     * 获取在线玩家名称列表<br>
-     * 开销爆炸 小心使用
-     *
-     * @return 在线玩家名称列表
-     */
-    public static List<String> getOnlinePlayersName() {
-        return getInstance().online_players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
     /**
