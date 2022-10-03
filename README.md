@@ -117,6 +117,10 @@ A paper plugin, some useful points
 
 使用了 gradle 的com.github.johnrengelman.shadow 7.1.2 插件进行构建jar
 
+## 代码质量
+
+Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_Points), [codacy.com](https://app.codacy.com/gh/HowieHz/Points/dashboard), [deepsource.io](https://deepsource.io/gh/HowieHz/Points) 监控代码质量
+
 ## 更新计划
 
 1. 添加床和重生锚有爆炸伤害但不破坏地形的选项

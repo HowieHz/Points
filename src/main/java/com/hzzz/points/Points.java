@@ -41,7 +41,7 @@ public final class Points extends JavaPlugin {
 
     private final List<NamedListener> event_handlers = new ArrayList<>();  // 已注册的监听器
     private final Collection<? extends Player> online_players = getServer().getOnlinePlayers();  // 在线玩家列表
-    public static final Logger logger = Logger.getLogger("Points");  // Points.logger
+    public static final Logger pluginLogger = Logger.getLogger("Points");  // Points.pluginLogger
 
     /**
      * 获取插件实例

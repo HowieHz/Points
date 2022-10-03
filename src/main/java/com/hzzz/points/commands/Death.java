@@ -13,9 +13,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.sql.SQLException;
 import java.util.*;
 
-import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
-import static com.hzzz.points.data_manager.operations_set.DeathLog.outputDeathLog;
-import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
+import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.data_manager.operations_utils.DeathLog.outputDeathLog;
+import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.updateDeathMessageConfig;
 import static com.hzzz.points.utils.Utils.*;
 
 /**

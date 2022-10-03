@@ -1,4 +1,4 @@
-package com.hzzz.points.data_manager.operations_set;
+package com.hzzz.points.data_manager.operations_utils;
 
 import com.hzzz.points.Points;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;

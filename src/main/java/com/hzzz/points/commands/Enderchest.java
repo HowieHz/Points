@@ -12,7 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
+import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
 
 /**
  * <p>随身潜影箱</p>

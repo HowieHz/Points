@@ -1,4 +1,4 @@
-package com.hzzz.points.commands.utils;
+package com.hzzz.points.commands.commands_utils;
 
 import com.hzzz.points.Points;
 import com.hzzz.points.text.Text;

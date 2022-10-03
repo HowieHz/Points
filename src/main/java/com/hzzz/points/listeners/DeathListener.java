@@ -11,10 +11,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.sql.SQLException;
 
-import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
+import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.isEnableDeathMessage;
-import static com.hzzz.points.data_manager.operations_set.DeathLog.insertDeathLog;
+import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.isEnableDeathMessage;
+import static com.hzzz.points.data_manager.operations_utils.DeathLog.insertDeathLog;
 
 /**
  * 玩家死亡事件监听器

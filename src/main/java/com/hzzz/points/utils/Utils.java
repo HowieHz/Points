@@ -36,7 +36,7 @@ public class Utils {
      * @param message 消息内容
      */
     public static void logInfo(String message) {
-        Points.logger.info(message);
+        Points.pluginLogger.info(message);
     }
 
     /**
@@ -45,7 +45,7 @@ public class Utils {
      * @param message 消息内容
      */
     public static void logError(String message) {
-        Points.logger.severe(message);
+        Points.pluginLogger.severe(message);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Utils {
      */
     public static void logDetailedInfo(String message) {
         if (Points.getInstance().getConfig().getBoolean("log.more-information", false)) {
-            Points.logger.info(message);
+            Points.pluginLogger.info(message);
         }
     }
 }
