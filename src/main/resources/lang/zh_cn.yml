@@ -1,0 +1,88 @@
+division_line: "-------------------------------"
+message:
+  executor:
+    set: "已注册 §e%s§f 指令"
+    already_disable: "已注销 §e%s§f 指令"
+    all_disabled: "已注销全部指令"
+  listeners:
+    register: "已注册 §e%s§f 监听器"
+    already_disable: "已注销 §e%s§f 监听器"
+    all_disabled: "已注销全部监听器"
+  reloaded:
+    config: "配置已重新加载"
+  finished: "已执行"
+  reload_ready: "插件已完成重载！"
+  plugin:
+    starting: "<Points>插件正在启动"
+    loading: "<Points>插件正在加载"
+    disabling: "<Points>插件正在关闭"
+    started: "<Points>插件已启动"
+    loaded: "<Points>插件已加载"
+    disabled: "<Points>插件已关闭"
+  database:
+    error: "数据库发生错误"
+    setup_error: "数据库初始化发生错误"
+    driver_error: "数据库驱动加载发生错误"
+    create_folder_successfully: "用于存放数据库的文件夹已初始化"
+    create_folder_failed: "用于存放数据库的文件夹创建失败"
+    wrong_database_type: "配置文件数据库类型错误，已启动默认数据库sqlite"
+    sqlite:
+      ready: "sqlite数据库 §e%s§f 已连接"
+      not_ready: "你sqlite数据库 §e%s§f 炸了，对应的子模块将不会开启"
+  no:
+    player: "该玩家不在线"
+    permission: "你没有使用该指令的权限"
+  canceled:
+    enter_bed: "你尝试进入梦乡，但是被未知力量阻止了"
+    use_respawn_anchor: "你尝试使用重生锚，但是被未知力量阻止了"
+commands:
+  global:
+    frequency_limit: "你使用的太快了！ 请稍后再试"
+    player_only: "此指令仅允许玩家使用"
+    disable_module: "此模块被关闭"
+    # here, where, death.log, death.message
+    coordinates_format: " [ %.0f, %.0f, %.0f ] "
+    voxelmap_support:
+      hover: "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点"
+      command: "/newWaypoint x:%.0f, y:%.0f, z:%.0f, dim:%s"
+    xaeros_support:
+      hover: "§6Xaeros Minimap§r: 点击添加路径点"
+      command: "xaero-waypoint:%s's Location:%s:%.0f:%.0f:%.0f:6:false:0:Internal_minecraft:%s_waypoints"
+    teleport_support:
+      hover: "§c点击以传送到 §e[%.0f, %.0f, %.0f]"
+      command: "/tp %f %f %f"
+  death:
+    help: """
+
+            -------------------------------------------------
+            /death : 显示此消息
+            /death message : 切换是否在死亡的时候发送死亡坐标
+            /death log : 获取死亡日志
+            -------------------------------------------------
+            """
+    message:
+      enable: "已开启死亡信息提示"
+      disable: "已关闭死亡信息提示"
+    log:
+      insert_death_record_fail: "记录玩家 §e%s§f 的死亡信息时失败"
+      no_death_record: "玩家 §e%s§f 没有已保存的死亡记录"
+      read_death_record: "-------已读取 §e%d§f 条死亡记录-------"
+      # 此消息为服务器日志
+      read_death_log_result: "%s 在数据库中记录 %d 条, 限制为 %d 条"
+  where:
+    help: "使用方法: /where 玩家名 或 /where"
+  enderchest:
+    help: "使用方法: /enderchest 玩家名 或 /enderchest"
+  points:
+    help: """
+
+            -------------------------------------------------
+            /points : 显示此消息
+            /points reload : 重载插件
+            /points help : 显示此消息
+            /here : 广播自己的坐标并且获得高亮
+            /where : 获取自己的坐标
+            /where <player_name> : 获取他人的坐标
+            /death : 死亡模块相关的指令帮助
+            -------------------------------------------------
+            """

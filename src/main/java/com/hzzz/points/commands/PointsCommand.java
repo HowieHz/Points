@@ -59,10 +59,10 @@ public final class PointsCommand implements TabExecutor {
             }
 
             // args[0].equals("help")
-            sender.sendMessage(Text.help);
+            sender.sendMessage(Text.help_points);
             return true;
         } else {
-            sender.sendMessage(Text.help);
+            sender.sendMessage(Text.help_points);
         }
         return true;
     }

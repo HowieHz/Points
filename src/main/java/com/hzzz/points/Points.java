@@ -82,7 +82,7 @@ public final class Points extends JavaPlugin {
             if (file.mkdirs()) {
                 logDetailedInfo(create_database_folder_successfully);
             } else {
-                logError(fail_to_create_database_folder);
+                logError(create_database_folder_failed);
             }
         }
 
@@ -173,7 +173,7 @@ public final class Points extends JavaPlugin {
     public void registerEvents(NamedListener listener_instance) {
         event_handlers.add(listener_instance);
         Bukkit.getPluginManager().registerEvents(listener_instance, this);
-        logDetailedInfo(String.format(register_event, listener_instance.getName()));  // 详细log
+        logDetailedInfo(String.format(register_listeners, listener_instance.getName()));  // 详细log
     }
 
     /**
@@ -195,10 +195,10 @@ public final class Points extends JavaPlugin {
     public void disableEventHandler() {
         for (NamedListener listener : event_handlers) {
             HandlerList.unregisterAll(listener);
-            logDetailedInfo(String.format(already_disable_event, listener.getName()));  // 详细log
+            logDetailedInfo(String.format(already_disable_listeners, listener.getName()));  // 详细log
         }
         event_handlers.clear();
-        logDetailedInfo(all_event_disabled);  // 详细log
+        logDetailedInfo(all_listeners_disabled);  // 详细log
     }
 
     /**
