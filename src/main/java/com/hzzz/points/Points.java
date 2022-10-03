@@ -10,7 +10,6 @@ import com.hzzz.points.listeners.DeathListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,7 +17,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -106,7 +104,7 @@ public final class Points extends JavaPlugin {
 
         logInfo(plugin_starting);  // 插件正在启动
 
-        // 读取配置 必须要在这边写上这么一行不然reload没用
+        // 读取配置
         // Points.config
         FileConfiguration config = getConfig();
 
@@ -224,6 +222,7 @@ public final class Points extends JavaPlugin {
         // reload一遍配置文件，用于重载 这个和onDisable谁先都一样
         reloadConfig();
         reloadLangConfig();
+
         logDetailedInfo(config_reloaded);  // 详细log
 
         onEnable();
@@ -254,16 +253,8 @@ public final class Points extends JavaPlugin {
         }
     }
 
-    public void reloadLangConfig(){
-//        YamlConfiguration.loadConfiguration(langConfigFile);
+    public void reloadLangConfig() {
         // 读取配置文件
-        this.langConfig = new YamlConfiguration();
-        try {
-            this.langConfig.load(langConfigFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-            // 关闭插件
-            getServer().getPluginManager().disablePlugin(this);
-        }
+        langConfig = YamlConfiguration.loadConfiguration(langConfigFile);
     }
 }

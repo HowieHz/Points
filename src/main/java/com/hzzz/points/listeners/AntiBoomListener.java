@@ -1,9 +1,11 @@
 package com.hzzz.points.listeners;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.data_structure.AntiBoomInfo;
 import com.hzzz.points.interfaces.NamedListener;
 import com.hzzz.points.text.Text;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +16,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Objects;
 
-import static com.hzzz.points.Points.config;
 import static org.bukkit.Material.*;
 
 /**
@@ -93,6 +94,7 @@ public class AntiBoomListener implements NamedListener {
      */
     @EventHandler
     public void onBoom(EntityExplodeEvent e) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         for (AntiBoomInfo info : anti_boom_info) {  // 遍历
@@ -119,6 +121,7 @@ public class AntiBoomListener implements NamedListener {
      */
     @EventHandler
     public void onWitherDestroyBlocks(EntityChangeBlockEvent e) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         String world_name = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         if ((e.getEntity().getType().equals(EntityType.WITHER)  // 检查类型
@@ -140,6 +143,7 @@ public class AntiBoomListener implements NamedListener {
      */
     @EventHandler
     public void onBad(PlayerInteractEvent e) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
         if (config.getBoolean("anti-boom.bed.enable", false)  // anti-boom.bed.enable
@@ -168,6 +172,7 @@ public class AntiBoomListener implements NamedListener {
      */
     @EventHandler
     public void onRespawnAnchor(PlayerInteractEvent e) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         Player player = e.getPlayer();
         String world_name = player.getWorld().getName();
 

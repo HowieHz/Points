@@ -1,5 +1,6 @@
 package com.hzzz.points.commands.utils;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.text.Text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -7,9 +8,9 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import static com.hzzz.points.Points.config;
 import static com.hzzz.points.utils.Utils.checkPermission;
 
 /**
@@ -27,6 +28,7 @@ public final class Utils {
      */
     public static Component builderPlayerCoordinatesMessage(String config_root, Player target_player, String separator, NamedTextColor separator_color) {
         Location player_location = target_player.getLocation();  // 获取位置
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
 
         // 编辑消息
         Component component = Component.text("")
@@ -111,6 +113,7 @@ public final class Utils {
                                                  String default_other_player_node,
                                                  String default_target_player_node,
                                                  String target_player_name) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         return !((// 检查是否启用了权限检查
                 config.getBoolean(String.format("%s.permission.other.enable", config_root), true))
                 && !(checkPermission(sender, config.getString(String.format("%s.permission.other.node-other-player", config_root), default_other_player_node))  // 玩家权限检查 目标为其他玩家
@@ -135,6 +138,7 @@ public final class Utils {
                                                  CommandSender sender,
                                                  String default_permission_node,
                                                  String config_middle_node) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         return !(config.getBoolean(String.format("%s.permission.%s.enable", config_root, config_middle_node), true)  // 子项权限管理
                 && !checkPermission(sender, config.getString(String.format("%s.permission.%s.node", config_root, config_middle_node),   // 玩家权限检查
                 default_permission_node)));
@@ -154,6 +158,7 @@ public final class Utils {
     public static boolean specialCheckPermission(String config_root,
                                                  CommandSender sender,
                                                  String default_self_node) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         return !(config.getBoolean(String.format("%s.permission.self.enable", config_root), true)  // 子项权限管理
                 && !checkPermission(sender, config.getString(String.format("%s.permission.self.node", config_root),   // 玩家权限检查
                 default_self_node)));
@@ -173,6 +178,7 @@ public final class Utils {
     public static boolean commonCheckPermission(String config_root,
                                                 CommandSender sender,
                                                 String default_node) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         return !(config.getBoolean(String.format("%s.permission.enable", config_root), true)  // 总项权限管理
                 && !checkPermission(sender, config.getString(String.format("%s.permission.node", config_root), default_node)));
     }

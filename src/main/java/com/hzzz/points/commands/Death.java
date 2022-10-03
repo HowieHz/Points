@@ -1,9 +1,11 @@
 package com.hzzz.points.commands;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.text.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +13,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.sql.SQLException;
 import java.util.*;
 
-import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.updateDeathMessageConfig;
@@ -42,6 +43,7 @@ public final class Death implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (args.length == 0) {
             // /death
             sender.sendMessage(Text.help_death);
@@ -147,6 +149,7 @@ public final class Death implements TabExecutor {
      * @return 超限返回true
      */
     private static boolean checkCommandFrequencyLimit(Player player) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
             if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
                 if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
@@ -166,6 +169,7 @@ public final class Death implements TabExecutor {
     @Override
     @ParametersAreNonnullByDefault
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (!(sender instanceof Player)) {
             // 控制台不注册
             return null;

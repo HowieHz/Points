@@ -1,11 +1,13 @@
 package com.hzzz.points.commands;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.text.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -15,7 +17,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.Points.config;
 import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.commands.utils.Utils.specialCheckPermission;
 
@@ -42,6 +43,8 @@ public final class Here implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+
         // 检查执行者
         if (!(sender instanceof Player player)) {
             sender.sendMessage(Text.player_only);

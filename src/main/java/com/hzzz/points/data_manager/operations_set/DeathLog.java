@@ -1,5 +1,6 @@
 package com.hzzz.points.data_manager.operations_set;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -8,6 +9,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -16,7 +18,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-import static com.hzzz.points.Points.config;
 import static com.hzzz.points.text.Text.*;
 import static com.hzzz.points.utils.Utils.*;
 
@@ -35,6 +36,7 @@ public class DeathLog {
      * @param death_reason  死亡原因
      */
     public static void insertDeathLog(Player target_player, String death_reason) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
         int count;  // 目前记录条数
         try {
@@ -140,6 +142,7 @@ public class DeathLog {
      * @param receiver      接受者
      */
     public static void outputDeathLog(Player target_player, CommandSender receiver) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         String player_name = target_player.getName();
         UUID uuid = target_player.getUniqueId();
 

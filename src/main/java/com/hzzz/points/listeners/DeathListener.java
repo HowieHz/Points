@@ -1,8 +1,10 @@
 package com.hzzz.points.listeners;
 
+import com.hzzz.points.Points;
 import com.hzzz.points.interfaces.NamedListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -13,7 +15,6 @@ import static com.hzzz.points.commands.utils.Utils.builderPlayerCoordinatesMessa
 import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.data_manager.operations_set.DeathMessageConfig.isEnableDeathMessage;
 import static com.hzzz.points.data_manager.operations_set.DeathLog.insertDeathLog;
-import static com.hzzz.points.Points.config;
 
 /**
  * 玩家死亡事件监听器
@@ -54,6 +55,7 @@ public final class DeathListener implements NamedListener { // TODO NamedListene
      */
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
+        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查
