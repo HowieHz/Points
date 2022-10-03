@@ -60,33 +60,20 @@ public final class Points extends JavaPlugin {
         return getInstance().online_players.stream().map(Player::getName).collect(Collectors.toList());
     }
 
+    /**
+     * 第一次加载要做的事情：<br>初始化配置文件，<br>初始化文件夹，<br>加载bStats
+     */
     @Override
     public void onLoad() {
         logInfo(plugin_loading);  // 插件正在加载
 
-        saveDefaultConfig();  // 如果配置文件不存在, 保存默认的配置config.yml
-
+        // 如果配置文件不存在, 保存默认的配置
+        // config.yml
+        saveDefaultConfig();
+        // lang/zh_cn.yml
         if (!new File(getDataFolder(), "lang/zh_cn.yml").exists()) {
             saveResource("lang/zh_cn.yml", false);
         }
-
-        // 开启bstats
-        if (getConfig().getBoolean("bStats.enable", true)) {  // 默认开启
-            int pluginId = 16544;
-            new Metrics(this, pluginId);
-        }
-
-        logInfo(plugin_loaded);  // 插件已加载
-    }
-
-    @Override
-    public void onEnable() {
-        INSTANCE = this;
-
-        logInfo(plugin_starting);  // 插件正在启动
-
-        // 读取配置
-        config = getConfig();
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
@@ -98,6 +85,27 @@ public final class Points extends JavaPlugin {
                 logError(fail_to_create_database_folder);
             }
         }
+
+        // 开启bstats
+        if (getConfig().getBoolean("bStats.enable", true)) {  // 默认开启
+            int pluginId = 16544;
+            new Metrics(this, pluginId);
+        }
+
+        logInfo(plugin_loaded);  // 插件已加载
+    }
+
+    /**
+     * 启用(重新加载插件)的时候要做的事情：<br>指令和监听器的注册，<br>配置文件的读取
+     */
+    @Override
+    public void onEnable() {
+        INSTANCE = this;
+
+        logInfo(plugin_starting);  // 插件正在启动
+
+        // 读取配置 必须要在这边写上这么一行不然reload没用
+        config = getConfig();
 
         // 注册指令
         CommandInfo[] command_info = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
