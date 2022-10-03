@@ -29,9 +29,8 @@ message:
     sqlite:
       ready: "sqlite数据库 §e%s§f 已连接"
       not_ready: "你sqlite数据库 §e%s§f 炸了，对应的子模块将不会开启"
-  no:
-    player: "该玩家不在线"
-    permission: "你没有使用该指令的权限"
+  player-not-online: "该玩家不在线"
+  no-permission: "你没有使用该指令的权限"
   canceled:
     enter_bed: "你尝试进入梦乡，但是被未知力量阻止了"
     use_respawn_anchor: "你尝试使用重生锚，但是被未知力量阻止了"
@@ -41,7 +40,7 @@ commands:
     player_only: "此指令仅允许玩家使用"
     disable_module: "此模块被关闭"
     # here, where, death.log, death.message
-    coordinates_format: " [ %.0f, %.0f, %.0f ] "
+    coordinates_format: " [%.0f, %.0f, %.0f] "
     voxelmap_support:
       hover: "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点"
       command: "/newWaypoint x:%.0f, y:%.0f, z:%.0f, dim:%s"

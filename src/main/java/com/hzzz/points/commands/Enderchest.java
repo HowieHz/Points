@@ -75,7 +75,7 @@ public final class Enderchest implements TabExecutor {
                 Player target_player = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (target_player == null) {  // 检查是否获取到玩家
-                    player.sendMessage(Text.no_player);
+                    player.sendMessage(Text.player_not_online);
                     return true;
                 }
 

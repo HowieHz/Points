@@ -76,7 +76,8 @@ public final class Points extends JavaPlugin {
         // 读取并加载语言文件 要在加载配置文件之后，因为要读取配置文件中language.file_name项
         saveLangConfig();
 
-        logInfo(plugin_loading);  // 插件正在加载
+        // 插件正在加载 这个要在读取加载语言文件之后，不然输出的就是null
+        logInfo(plugin_loading);
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
@@ -242,11 +243,11 @@ public final class Points extends JavaPlugin {
      * 初始化和读取语言配置文件
      */
     private void saveLangConfig() {
-        langConfigFile = new File(getDataFolder(), "lang/zh_cn.yml");
-        // 不存在就初始化文件夹和配置文件
+        langConfigFile = new File(getDataFolder(), String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn")));
+        // 配置文件不存在就初始化文件夹和配置文件
         if (!langConfigFile.exists()) {
             langConfigFile.getParentFile().mkdirs();
-            saveResource("lang/zh_cn.yml", false);
+            saveResource(String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn")), false);
         }
 
         // 读取配置文件, 加载文字

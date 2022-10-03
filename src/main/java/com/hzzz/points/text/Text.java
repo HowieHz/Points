@@ -19,7 +19,7 @@ public final class Text {
     public static String create_database_folder_failed;
     public static String player_only;
     public static String no_permission;
-    public static String no_player;
+    public static String player_not_online;
     public static String finished;
     public static String coordinates_format;
     public static String voxelmap_support_hover;
@@ -67,18 +67,13 @@ public final class Text {
      * @return 读取出的文字
      */
     private static String getLang(String path, String default_text) {
-        if (Points.getInstance().getConfig().getBoolean("debug.enable", false)) {  // debug模式
-            if (default_text.equals(Points.getInstance().getLangConfig().getString(path))) {
-                return Points.getInstance().getLangConfig().getString(path, default_text);
-            } else {
-                logError(String.format("读取%s发生错误", path));
-                logError(String.format("默认为%s", default_text));
-                logError(String.format("读取为%s", Points.getInstance().getLangConfig().getString(path)));
-                return Points.getInstance().getLangConfig().getString(path);
-            }
-        } else {
-            return Points.getInstance().getLangConfig().getString(path, default_text);
+        if (Points.getInstance().getConfig().getBoolean("debug.enable", false)
+                && !default_text.equals(Points.getInstance().getLangConfig().getString(path))) {  // debug模式
+            logError(String.format("读取%s和默认不一致", path));
+            logError(String.format("默认为:%s", default_text));
+            logError(String.format("读取为:%s", Points.getInstance().getLangConfig().getString(path)));
         }
+        return Points.getInstance().getLangConfig().getString(path, default_text);
     }
 
     /**
@@ -94,8 +89,8 @@ public final class Text {
         create_database_folder_successfully = getLang("message.database.create_folder_successfully", "用于存放数据库的文件夹已初始化");
         create_database_folder_failed = getLang("message.database.create_folder_failed", "用于存放数据库的文件夹创建失败");
         player_only = getLang("commands.global.player_only", "此指令仅允许玩家使用");
-        no_permission = getLang("message.no.permission", "你没有使用该指令的权限");
-        no_player = getLang("message.no.player", "该玩家不在线");
+        no_permission = getLang("message.no-permission", "你没有使用该指令的权限");
+        player_not_online = getLang("message.player-not-online", "该玩家不在线");
         finished = getLang("message.finished", "已执行");
         coordinates_format = getLang("commands.global.coordinates_format", " [%.0f, %.0f, %.0f] ");
         voxelmap_support_hover = getLang("commands.global.voxelmap_support.hover", "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点");

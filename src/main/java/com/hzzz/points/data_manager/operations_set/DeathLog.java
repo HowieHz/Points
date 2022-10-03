@@ -113,7 +113,7 @@ public class DeathLog {
         Player target_player = Bukkit.getPlayer(uuid);  // 使用uuid获取
 
         if (target_player == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(no_player);
+            receiver.sendMessage(player_not_online);
             return;
         }
         outputDeathLog(target_player, receiver);
@@ -129,7 +129,7 @@ public class DeathLog {
         Player target_player = Bukkit.getPlayerExact(player_name);  // 使用玩家名获取
 
         if (target_player == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(no_player);
+            receiver.sendMessage(player_not_online);
             return;
         }
         outputDeathLog(target_player, receiver);
