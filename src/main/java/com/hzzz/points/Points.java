@@ -108,6 +108,9 @@ public final class Points extends JavaPlugin {
         // Points.config
         FileConfiguration config = getConfig();
 
+        // 读取配置，加载文字
+        loadText();
+
         // 注册指令
         CommandInfo[] command_info = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
                 new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
