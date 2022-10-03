@@ -6,6 +6,8 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6514d15bcda04c4db6ef136204282a46)](https://www.codacy.com/gh/HowieHz/Points/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=HowieHz/Points&amp;utm_campaign=Badge_Grade)
 [![DeepSource](https://deepsource.io/gh/HowieHz/Points.svg/?label=active+issues&show_trend=true&token=BsdaFuwaOvvqaAa8w-r7YmmN)](https://deepsource.io/gh/HowieHz/Points/?ref=repository-badge)
 
+![项目图标, 感谢@Lenc1](./img/P.png)
+
 A paper plugin, some useful points
 
 ## 主要功能
