@@ -63,17 +63,23 @@ public final class Points extends JavaPlugin {
     }
 
     /**
-     * 第一次加载要做的事情：<br>初始化配置文件，<br>初始化文件夹，<br>加载bStats
+     * 第一次加载要做的事情：<br>初始化配置文件并读取，<br>初始化文件夹，<br>加载bStats，<br>加载语言文件
      */
     @Override
     public void onLoad() {
+        INSTANCE = this;
+
+        // 加载语言文件
+        // lang/zh_cn.yml
+        saveLangConfig();
+        // 读取配置，加载文字
+        loadText();
+
         logInfo(plugin_loading);  // 插件正在加载
 
         // 如果配置文件不存在, 保存默认的配置
         // config.yml
         saveDefaultConfig();
-        // lang/zh_cn.yml
-        saveLangConfig();
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
@@ -96,20 +102,15 @@ public final class Points extends JavaPlugin {
     }
 
     /**
-     * 启用(重新加载插件)的时候要做的事情：<br>指令和监听器的注册，<br>配置文件的读取
+     * 启用(重新加载插件)的时候要做的事情：<br>指令和监听器的注册
      */
     @Override
     public void onEnable() {
-        INSTANCE = this;
-
         logInfo(plugin_starting);  // 插件正在启动
 
         // 读取配置
         // Points.config
         FileConfiguration config = getConfig();
-
-        // 读取配置，加载文字
-        loadText();
 
         // 注册指令
         CommandInfo[] command_info = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
@@ -237,10 +238,6 @@ public final class Points extends JavaPlugin {
      * @return 语言配置文件实例
      */
     public FileConfiguration getLangConfig() {
-        if (this.langConfig == null) {
-            // 读取配置文件
-            reloadLangConfig();
-        }
         return this.langConfig;
     }
 
@@ -254,6 +251,9 @@ public final class Points extends JavaPlugin {
             langConfigFile.getParentFile().mkdirs();
             saveResource("lang/zh_cn.yml", false);
         }
+
+        // 读取配置文件
+        reloadLangConfig();
     }
 
     public void reloadLangConfig() {

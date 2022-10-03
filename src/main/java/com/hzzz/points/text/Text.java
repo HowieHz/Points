@@ -66,12 +66,12 @@ public final class Text {
      * @return 读取出的文字
      */
     private static String getLang(String path, String default_text) {
-        if (default_text.equals(Points.getInstance().getLangConfig().getString(path, default_text))) {
-            return Points.getInstance().getLangConfig().getString(path, default_text);
-        } else {
-            return "???";
-        }
-//        return Points.getInstance().getLangConfig().getString(path, default_text);
+//        if (default_text.equals(Points.getInstance().getLangConfig().getString(path))) {
+//            return Points.getInstance().getLangConfig().getString(path, default_text);
+//        } else {
+//            return "???";
+//        }
+        return Points.getInstance().getLangConfig().getString(path, default_text);
     }
 
     /**
@@ -111,7 +111,7 @@ public final class Text {
         register_listeners = getLang("message.listeners.register", "已注册 §e%s§f 监听器");
         already_disable_listeners = getLang("message.listeners.already_disable", "已注销 §e%s§f 监听器");
         all_listeners_disabled = getLang("message.listeners.all_disabled", "已注销全部监听器");
-        config_reloaded = getLang("reloaded.config", "配置已重新加载");
+        config_reloaded = getLang("message.reloaded.config", "配置已重新加载");
         insert_death_record_fail = getLang("commands.death.log.insert_death_record_fail", "记录玩家 §e%s§f 的死亡信息时失败");
         no_death_record = getLang("commands.death.log.no_death_record", "玩家 §e%s§f 没有已保存的死亡记录");
         read_death_record = getLang("commands.death.log.read_death_record", "-------已读取 §e%d§f 条死亡记录-------");
