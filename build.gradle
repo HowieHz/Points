@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.hzzz.points'
-version = '0.2.2'
+version = '0.2.3'
 mainClassName = 'com.hzzz.points.Points'
 
 repositories {

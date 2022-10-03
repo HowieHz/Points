@@ -1,5 +1,5 @@
 name: Points
-version: '0.2.2'
+version: '0.2.3'
 main: com.hzzz.points.Points
 api-version: 1.16
 authors: [ Hzzz ]
