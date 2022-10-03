@@ -1,7 +1,7 @@
 name: Points
 version: '0.2.2'
 main: com.hzzz.points.Points
-api-version: 1.19
+api-version: 1.16
 authors: [ Hzzz ]
 description: Some useful points
 commands:
