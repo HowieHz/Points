@@ -43,5 +43,5 @@ jobs:
       - name: Upload Paper Build Target
         uses: actions/upload-artifact@v3
         with:
-          name: "Points-Artifact"
+          name: Points-Artifact-${{ matrix.java }}
           path: build/libs/
