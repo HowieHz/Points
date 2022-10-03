@@ -8,7 +8,7 @@ import static org.bukkit.ChatColor.*;
 /**
  * 文字枚举
  */
-public final class Text {
+public final class Text {  // TODO 重构这个类 可以是map
     private static String plugin_starting;
     private static String plugin_loading;
     private static String plugin_disabling;
