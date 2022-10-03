@@ -8,20 +8,20 @@ commands:
   where:
     description: Get player position
     aliases: [ whe, wh ]
-    usage: "/where <player-name>"
+    usage: "Not enable 'where'"
   here:
     description: Broadcast player position
     aliases: [ he ]
-    usage: "/here"
+    usage: "Not enable 'here'"
   death:
     description: About death
     aliases: [ de ]
-    usage: "/death"
+    usage: "Not enable 'death'"
   enderchest:
     description: About enderchest
     aliases: [ ec ]
-    usage: "/enderchest"
+    usage: "Not enable 'enderchest'"
   points:
     description: plugin commands
     aliases: [ po ]
-    usage: "/points"
+    usage: "Not enable 'points'"
