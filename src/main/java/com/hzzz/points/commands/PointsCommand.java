@@ -43,26 +43,26 @@ public final class PointsCommand implements TabExecutor {
             if (args[0].equals("reload")) {
                 // 权限检查
                 if (!commonCheckPermission("points.reload", sender, "points.reload")) {
-                    sender.sendMessage(Text.no_permission);
+                    sender.sendMessage(Text.getNoPermission());
                     return true;
                 }
                 // 重载的逻辑
                 Points.getInstance().onReload();
 
                 // 发消息
-                sender.sendMessage(Text.reload_ready);
+                sender.sendMessage(Text.getReloadReady());
                 if (sender instanceof Player) {  // 玩家重载 在控制台也输出重载结果
-                    logInfo(Text.reload_ready);
+                    logInfo(Text.getReloadReady());
 
                 }
                 return true;
             }
 
             // args[0].equals("help")
-            sender.sendMessage(Text.help_points);
+            sender.sendMessage(Text.getHelpPoints());
             return true;
         } else {
-            sender.sendMessage(Text.help_points);
+            sender.sendMessage(Text.getHelpPoints());
         }
         return true;
     }

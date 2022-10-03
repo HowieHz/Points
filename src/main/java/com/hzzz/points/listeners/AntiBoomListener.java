@@ -157,7 +157,7 @@ public class AntiBoomListener implements NamedListener {
                             || (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
                             && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                         e.setCancelled(true);
-                        player.sendMessage(Text.enter_bed_canceled);
+                        player.sendMessage(Text.getEnterBedCanceled());
                     }
                     break;
                 }
@@ -186,7 +186,7 @@ public class AntiBoomListener implements NamedListener {
                 || (config.getBoolean("anti-boom.respawn-anchor.world-the-end", false)  // 末地使用
                 && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))))) {
             e.setCancelled(true);
-            player.sendMessage(Text.use_respawn_anchor_canceled);
+            player.sendMessage(Text.getUseRespawnAnchorCanceled());
         }
     }
 }

@@ -47,13 +47,13 @@ public final class Here implements TabExecutor {
 
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Text.player_only);
+            sender.sendMessage(Text.getPlayerOnly());
             return true;
         }
 
         // 权限检查
         if (!specialCheckPermission("here", player, "points.command.here")) {
-            sender.sendMessage(Text.no_permission);
+            sender.sendMessage(Text.getNoPermission());
             return true;
         }
 

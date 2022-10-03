@@ -19,7 +19,7 @@ public class JdbcUtils {
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
-            logError(Text.database_driver_error);
+            logError(Text.getDatabaseDriverError());
             e.printStackTrace();
         }
     }

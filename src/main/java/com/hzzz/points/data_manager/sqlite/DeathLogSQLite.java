@@ -78,7 +78,7 @@ public class DeathLogSQLite {
 
             ps_select_death_log = con.prepareStatement("SELECT * FROM DeathLog WHERE uuid=?");
         } catch (SQLException e) {
-            logError(Text.database_setup_error);
+            logError(Text.getDatabaseSetupError());
             e.printStackTrace();
         }
     }
@@ -95,7 +95,7 @@ public class DeathLogSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
-                    logError(Text.database_error);
+                    logError(Text.getDatabaseError());
                     e.printStackTrace();
                 }
             }

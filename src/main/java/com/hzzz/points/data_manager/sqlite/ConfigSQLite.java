@@ -67,7 +67,7 @@ public class ConfigSQLite {
             ps_select_death_config = con.prepareStatement("SELECT * FROM DeathMessageConfig WHERE uuid=?");
             ps_update_death_config = con.prepareStatement("UPDATE DeathMessageConfig SET enable=? WHERE uuid=?");
         } catch (SQLException e) {
-            logError(Text.database_setup_error);
+            logError(Text.getDatabaseSetupError());
             e.printStackTrace();
         }
     }
@@ -84,7 +84,7 @@ public class ConfigSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
-                    logError(Text.database_error);
+                    logError(Text.getDatabaseError());
                     e.printStackTrace();
                 }
             }

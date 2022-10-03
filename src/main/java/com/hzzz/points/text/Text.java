@@ -9,55 +9,54 @@ import static org.bukkit.ChatColor.*;
  * 文字枚举
  */
 public final class Text {
-    public static String plugin_starting;
-    public static String plugin_loading;
-    public static String plugin_disabling;
-    public static String plugin_started;
-    public static String plugin_loaded;
-    public static String plugin_disabled;
-    public static String create_database_folder_successfully;
-    public static String create_database_folder_failed;
-    public static String player_only;
-    public static String no_permission;
-    public static String player_not_online;
-    public static String finished;
-    public static String coordinates_format;
-    public static String voxelmap_support_hover;
-    public static String voxelmap_support_command;
-    public static String xaeros_support_hover;
-    public static String xaeros_support_command;
-    public static String teleport_support_hover;
-    public static String teleport_support_command;
-    public static String reload_ready;
-    public static String wrong_database_type;
-
-    public static String enable_death_message;
-    public static String disable_death_message;
-    public static String disable_module;
-    public static String sqlite_ready;
-    public static String sqlite_not_ready;
-    public static String set_executor;
-    public static String already_disable_executor;
-    public static String all_executor_disabled;
-    public static String register_listeners;
-    public static String already_disable_listeners;
-    public static String all_listeners_disabled;
-    public static String config_reloaded;
-    public static String insert_death_record_fail;
-    public static String no_death_record;
-    public static String read_death_record;
-    public static String division_line;
-    public static String enter_bed_canceled;
-    public static String use_respawn_anchor_canceled;
-    public static String command_frequency_limit;
-    public static String read_death_log_result;
-    public static String database_error;
-    public static String database_setup_error;
-    public static String database_driver_error;
-    public static String help_points;
-    public static String help_death;
-    public static String help_where;
-    public static String help_enderchest;
+    private static String plugin_starting;
+    private static String plugin_loading;
+    private static String plugin_disabling;
+    private static String plugin_started;
+    private static String plugin_loaded;
+    private static String plugin_disabled;
+    private static String create_database_folder_successfully;
+    private static String create_database_folder_failed;
+    private static String player_only;
+    private static String no_permission;
+    private static String player_not_online;
+    private static String finished;
+    private static String coordinates_format;
+    private static String voxelmap_support_hover;
+    private static String voxelmap_support_command;
+    private static String xaeros_support_hover;
+    private static String xaeros_support_command;
+    private static String teleport_support_hover;
+    private static String teleport_support_command;
+    private static String reload_ready;
+    private static String wrong_database_type;
+    private static String enable_death_message;
+    private static String disable_death_message;
+    private static String disable_module;
+    private static String sqlite_ready;
+    private static String sqlite_not_ready;
+    private static String set_executor;
+    private static String already_disable_executor;
+    private static String all_executor_disabled;
+    private static String register_listeners;
+    private static String already_disable_listeners;
+    private static String all_listeners_disabled;
+    private static String config_reloaded;
+    private static String insert_death_record_fail;
+    private static String no_death_record;
+    private static String read_death_record;
+    private static String division_line;
+    private static String enter_bed_canceled;
+    private static String use_respawn_anchor_canceled;
+    private static String command_frequency_limit;
+    private static String read_death_log_result;
+    private static String database_error;
+    private static String database_setup_error;
+    private static String database_driver_error;
+    private static String help_points;
+    private static String help_death;
+    private static String help_where;
+    private static String help_enderchest;
 
     /**
      * 从lang\*.yml里面读取文字
@@ -148,5 +147,197 @@ public final class Text {
                 """);
         help_where = getLang("commands.where.help", "使用方法: /where 玩家名 或 /where");
         help_enderchest = getLang("commands.enderchest.help", "使用方法: /enderchest 玩家名 或 /enderchest");
+    }
+
+    public static String getPluginStarting() {
+        return plugin_starting;
+    }
+
+    public static String getPluginLoading() {
+        return plugin_loading;
+    }
+
+    public static String getPluginDisabling() {
+        return plugin_disabling;
+    }
+
+    public static String getPluginStarted() {
+        return plugin_started;
+    }
+
+    public static String getPluginLoaded() {
+        return plugin_loaded;
+    }
+
+    public static String getPluginDisabled() {
+        return plugin_disabled;
+    }
+
+    public static String getCreateDatabaseFolderSuccessfully() {
+        return create_database_folder_successfully;
+    }
+
+    public static String getCreateDatabaseFolderFailed() {
+        return create_database_folder_failed;
+    }
+
+    public static String getPlayerOnly() {
+        return player_only;
+    }
+
+    public static String getNoPermission() {
+        return no_permission;
+    }
+
+    public static String getPlayerNotOnline() {
+        return player_not_online;
+    }
+
+    public static String getFinished() {
+        return finished;
+    }
+
+    public static String getCoordinatesFormat() {
+        return coordinates_format;
+    }
+
+    public static String getVoxelmapSupportHover() {
+        return voxelmap_support_hover;
+    }
+
+    public static String getVoxelmapSupportCommand() {
+        return voxelmap_support_command;
+    }
+
+    public static String getXaerosSupportHover() {
+        return xaeros_support_hover;
+    }
+
+    public static String getXaerosSupportCommand() {
+        return xaeros_support_command;
+    }
+
+    public static String getTeleportSupportHover() {
+        return teleport_support_hover;
+    }
+
+    public static String getTeleportSupportCommand() {
+        return teleport_support_command;
+    }
+
+    public static String getReloadReady() {
+        return reload_ready;
+    }
+
+    public static String getWrongDatabaseType() {
+        return wrong_database_type;
+    }
+
+    public static String getEnableDeathMessage() {
+        return enable_death_message;
+    }
+
+    public static String getDisableDeathMessage() {
+        return disable_death_message;
+    }
+
+    public static String getDisableModule() {
+        return disable_module;
+    }
+
+    public static String getSqliteReady() {
+        return sqlite_ready;
+    }
+
+    public static String getSqliteNotReady() {
+        return sqlite_not_ready;
+    }
+
+    public static String getSetExecutor() {
+        return set_executor;
+    }
+
+    public static String getAlreadyDisableExecutor() {
+        return already_disable_executor;
+    }
+
+    public static String getAllExecutorDisabled() {
+        return all_executor_disabled;
+    }
+
+    public static String getRegister_listeners() {
+        return register_listeners;
+    }
+
+    public static String getAlreadyDisableListeners() {
+        return already_disable_listeners;
+    }
+
+    public static String getAllListenersDisabled() {
+        return all_listeners_disabled;
+    }
+
+    public static String getConfigReloaded() {
+        return config_reloaded;
+    }
+
+    public static String getInsertDeathRecordFail() {
+        return insert_death_record_fail;
+    }
+
+    public static String getNoDeathRecord() {
+        return no_death_record;
+    }
+
+    public static String getReadDeathRecord() {
+        return read_death_record;
+    }
+
+    public static String getDivisionLine() {
+        return division_line;
+    }
+
+    public static String getEnterBedCanceled() {
+        return enter_bed_canceled;
+    }
+
+    public static String getUseRespawnAnchorCanceled() {
+        return use_respawn_anchor_canceled;
+    }
+
+    public static String getCommandFrequencyLimit() {
+        return command_frequency_limit;
+    }
+
+    public static String getReadDeathLogResult() {
+        return read_death_log_result;
+    }
+
+    public static String getDatabaseError() {
+        return database_error;
+    }
+
+    public static String getDatabaseSetupError() {
+        return database_setup_error;
+    }
+
+    public static String getDatabaseDriverError() {
+        return database_driver_error;
+    }
+
+    public static String getHelpPoints() {
+        return help_points;
+    }
+
+    public static String getHelpDeath() {
+        return help_death;
+    }
+
+    public static String getHelpWhere() {
+        return help_where;
+    }
+
+    public static String getHelpEnderchest() {
+        return help_enderchest;
     }
 }

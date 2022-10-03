@@ -36,12 +36,12 @@ import static com.hzzz.points.utils.Utils.*;
 public final class Points extends JavaPlugin {
     private File langConfigFile;  // 语言配置文件
     private FileConfiguration langConfig = null;  // 语言配置文件
-    public static final Logger logger = Logger.getLogger("Points");  // Points.logger
     private static Points INSTANCE;
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
 
     private final List<NamedListener> event_handlers = new ArrayList<>();  // 已注册的监听器
     private final Collection<? extends Player> online_players = getServer().getOnlinePlayers();  // 在线玩家列表
+    public static final Logger logger = Logger.getLogger("Points");  // Points.logger
 
     /**
      * 获取插件实例
@@ -77,16 +77,16 @@ public final class Points extends JavaPlugin {
         saveLangConfig();
 
         // 插件正在加载 这个要在读取加载语言文件之后，不然输出的就是null
-        logInfo(plugin_loading);
+        logInfo(getPluginLoading());
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {
             if (file.mkdirs()) {
-                logDetailedInfo(create_database_folder_successfully);
+                logDetailedInfo(getCreateDatabaseFolderSuccessfully());
             } else {
-                logError(create_database_folder_failed);
+                logError(getCreateDatabaseFolderFailed());
             }
         }
 
@@ -96,7 +96,7 @@ public final class Points extends JavaPlugin {
             new Metrics(this, pluginId);
         }
 
-        logInfo(plugin_loaded);  // 插件已加载
+        logInfo(getPluginLoaded());  // 插件已加载
     }
 
     /**
@@ -104,7 +104,7 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        logInfo(plugin_starting);  // 插件正在启动
+        logInfo(getPluginStarting());  // 插件正在启动
 
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
@@ -135,13 +135,13 @@ public final class Points extends JavaPlugin {
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
             if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
-                logDetailedInfo(String.format(sqlite_ready, "config.sqlite, death_log.sqlite"));
+                logDetailedInfo(String.format(getSqliteReady(), "config.sqlite, death_log.sqlite"));
 
                 // 数据库成功启动才启动death模块
                 // 注册监听
                 registerEvents(DeathListener.getInstance());
             } else {
-                logError(String.format(sqlite_not_ready, "config.sqlite, death_log.sqlite"));
+                logError(String.format(getSqliteNotReady(), "config.sqlite, death_log.sqlite"));
             }
         }
 
@@ -151,18 +151,18 @@ public final class Points extends JavaPlugin {
             registerEvents(AntiBoomListener.getInstance());
         }
 
-        logInfo(plugin_started);  // 插件已启动
+        logInfo(getPluginStarted());  // 插件已启动
     }
 
     @Override
     public void onDisable() {
-        logInfo(plugin_disabling);  // 插件正在关闭
+        logInfo(getPluginDisabling());  // 插件正在关闭
 
         Bukkit.getScheduler().cancelTasks(this);  // 关闭插件时, 确保取消我调度的所有任务
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
 
-        logInfo(plugin_disabled);  // 插件已关闭
+        logInfo(getPluginDisabled());  // 插件已关闭
     }
 
     /**
@@ -174,7 +174,7 @@ public final class Points extends JavaPlugin {
     private void registerEvents(NamedListener listener_instance) {
         event_handlers.add(listener_instance);
         Bukkit.getPluginManager().registerEvents(listener_instance, this);
-        logDetailedInfo(String.format(register_listeners, listener_instance.getName()));  // 详细log
+        logDetailedInfo(String.format(getRegister_listeners(), listener_instance.getName()));  // 详细log
     }
 
     /**
@@ -187,7 +187,7 @@ public final class Points extends JavaPlugin {
     private void setExecutor(String command, CommandExecutor executor_instance) {
         commands.add(command);
         Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor_instance);
-        logDetailedInfo(String.format(set_executor, command));  // 详细log
+        logDetailedInfo(String.format(getSetExecutor(), command));  // 详细log
     }
 
     /**
@@ -196,10 +196,10 @@ public final class Points extends JavaPlugin {
     private void disableEventHandler() {
         for (NamedListener listener : event_handlers) {
             HandlerList.unregisterAll(listener);
-            logDetailedInfo(String.format(already_disable_listeners, listener.getName()));  // 详细log
+            logDetailedInfo(String.format(getAlreadyDisableListeners(), listener.getName()));  // 详细log
         }
         event_handlers.clear();
-        logDetailedInfo(all_listeners_disabled);  // 详细log
+        logDetailedInfo(getAllListenersDisabled());  // 详细log
     }
 
     /**
@@ -208,10 +208,10 @@ public final class Points extends JavaPlugin {
     private void disableExecutor() {
         for (String command : commands) {
             Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(null);
-            logDetailedInfo(String.format(already_disable_executor, command));  // 详细log
+            logDetailedInfo(String.format(getAlreadyDisableExecutor(), command));  // 详细log
         }
         commands.clear();
-        logDetailedInfo(all_executor_disabled);  // 详细log
+        logDetailedInfo(getAllExecutorDisabled());  // 详细log
     }
 
     /**
@@ -225,7 +225,7 @@ public final class Points extends JavaPlugin {
         // 读取配置，加载文字
         reloadLangConfig();
 
-        logDetailedInfo(config_reloaded);  // 详细log
+        logDetailedInfo(getConfigReloaded());  // 详细log
 
         onEnable();
     }
