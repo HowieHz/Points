@@ -55,6 +55,8 @@ bin/
 
 # server test
 server/
+server-112/
+server-116/
 
 # Package Files #
 *.jar

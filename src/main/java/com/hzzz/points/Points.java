@@ -174,7 +174,7 @@ public final class Points extends JavaPlugin {
     private void registerEvents(NamedListener listener_instance) {
         event_handlers.add(listener_instance);
         Bukkit.getPluginManager().registerEvents(listener_instance, this);
-        logDetailedInfo(String.format(getRegister_listeners(), listener_instance.getName()));  // 详细log
+        logDetailedInfo(String.format(getRegisterListeners(), listener_instance.getName()));  // 详细log
     }
 
     /**

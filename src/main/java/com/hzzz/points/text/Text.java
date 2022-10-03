@@ -265,7 +265,7 @@ public final class Text {  // TODO 重构这个类 可以是map
         return all_executor_disabled;
     }
 
-    public static String getRegister_listeners() {
+    public static String getRegisterListeners() {
         return register_listeners;
     }
 
