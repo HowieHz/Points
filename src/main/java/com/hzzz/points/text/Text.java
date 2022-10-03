@@ -72,6 +72,7 @@ public final class Text {
             logError(String.format("读取%s和默认不一致", path));
             logError(String.format("默认为:%s", default_text));
             logError(String.format("读取为:%s", Points.getInstance().getLangConfig().getString(path)));
+            logError(String.format("返回为:%s", Points.getInstance().getLangConfig().getString(path, default_text)));
         }
         return Points.getInstance().getLangConfig().getString(path, default_text);
     }
