@@ -64,7 +64,17 @@ public final class Points extends JavaPlugin {
     public void onLoad() {
         logInfo(plugin_loading);  // 插件正在加载
 
-        saveDefaultConfig();  // 如果配置文件不存在, 保存默认的配置
+        saveDefaultConfig();  // 如果配置文件不存在, 保存默认的配置config.yml
+
+        if (!new File(getDataFolder(), "lang/zh_cn.yml").exists()) {
+            saveResource("lang/zh_cn.yml", false);
+        }
+
+        // 开启bstats
+        if (getConfig().getBoolean("bStats.enable", true)) {  // 默认开启
+            int pluginId = 16544;
+            new Metrics(this, pluginId);
+        }
 
         logInfo(plugin_loaded);  // 插件已加载
     }
@@ -77,12 +87,6 @@ public final class Points extends JavaPlugin {
 
         // 读取配置
         config = getConfig();
-
-        // 开启bstats
-        if (config.getBoolean("bStats.enable", true)) {  // 默认开启
-            int pluginId = 16544;
-            new Metrics(this, pluginId);
-        }
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
