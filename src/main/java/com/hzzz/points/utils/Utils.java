@@ -3,8 +3,6 @@ package com.hzzz.points.utils;
 import com.hzzz.points.Points;
 import org.bukkit.command.CommandSender;
 
-import static com.hzzz.points.Points.config;
-
 /**
  * 工具类
  */
@@ -49,7 +47,7 @@ public class Utils {
      * @param message 消息内容
      */
     public static void logDetailedInfo(String message) {
-        if (config.getBoolean("log.more-information", false)) {
+        if (Points.getInstance().getConfig().getBoolean("log.more-information", false)) {
             Points.logger.info(message);
         }
     }

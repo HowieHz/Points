@@ -10,12 +10,15 @@ import com.hzzz.points.listeners.DeathListener;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +36,8 @@ import static com.hzzz.points.utils.Utils.*;
  * @since 2022-09-12 12:31
  */
 public final class Points extends JavaPlugin {
-    public static FileConfiguration config;  // Points.config
+    private File langConfigFile;  // 语言配置文件
+    private FileConfiguration langConfig = null;  // 语言配置文件
     public static final Logger logger = Logger.getLogger("Points");  // Points.logger
     private static Points INSTANCE;
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
@@ -71,9 +75,7 @@ public final class Points extends JavaPlugin {
         // config.yml
         saveDefaultConfig();
         // lang/zh_cn.yml
-        if (!new File(getDataFolder(), "lang/zh_cn.yml").exists()) {
-            saveResource("lang/zh_cn.yml", false);
-        }
+        saveLangConfig();
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
@@ -105,7 +107,8 @@ public final class Points extends JavaPlugin {
         logInfo(plugin_starting);  // 插件正在启动
 
         // 读取配置 必须要在这边写上这么一行不然reload没用
-        config = getConfig();
+        // Points.config
+        FileConfiguration config = getConfig();
 
         // 注册指令
         CommandInfo[] command_info = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
@@ -220,8 +223,47 @@ public final class Points extends JavaPlugin {
 
         // reload一遍配置文件，用于重载 这个和onDisable谁先都一样
         reloadConfig();
+        reloadLangConfig();
         logDetailedInfo(config_reloaded);  // 详细log
 
         onEnable();
+    }
+
+    /**
+     * 获取语言配置文件
+     *
+     * @return 语言配置文件实例
+     */
+    public FileConfiguration getLangConfig() {
+        if (this.langConfig == null) {
+            // 读取配置文件
+            reloadLangConfig();
+        }
+        return this.langConfig;
+    }
+
+    /**
+     * 初始化和读取语言配置文件
+     */
+    private void saveLangConfig() {
+        langConfigFile = new File(getDataFolder(), "lang/zh_cn.yml");
+        // 不存在就初始化文件夹和配置文件
+        if (!langConfigFile.exists()) {
+            langConfigFile.getParentFile().mkdirs();
+            saveResource("lang/zh_cn.yml", false);
+        }
+    }
+
+    public void reloadLangConfig(){
+//        YamlConfiguration.loadConfiguration(langConfigFile);
+        // 读取配置文件
+        this.langConfig = new YamlConfiguration();
+        try {
+            this.langConfig.load(langConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+            // 关闭插件
+            getServer().getPluginManager().disablePlugin(this);
+        }
     }
 }
