@@ -115,7 +115,11 @@ A paper plugin, some useful points
 
 ## 构建
 
-使用了 gradle 的com.github.johnrengelman.shadow 7.1.2 插件进行构建jar
+项目使用java16进行构建 
+
+paper-api版本为1.17.1
+
+最新开发版自动构建可在github action中下载
 
 ## 代码质量
 
