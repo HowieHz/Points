@@ -27,7 +27,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+//    compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
+    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
 
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     compileOnly 'org.xerial:sqlite-jdbc:3.39.3.0'
@@ -40,23 +41,11 @@ dependencies {
 //    compile fileTree(dir: 'src/main/libs', includes: ['*.jar'])
 //    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
 }
-
-def targetJavaVersion = 17  // 因为paper api是1.19 所以这里需要17
+// paper api是1.19 1.18  这里需要17
+// paper api是1.17 这里需要16
+def targetJavaVersion = 16
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
-    }
+    toolchain.languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
 }
 
 processResources {

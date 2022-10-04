@@ -9,7 +9,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -167,8 +166,7 @@ public final class Death implements TabExecutor {
     }
 
     @Override
-    @ParametersAreNonnullByDefault
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (!(sender instanceof Player)) {
             // 控制台不注册
