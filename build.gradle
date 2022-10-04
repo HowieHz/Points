@@ -57,14 +57,6 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectKey", "HowieHz_Points"
-        property "sonar.organization", "howiehz"
-        property "sonar.host.url", "https://sonarcloud.io"
-    }
-}
-
 processResources {
     def props = [version: version]
     inputs.properties props
@@ -74,12 +66,20 @@ processResources {
     }
 }
 
-shadowJar {
+sonarqube {  // CI
+    properties {
+        property "sonar.projectKey", "HowieHz_Points"
+        property "sonar.organization", "howiehz"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+shadowJar {  // 打包库到jar里面，以及给bstats的库改位置
     mergeServiceFiles()
     relocate('org.bstats', 'utils.org.bstats') {
     }
 }
 
-test {
+test {  // 测试
     useJUnitPlatform()
 }
