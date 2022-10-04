@@ -10,6 +10,8 @@
 
 A paper plugin, some useful points
 
+插件支持 1.17-1.19 paper及其衍生端
+
 ## 主要功能
 
 1. 高亮自身 公屏发坐标 (/here指令)
