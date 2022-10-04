@@ -28,8 +28,8 @@ repositories {
 
 dependencies {
 //    compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
-//    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
+//    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 //    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 //    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
@@ -45,9 +45,6 @@ dependencies {
 //    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
 }
 
-// paper api是1.19 1.18  这里需要17
-// paper api是1.17 这里需要16
-// paper api是1.16 这里到8都可以，但是服务端需要14
 def targetJavaVersion = 16  // 目标版本
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)  // 转换
