@@ -47,9 +47,22 @@ dependencies {
 // paper api是1.19 1.18  这里需要17
 // paper api是1.17 这里需要16
 // paper api是1.16 这里到8都可以，但是服务端需要14
-def targetJavaVersion = 16
+def targetJavaVersion = 16  // 目标版本
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)  // 转换
+
+    sourceCompatibility = javaVersion  // 编译环境有关 定义源文件应被视为哪种语言版本的 Java 关系到你使用到的Java语法特性及库 不能比targetCompatibility大
+    targetCompatibility = javaVersion  // 运行环境有关 定义代码应运行的最低 JVM 版本，即它确定编译器生成的字节代码的版本 不能比目标客户端运行环境的JavaVersion大 不能比当前Gradle使用的JavaVersion大
+
+    if (JavaVersion.current() < javaVersion) {  // JavaVersion.current()是gradle使用的java版本
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)  // 工具链指向 Java xx version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {  // https://docs.gradle.org/current/userguide/building_java_projects.html#sec:java_cross_compilation
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
 }
 
 processResources {
