@@ -27,7 +27,11 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+//    compileOnly("com.destroystokyo.paper:paper-api:1.12.2-R0.1-SNAPSHOT")
+    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
+//    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+//    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+//    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
 
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     compileOnly 'org.xerial:sqlite-jdbc:3.39.3.0'
@@ -41,31 +45,28 @@ dependencies {
 //    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
 }
 
-def targetJavaVersion = 17  // 因为paper api是1.19 所以这里需要17
+def targetJavaVersion = 16  // 目标版本
 java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)  // 转换
+
+    sourceCompatibility = javaVersion  // 编译环境有关 定义源文件应被视为哪种语言版本的 Java 关系到你使用到的Java语法特性及库 不能比targetCompatibility大
+    targetCompatibility = javaVersion  // 运行环境有关 定义代码应运行的最低 JVM 版本，即它确定编译器生成的字节代码的版本 不能比目标客户端运行环境的JavaVersion大 不能比当前Gradle使用的JavaVersion大
+
+    if (JavaVersion.current() < javaVersion) {  // JavaVersion.current()是gradle使用的java版本
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)  // 工具链指向 Java xx version
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
+tasks.withType(JavaCompile).configureEach {  // https://docs.gradle.org/current/userguide/building_java_projects.html#sec:java_cross_compilation
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectKey", "HowieHz_Points"
-        property "sonar.organization", "howiehz"
-        property "sonar.host.url", "https://sonarcloud.io"
-    }
-}
-
 processResources {
+    println "inputs: " + getInputs().getFiles().asList()
+    println "outputs: " + getOutputs().getFiles().asList()
+
     def props = [version: version]
     inputs.properties props
     filteringCharset 'UTF-8'
@@ -74,12 +75,20 @@ processResources {
     }
 }
 
-shadowJar {
+sonarqube {  // CI
+    properties {
+        property "sonar.projectKey", "HowieHz_Points"
+        property "sonar.organization", "howiehz"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+shadowJar {  // 打包库到jar里面，以及给bstats的库改位置
     mergeServiceFiles()
     relocate('org.bstats', 'utils.org.bstats') {
     }
 }
 
-test {
+test {  // 测试
     useJUnitPlatform()
 }

@@ -10,6 +10,8 @@
 
 A paper plugin, some useful points
 
+插件支持1.16.5 1.17.1 1.18.2 1.19.2 paper及其衍生端
+
 ## 主要功能
 
 1. 高亮自身 公屏发坐标 (/here指令)
@@ -115,7 +117,11 @@ A paper plugin, some useful points
 
 ## 构建
 
-使用了 gradle 的com.github.johnrengelman.shadow 7.1.2 插件进行构建jar
+项目使用java16进行构建 
+
+paper-api版本为1.16.5 向后兼容到1.19.2
+
+最新开发版自动构建可在github action中下载
 
 ## 代码质量
 
