@@ -5,7 +5,6 @@ plugins {
     id "org.sonarqube" version "3.4.0.2513"
 }
 
-group = 'com.hzzz.points'
 version = '0.2.3'
 mainClassName = 'com.hzzz.points.Points'
 
@@ -67,7 +66,10 @@ processResources {
     println "inputs: " + getInputs().getFiles().asList()
     println "outputs: " + getOutputs().getFiles().asList()
 
-    def props = [version: version]
+    def props = [  // 需要填充的变量
+                   version: version,
+    ]
+
     inputs.properties props
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {

@@ -1,8 +1,8 @@
 name: Points
-version: '0.2.3'
+version: ${version}
 main: com.hzzz.points.Points
 api-version: 1.16
-authors: [ Hzzz ]
+authors: [ HowieHz ]
 description: Some useful points
 commands:
   where:
