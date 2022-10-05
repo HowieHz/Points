@@ -117,13 +117,13 @@ public class DeathLog {
      * @param receiver 接受者
      */
     public static void outputDeathLog(UUID uuid, CommandSender receiver) {
-        Player target_player = Bukkit.getPlayer(uuid);  // 使用uuid获取
+        Player targetPlayer = Bukkit.getPlayer(uuid);  // 使用uuid获取
 
-        if (target_player == null) {  // 检查是否获取到玩家
+        if (targetPlayer == null) {  // 检查是否获取到玩家
             receiver.sendMessage(getPlayerNotOnline());
             return;
         }
-        outputDeathLog(target_player, receiver);
+        outputDeathLog(targetPlayer, receiver);
     }
 
     /**
@@ -133,13 +133,13 @@ public class DeathLog {
      * @param receiver    接受者
      */
     public static void outputDeathLog(String playerName, CommandSender receiver) {
-        Player target_player = Bukkit.getPlayerExact(playerName);  // 使用玩家名获取
+        Player targetPlayer = Bukkit.getPlayerExact(playerName);  // 使用玩家名获取
 
-        if (target_player == null) {  // 检查是否获取到玩家
+        if (targetPlayer == null) {  // 检查是否获取到玩家
             receiver.sendMessage(getPlayerNotOnline());
             return;
         }
-        outputDeathLog(target_player, receiver);
+        outputDeathLog(targetPlayer, receiver);
     }
 
     /**

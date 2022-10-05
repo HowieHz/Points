@@ -11,7 +11,7 @@ public class AntiBoomInfo {
 
     /**
      * @param type        需要检查的EntityType
-     * @param configPath 需要检查的config_path
+     * @param configPath 需要检查的configPath
      */
     public AntiBoomInfo(EntityType type, String configPath) {
         this.type = type;

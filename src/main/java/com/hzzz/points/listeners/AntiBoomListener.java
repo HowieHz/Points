@@ -146,17 +146,17 @@ public class AntiBoomListener implements NamedListener {
     public void onBadOrRespawnAnchor(PlayerInteractEvent e) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         Player player = e.getPlayer();
-        String world_name = player.getWorld().getName();
+        String worldName = player.getWorld().getName();
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) { // 是不是右手
             // anti-boom.respawn-anchor.enable
             if (config.getBoolean("anti-boom.respawn-anchor.enable", false)
                     && Objects.requireNonNull(e.getClickedBlock()).getType().equals(RESPAWN_ANCHOR) // 是不是重生锚
                     && (config.getBoolean("anti-boom.respawn-anchor.world", false)  // 主世界使用
-                    && world_name.equals(config.getString("anti-boom.world-name.world", "world"))
+                    && worldName.equals(config.getString("anti-boom.world-name.world", "world"))
                     || (config.getBoolean("anti-boom.respawn-anchor.world-nether", false)  // 下界使用
-                    && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
+                    && worldName.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
                     || (config.getBoolean("anti-boom.respawn-anchor.world-the-end", false)  // 末地使用
-                    && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))))) {
+                    && worldName.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))))) {
                 e.setCancelled(true);
                 player.sendMessage(Text.getUseRespawnAnchorCanceled());
             }
@@ -166,11 +166,11 @@ public class AntiBoomListener implements NamedListener {
                 for (Material bed : beds) {  // 遍历
                     if (Objects.requireNonNull(e.getClickedBlock()).getType().equals(bed)) {  // 是不是床
                         if ((config.getBoolean("anti-boom.bed.world", false)  // 主世界睡觉
-                                && world_name.equals(config.getString("anti-boom.world-name.world", "world")))
+                                && worldName.equals(config.getString("anti-boom.world-name.world", "world")))
                                 || (config.getBoolean("anti-boom.bed.world-nether", false)  // 下界睡觉
-                                && world_name.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
+                                && worldName.equals(config.getString("anti-boom.world-name.world-nether", "world_nether")))
                                 || (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
-                                && world_name.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
+                                && worldName.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                             e.setCancelled(true);
                             player.sendMessage(Text.getEnterBedCanceled());
                         }
