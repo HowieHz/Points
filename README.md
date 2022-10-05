@@ -117,8 +117,6 @@ A paper plugin, some useful points
 
 ## 构建
 
-项目使用java16进行构建 
-
 paper-api版本为1.16.5 向后兼容到1.19.2
 
 最新开发版自动构建可在github action中下载
@@ -133,3 +131,6 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 2. 异步数据库操作
 3. 重写部分类
 4. 支持mysql等数据库存储
+5. 配置文件占位符检查
+6. 在服务器隐身（玩家列表也看不到的那种可以用来抓挂）
+7. 右键打开潜影箱
