@@ -35,11 +35,11 @@ import static com.hzzz.points.utils.Utils.*;
 public final class Points extends JavaPlugin {
     private File langConfigFile;  // 语言配置文件
     private FileConfiguration langConfig = null;  // 语言配置文件
-    private static Points INSTANCE;
+    private static Points instance;
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
 
-    private final List<NamedListener> event_handlers = new ArrayList<>();  // 已注册的监听器
-    private final Collection<? extends Player> online_players = getServer().getOnlinePlayers();  // 在线玩家列表
+    private final List<NamedListener> eventHandlers = new ArrayList<>();  // 已注册的监听器
+    private final Collection<? extends Player> onlinePlayers = getServer().getOnlinePlayers();  // 在线玩家列表
     public static final Logger pluginLogger = Logger.getLogger("Points");  // Points.pluginLogger
 
     /**
@@ -48,7 +48,7 @@ public final class Points extends JavaPlugin {
      * @return Points实例
      */
     public static Points getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -56,7 +56,7 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onLoad() {
-        INSTANCE = this;
+        instance = this;
 
         // 如果配置文件不存在, 保存默认的配置
         // config.yml
@@ -161,7 +161,7 @@ public final class Points extends JavaPlugin {
      * @param listener_instance 需要注册的监听器的实例
      */
     private void registerEvents(NamedListener listener_instance) {
-        event_handlers.add(listener_instance);
+        eventHandlers.add(listener_instance);
         Bukkit.getPluginManager().registerEvents(listener_instance, this);
         logDetailedInfo(String.format(getRegisterListeners(), listener_instance.getName()));  // 详细log
     }
@@ -183,11 +183,11 @@ public final class Points extends JavaPlugin {
      * 注销{@link #registerEvents}注册的监听器
      */
     private void disableEventHandler() {
-        for (NamedListener listener : event_handlers) {
+        for (NamedListener listener : eventHandlers) {
             HandlerList.unregisterAll(listener);
             logDetailedInfo(String.format(getAlreadyDisableListeners(), listener.getName()));  // 详细log
         }
-        event_handlers.clear();
+        eventHandlers.clear();
         logDetailedInfo(getAllListenersDisabled());  // 详细log
     }
 
