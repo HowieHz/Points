@@ -66,11 +66,11 @@ public final class Points extends JavaPlugin {
         // config.yml
         saveDefaultConfig();
 
-        // 读取并加载语言文件 要在加载配置文件之后，因为要读取配置文件中language.file_name项
+        // 保存语言文件 加载文字 要在加载配置文件之后，因为要读取配置文件中language.file_name项
         saveLangConfig();
 
         // 插件正在加载 这个要在读取加载语言文件之后，不然输出的就是null
-        logInfo(getPluginLoading());
+        logInfo(getMessage("plugin_loading"));
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
@@ -97,7 +97,7 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        logInfo(getPluginStarting());  // 插件正在启动
+        logInfo(getMessage("plugin_starting"));  // 插件正在启动
 
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
@@ -220,6 +220,9 @@ public final class Points extends JavaPlugin {
      * @return 语言配置文件实例
      */
     public FileConfiguration getLangConfig() {
+        if (this.langConfig == null) {
+            reloadLangConfig();
+        }
         return this.langConfig;
     }
 
@@ -227,14 +230,15 @@ public final class Points extends JavaPlugin {
      * 初始化和读取语言配置文件
      */
     private void saveLangConfig() {
-        langConfigFile = new File(getDataFolder(), String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn")));
+        final String fileName = String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn"));
+        langConfigFile = new File(getDataFolder(), fileName);
         // 配置文件不存在就初始化文件夹和配置文件
         if (!langConfigFile.exists()) {
             langConfigFile.getParentFile().mkdirs();
-            saveResource(String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn")), false);
+            saveResource(fileName, false);
         }
 
-        // 读取配置文件, 加载文字
+        // 读取配置文件，加载文字
         reloadLangConfig();
     }
 
@@ -242,6 +246,7 @@ public final class Points extends JavaPlugin {
      * 重新读取语言配置文件，加载文字
      */
     private void reloadLangConfig() {
+        langConfigFile = new File(getDataFolder(), String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn")));
         // 读取配置文件
         langConfig = YamlConfiguration.loadConfiguration(langConfigFile);
         // 加载文字

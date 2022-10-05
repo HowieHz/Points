@@ -2,15 +2,16 @@ package com.hzzz.points.utils;
 
 import com.hzzz.points.Points;
 
+import java.util.HashMap;
+
 import static com.hzzz.points.utils.Utils.logError;
-import static org.bukkit.ChatColor.*;
+import static org.bukkit.ChatColor.BLUE;
 
 /**
  * 文字枚举
  */
 public final class Text {  // TODO 重构这个类 可以是map
-    private static String plugin_starting;
-    private static String plugin_loading;
+    private static final HashMap<String, String> messageMap = new HashMap<>();
     private static String plugin_disabling;
     private static String plugin_started;
     private static String plugin_loaded;
@@ -59,6 +60,16 @@ public final class Text {  // TODO 重构这个类 可以是map
     private static String help_enderchest;
 
     /**
+     * 读取消息
+     *
+     * @param msgKey 消息键
+     * @return 消息
+     */
+    public static String getMessage(String msgKey) {
+        return messageMap.get(msgKey);
+    }
+
+    /**
      * 从lang\*.yml里面读取文字
      *
      * @param path         配置文件中的路径
@@ -80,8 +91,8 @@ public final class Text {  // TODO 重构这个类 可以是map
      * 加载文字
      */
     public static void loadText() {
-        plugin_starting = BLUE + getLang("message.plugin.starting", "<Points>插件正在启动");
-        plugin_loading = BLUE + getLang("message.plugin.loading", "<Points>插件正在加载");
+        messageMap.put("plugin_starting", BLUE + getLang("message.plugin.starting", "<Points>插件正在启动"));
+        messageMap.put("plugin_loading", BLUE + getLang("message.plugin.loading", "<Points>插件正在加载"));
         plugin_disabling = BLUE + getLang("message.plugin.disabling", "<Points>插件正在关闭");
         plugin_started = BLUE + getLang("message.plugin.started", "<Points>插件已启动");
         plugin_loaded = BLUE + getLang("message.plugin.loaded", "<Points>插件已加载");
@@ -145,14 +156,6 @@ public final class Text {  // TODO 重构这个类 可以是map
                 """);
         help_where = getLang("commands.where.help", "使用方法: /where 玩家名 或 /where");
         help_enderchest = getLang("commands.enderchest.help", "使用方法: /enderchest 玩家名 或 /enderchest");
-    }
-
-    public static String getPluginStarting() {
-        return plugin_starting;
-    }
-
-    public static String getPluginLoading() {
-        return plugin_loading;
     }
 
     public static String getPluginDisabling() {
