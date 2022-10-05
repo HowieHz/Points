@@ -243,7 +243,7 @@ public final class Points extends JavaPlugin {
     }
 
     /**
-     * 重新读取语言配置文件，加载文字
+     * 读取语言配置文件，加载文字
      */
     private void reloadLangConfig() {
         langConfigFile = new File(getDataFolder(), String.format("lang/%s.yml", getConfig().getString("language.file_name", "zh_cn")));
