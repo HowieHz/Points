@@ -10,7 +10,7 @@ import static com.hzzz.points.utils.Utils.logError;
 /**
  * 管理config.sqlite
  */
-public class ConfigSQLite extends BaseSQLite {
+public final class ConfigSQLite extends BaseSQLite {
     private static ConfigSQLite instance;
 
     static {

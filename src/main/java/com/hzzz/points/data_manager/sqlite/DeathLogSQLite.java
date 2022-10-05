@@ -10,7 +10,7 @@ import static com.hzzz.points.utils.Utils.logError;
 /**
  * 管理death_log.sqlite
  */
-public class DeathLogSQLite extends BaseSQLite {
+public final class DeathLogSQLite extends BaseSQLite {
     private static DeathLogSQLite instance;
 
     static {

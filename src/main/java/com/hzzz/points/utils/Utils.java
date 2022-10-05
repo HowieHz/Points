@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 /**
  * 工具类
  */
-public class Utils {
+public final class Utils {
     /**
      * 工具类禁止实例化
      */
@@ -17,7 +17,7 @@ public class Utils {
     /**
      * 检查是否对象有权限(支持*通配符)
      *
-     * @param sender          被检查权限的对象
+     * @param sender         被检查权限的对象
      * @param permissionName 权限节点名
      * @return 是否有权限，有权限为ture，无权限为false
      */

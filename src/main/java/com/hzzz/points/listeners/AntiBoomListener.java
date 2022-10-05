@@ -21,7 +21,7 @@ import static org.bukkit.Material.*;
 /**
  * 防爆监听器
  */
-public class AntiBoomListener implements NamedListener {
+public final class AntiBoomListener implements NamedListener {
     private static final AntiBoomListener instance = new AntiBoomListener();
     private static final String NAME = "防爆";
     private static final AntiBoomInfo[] antiBoomInfo = {

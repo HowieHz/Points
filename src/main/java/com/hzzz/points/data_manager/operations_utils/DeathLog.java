@@ -24,7 +24,7 @@ import static com.hzzz.points.utils.Utils.*;
 /**
  * 有关DeathLog的数据库操作
  */
-public class DeathLog {
+public final class DeathLog {
     private static final PreparedStatement psDeleteDeathLog = DeathLogSQLite.getInstance().psDeleteDeathLog;
     private static final PreparedStatement psInsertDeathLog = DeathLogSQLite.getInstance().psInsertDeathLog;
     private static final PreparedStatement psSelectDeathLog = DeathLogSQLite.getInstance().psSelectDeathLog;

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * 有关DeathMessage的数据库操作
  */
-public class DeathMessageConfig {
+public final class DeathMessageConfig {
     private static final PreparedStatement psInsertDeathConfig = ConfigSQLite.getInstance().psInsertDeathConfig;
     private static final PreparedStatement psSelectDeathConfig = ConfigSQLite.getInstance().psSelectDeathConfig;
     private static final PreparedStatement psUpdateDeathConfig = ConfigSQLite.getInstance().psUpdateDeathConfig;
