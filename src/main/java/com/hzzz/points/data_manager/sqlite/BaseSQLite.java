@@ -1,11 +1,11 @@
 package com.hzzz.points.data_manager.sqlite;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.data_manager.sqlite.utils.JdbcUtils;
 import com.hzzz.points.utils.Text;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,6 +21,18 @@ import static com.hzzz.points.utils.Utils.logError;
 public abstract class BaseSQLite {
     protected final Connection con;  // 连接
     protected final Statement st;  // 数据库操作接口
+
+    private static final String driver = "org.sqlite.JDBC";
+
+    // 加载驱动
+    static {
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            logError(Text.getDatabaseDriverError());
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 获取操作接口Statement
@@ -48,7 +60,7 @@ public abstract class BaseSQLite {
      */
     protected BaseSQLite(String url) throws SQLException {
         // 连接数据库 初始化st
-        con = JdbcUtils.getConnection(url);
+        con = DriverManager.getConnection(url);
         st = con.createStatement();
     }
 
