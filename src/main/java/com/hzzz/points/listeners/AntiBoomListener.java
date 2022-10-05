@@ -23,7 +23,7 @@ import static org.bukkit.Material.*;
  */
 public class AntiBoomListener implements NamedListener {
     private static final AntiBoomListener instance = new AntiBoomListener();
-    private static final String name = "防爆";
+    private static final String NAME = "防爆";
     private static final AntiBoomInfo[] antiBoomInfo = {
             new AntiBoomInfo(EntityType.ENDER_CRYSTAL, "anti-boom.ender-crystal.%s"),
             new AntiBoomInfo(EntityType.PRIMED_TNT, "anti-boom.tnt.%s"),
@@ -71,7 +71,7 @@ public class AntiBoomListener implements NamedListener {
      */
     @Override
     public String getName() {
-        return name;
+        return NAME;
     }
 
     /**

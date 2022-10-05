@@ -98,16 +98,14 @@ public final class Where implements TabExecutor {
         /* where
          * where <player_name>
          */
-        if (args.length == 0 || args.length == 1) {
-            // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
-            if (specialCheckPermission("where",
-                    sender,
-                    "points.command.where.other",
-                    "points.command.where.other.%s",
-                    args[0])
-            ) {
-                return null;  // 提示玩家名
-            }
+        if ((args.length == 0 || args.length == 1)  // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
+                && (specialCheckPermission("where",
+                sender,
+                "points.command.where.other",
+                "points.command.where.other.%s",
+                args[0])
+        )) {
+            return null;  // 提示玩家名
         }
         // 前两个参数已经输入完成，不继续提示
         return Collections.singletonList("");

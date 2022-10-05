@@ -21,7 +21,7 @@ import static com.hzzz.points.data_manager.operations_utils.DeathLog.insertDeath
  */
 public final class DeathListener implements NamedListener {
     private static final DeathListener instance = new DeathListener();
-    private static final String name = "玩家死亡事件";
+    private static final String NAME = "玩家死亡事件";
 
     /**
      * 获取监听器实例
@@ -45,7 +45,7 @@ public final class DeathListener implements NamedListener {
      */
     @Override
     public String getName() {
-        return name;
+        return NAME;
     }
 
     /**

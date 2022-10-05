@@ -22,12 +22,12 @@ public abstract class BaseSQLite {
     protected final Connection con;  // 连接
     protected final Statement st;  // 数据库操作接口
 
-    private static final String driver = "org.sqlite.JDBC";
+    private static final String DRIVER = "org.sqlite.JDBC";
 
     // 加载驱动
     static {
         try {
-            Class.forName(driver);
+            Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
             logError(Text.getDatabaseDriverError());
             e.printStackTrace();

@@ -1,19 +1,24 @@
 package com.hzzz.points.data_manager.sqlite;
 
+import com.hzzz.points.utils.Text;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import static com.hzzz.points.utils.Utils.logError;
 
 /**
  * 管理config.sqlite
  */
 public class ConfigSQLite extends BaseSQLite {
-    private static final ConfigSQLite instance;
+    private static ConfigSQLite instance;
 
     static {
         try {
             instance = new ConfigSQLite();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logError(Text.getDatabaseSetupError());
+            e.printStackTrace();
         }
     }
 
