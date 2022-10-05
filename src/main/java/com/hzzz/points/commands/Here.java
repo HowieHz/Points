@@ -23,7 +23,7 @@ import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermissi
  * here指令的执行器以及tab补全
  */
 public final class Here implements TabExecutor {
-    private static final Here INSTANCE = new Here();
+    private static final Here instance = new Here();
 
     /**
      * 获取实例
@@ -31,7 +31,7 @@ public final class Here implements TabExecutor {
      * @return Instance of executor
      */
     public static Here getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     /**

@@ -17,9 +17,9 @@ public class ConfigSQLite extends BaseSQLite {
         }
     }
 
-    public final PreparedStatement ps_insert_death_config;
-    public final PreparedStatement ps_select_death_config;
-    public final PreparedStatement ps_update_death_config;
+    public final PreparedStatement psInsertDeathConfig;
+    public final PreparedStatement psSelectDeathConfig;
+    public final PreparedStatement psUpdateDeathConfig;
 
     /**
      * 获取数据库实例
@@ -42,8 +42,8 @@ public class ConfigSQLite extends BaseSQLite {
                 "enable INTEGER NOT NULL" +
                 ")");
         // 初始化
-        ps_insert_death_config = con.prepareStatement("INSERT OR IGNORE INTO DeathMessageConfig(uuid, username, enable) VALUES (?, ?, 1)");
-        ps_select_death_config = con.prepareStatement("SELECT * FROM DeathMessageConfig WHERE uuid=?");
-        ps_update_death_config = con.prepareStatement("UPDATE DeathMessageConfig SET enable=? WHERE uuid=?");
+        psInsertDeathConfig = con.prepareStatement("INSERT OR IGNORE INTO DeathMessageConfig(uuid, username, enable) VALUES (?, ?, 1)");
+        psSelectDeathConfig = con.prepareStatement("SELECT * FROM DeathMessageConfig WHERE uuid=?");
+        psUpdateDeathConfig = con.prepareStatement("UPDATE DeathMessageConfig SET enable=? WHERE uuid=?");
     }
 }

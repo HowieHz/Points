@@ -21,9 +21,9 @@ import static com.hzzz.points.utils.Utils.*;
  * death指令的执行器以及tab补全
  */
 public final class Death implements TabExecutor {
-    private static final Death INSTANCE = new Death();
+    private static final Death instance = new Death();
 
-    private static final HashMap<UUID, Long> last_success_get_death_log_timestamp = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
+    private static final HashMap<UUID, Long> lastSuccessGetDeathLogTimestamp = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
 
     /**
      * 获取实例
@@ -31,7 +31,7 @@ public final class Death implements TabExecutor {
      * @return Instance of executor
      */
     public static Death getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -150,16 +150,16 @@ public final class Death implements TabExecutor {
     private static boolean checkCommandFrequencyLimit(Player player) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-            if (last_success_get_death_log_timestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
-                if ((System.currentTimeMillis() - last_success_get_death_log_timestamp.get(player.getUniqueId()))
+            if (lastSuccessGetDeathLogTimestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
+                if ((System.currentTimeMillis() - lastSuccessGetDeathLogTimestamp.get(player.getUniqueId()))
                         < (config.getInt("death.log.command.frequency-limit.second", 1)
                         / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
                     return true;
                 } else {  // 更新
-                    last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                    lastSuccessGetDeathLogTimestamp.put(player.getUniqueId(), System.currentTimeMillis());
                 }
             } else {  // 初始化
-                last_success_get_death_log_timestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                lastSuccessGetDeathLogTimestamp.put(player.getUniqueId(), System.currentTimeMillis());
             }
         }
         return false;
@@ -181,9 +181,9 @@ public final class Death implements TabExecutor {
                 // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
                 // 交叉检测，开启哪个模块有哪个模块的补全提示
                 // 因为没有第二个参数，所以没法检测 points.command.death.log.other.玩家名 的权限
-                List<String> complete_arrays = new ArrayList<>();
+                List<String> completeArrays = new ArrayList<>();
                 if (config.getBoolean("death.message.enable", false)) {
-                    complete_arrays.add("message");
+                    completeArrays.add("message");
                 }
                 if (config.getBoolean("death.log.enable", false)
                         && (specialCheckPermission("death.log",
@@ -193,9 +193,9 @@ public final class Death implements TabExecutor {
                         sender,
                         "points.command.death.log.other",
                         "other"))) {
-                    complete_arrays.add("log");
+                    completeArrays.add("log");
                 }
-                return complete_arrays;
+                return completeArrays;
             }
             case 2 -> {
                 // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））

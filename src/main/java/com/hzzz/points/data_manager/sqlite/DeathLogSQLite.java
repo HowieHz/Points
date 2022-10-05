@@ -22,9 +22,9 @@ public class DeathLogSQLite extends BaseSQLite {
         }
     }
 
-    public final PreparedStatement ps_delete_death_log;
-    public final PreparedStatement ps_insert_death_log;
-    public final PreparedStatement ps_select_death_log;
+    public final PreparedStatement psDeleteDeathLog;
+    public final PreparedStatement psInsertDeathLog;
+    public final PreparedStatement psSelectDeathLog;
 
     /**
      * 获取数据库实例
@@ -52,12 +52,12 @@ public class DeathLogSQLite extends BaseSQLite {
                 "deathTime TIMESTAMP NOT NULL DEFAULT (strftime('%s','now'))" +
                 ")");
         // 初始化
-        ps_delete_death_log = con.prepareStatement("DELETE FROM DeathLog WHERE rowid in (SELECT rowid FROM DeathLog " +
+        psDeleteDeathLog = con.prepareStatement("DELETE FROM DeathLog WHERE rowid in (SELECT rowid FROM DeathLog " +
                 "WHERE uuid=?" +
                 "ORDER BY deathTime " +
                 "LIMIT ?)");
-        ps_insert_death_log = con.prepareStatement("INSERT INTO DeathLog(uuid, username, deathReason, world, x, y, z) " +
+        psInsertDeathLog = con.prepareStatement("INSERT INTO DeathLog(uuid, username, deathReason, world, x, y, z) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)");
-        ps_select_death_log = con.prepareStatement("SELECT * FROM DeathLog WHERE uuid=?");
+        psSelectDeathLog = con.prepareStatement("SELECT * FROM DeathLog WHERE uuid=?");
     }
 }

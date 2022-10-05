@@ -19,7 +19,7 @@ import static com.hzzz.points.utils.Utils.logInfo;
  * points指令的执行器以及tab补全
  */
 public final class PointsCommand implements TabExecutor {
-    private static final PointsCommand INSTANCE = new PointsCommand();
+    private static final PointsCommand instance = new PointsCommand();
 
     /**
      * 获取实例
@@ -27,7 +27,7 @@ public final class PointsCommand implements TabExecutor {
      * @return Instance of executor
      */
     public static PointsCommand getInstance() {
-        return INSTANCE;
+        return instance;
     }
 
     /**
@@ -76,18 +76,15 @@ public final class PointsCommand implements TabExecutor {
          * points help
          * points reload
          */
-        switch (args.length) {
-            case 0, 1 -> {
-                // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /points ），或者第一个参数输入到一半（此时长度为一 /points he……））
-                if (commonCheckPermission("points.reload", sender, "points.reload")) {
-                    return Arrays.asList("help", "reload");
-                }
-                return Collections.singletonList("help");
+        if (args.length == 0 || args.length == 1) {
+            // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /points ），或者第一个参数输入到一半（此时长度为一 /points he……））
+            if (commonCheckPermission("points.reload", sender, "points.reload")) {
+                return Arrays.asList("help", "reload");
             }
-            default -> {
-                // 前一个参数已经输入完成，不继续提示
-                return Collections.singletonList("");
-            }
+            return Collections.singletonList("help");
+        } else {
+            // 前一个参数已经输入完成，不继续提示
+            return Collections.singletonList("");
         }
     }
 }

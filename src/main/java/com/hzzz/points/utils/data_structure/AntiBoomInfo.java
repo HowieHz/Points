@@ -7,14 +7,14 @@ import org.bukkit.entity.EntityType;
  */
 public class AntiBoomInfo {
     public final EntityType type;
-    public final String config_path;
+    public final String configPath;
 
     /**
      * @param type        需要检查的EntityType
-     * @param config_path 需要检查的config_path
+     * @param configPath 需要检查的config_path
      */
-    public AntiBoomInfo(EntityType type, String config_path) {
+    public AntiBoomInfo(EntityType type, String configPath) {
         this.type = type;
-        this.config_path = config_path;
+        this.configPath = configPath;
     }
 }

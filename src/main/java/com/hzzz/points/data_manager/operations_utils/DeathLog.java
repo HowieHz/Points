@@ -25,9 +25,9 @@ import static com.hzzz.points.utils.Utils.*;
  * 有关DeathLog的数据库操作
  */
 public class DeathLog {
-    private static final PreparedStatement ps_delete_death_log = DeathLogSQLite.getInstance().ps_delete_death_log;
-    private static final PreparedStatement ps_insert_death_log = DeathLogSQLite.getInstance().ps_insert_death_log;
-    private static final PreparedStatement ps_select_death_log = DeathLogSQLite.getInstance().ps_select_death_log;
+    private static final PreparedStatement ps_delete_death_log = DeathLogSQLite.getInstance().psDeleteDeathLog;
+    private static final PreparedStatement ps_insert_death_log = DeathLogSQLite.getInstance().psInsertDeathLog;
+    private static final PreparedStatement ps_select_death_log = DeathLogSQLite.getInstance().psSelectDeathLog;
 
     /**
      * 工具类禁止实例化
@@ -39,15 +39,15 @@ public class DeathLog {
     /**
      * 增加死亡记录的操作
      *
-     * @param target_player 目标玩家对象
+     * @param targetPlayer 目标玩家对象
      * @param death_reason  死亡原因
      */
-    public static void insertDeathLog(Player target_player, String death_reason) {
+    public static void insertDeathLog(Player targetPlayer, String death_reason) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
         int count;  // 目前记录条数
         try {
-            count = countDeathLog(target_player.getUniqueId());  // 获取目前记录条数
+            count = countDeathLog(targetPlayer.getUniqueId());  // 获取目前记录条数
         } catch (SQLException e) {
             logError(getDatabaseError());
             e.printStackTrace();
@@ -55,27 +55,27 @@ public class DeathLog {
         }
 
         try {
-            logDetailedInfo(String.format(getReadDeathLogResult(), target_player.getName(), count, limit));
+            logDetailedInfo(String.format(getReadDeathLogResult(), targetPlayer.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
-                ps_delete_death_log.setString(1, target_player.getUniqueId().toString());
+                ps_delete_death_log.setString(1, targetPlayer.getUniqueId().toString());
                 ps_delete_death_log.setInt(2, count - limit + 1);
                 ps_delete_death_log.execute();
             }
 
             // 增加新的
-            Location player_location = target_player.getLocation();  // 获取位置
+            Location player_location = targetPlayer.getLocation();  // 获取位置
 
-            ps_insert_death_log.setString(1, target_player.getUniqueId().toString());
-            ps_insert_death_log.setString(2, target_player.getName());
+            ps_insert_death_log.setString(1, targetPlayer.getUniqueId().toString());
+            ps_insert_death_log.setString(2, targetPlayer.getName());
             ps_insert_death_log.setString(3, death_reason);
-            ps_insert_death_log.setString(4, target_player.getWorld().getName());
+            ps_insert_death_log.setString(4, targetPlayer.getWorld().getName());
             ps_insert_death_log.setDouble(5, player_location.getX());
             ps_insert_death_log.setDouble(6, player_location.getY());
             ps_insert_death_log.setDouble(7, player_location.getZ());
             ps_insert_death_log.execute();
         } catch (SQLException e) {
-            logError(String.format(getInsertDeathRecordFail(), target_player.getName()));  // 未成功录入死亡信息
+            logError(String.format(getInsertDeathRecordFail(), targetPlayer.getName()));  // 未成功录入死亡信息
             e.printStackTrace();
         }
     }

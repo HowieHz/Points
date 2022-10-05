@@ -99,7 +99,7 @@ public final class Points extends JavaPlugin {
         FileConfiguration config = getConfig();
 
         // 注册指令
-        CommandInfo[] command_info = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
+        CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
                 new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
                 new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
                 new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
@@ -108,7 +108,7 @@ public final class Points extends JavaPlugin {
                 new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
         };
 
-        for (CommandInfo info : command_info) {
+        for (CommandInfo info : commandInfos) {
             if (info.and) {
                 if (info.enabling == null) {
                     setExecutor(info.command, info.executor);
@@ -156,26 +156,26 @@ public final class Points extends JavaPlugin {
 
     /**
      * 注册监听器<br>
-     * 替代Bukkit.getPluginManager().registerEvents(listener_instance, this)<br>
+     * 替代Bukkit.getPluginManager().registerEvents(listenerInstance, this)<br>
      *
-     * @param listener_instance 需要注册的监听器的实例
+     * @param listenerInstance 需要注册的监听器的实例
      */
-    private void registerEvents(NamedListener listener_instance) {
-        eventHandlers.add(listener_instance);
-        Bukkit.getPluginManager().registerEvents(listener_instance, this);
-        logDetailedInfo(String.format(getRegisterListeners(), listener_instance.getName()));  // 详细log
+    private void registerEvents(NamedListener listenerInstance) {
+        eventHandlers.add(listenerInstance);
+        Bukkit.getPluginManager().registerEvents(listenerInstance, this);
+        logDetailedInfo(String.format(getRegisterListeners(), listenerInstance.getName()));  // 详细log
     }
 
     /**
      * 注册指令执行器(以及tab补全)<br>
-     * 替代需要Bukkit.getPluginManager().registerEvents(listener_instance, this)<br>
+     * 替代需要Bukkit.getPluginManager().registerEvents(listenerInstance, this)<br>
      *
      * @param command           根指令
-     * @param executor_instance 执行器实例
+     * @param executorInstance 执行器实例
      */
-    private void setExecutor(String command, CommandExecutor executor_instance) {
+    private void setExecutor(String command, CommandExecutor executorInstance) {
         commands.add(command);
-        Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executor_instance);
+        Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executorInstance);
         logDetailedInfo(String.format(getSetExecutor(), command));  // 详细log
     }
 
