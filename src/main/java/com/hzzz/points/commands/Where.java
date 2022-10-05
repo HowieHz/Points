@@ -1,6 +1,6 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.text.Text;
+import com.hzzz.points.utils.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

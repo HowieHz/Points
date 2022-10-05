@@ -1,7 +1,7 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.text.Text;
+import com.hzzz.points.utils.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;

@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-import static com.hzzz.points.text.Text.*;
+import static com.hzzz.points.utils.Text.*;
 import static com.hzzz.points.utils.Utils.*;
 
 /**

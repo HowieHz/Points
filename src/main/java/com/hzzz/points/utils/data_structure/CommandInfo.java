@@ -1,4 +1,4 @@
-package com.hzzz.points.data_structure;
+package com.hzzz.points.utils.data_structure;
 
 import org.bukkit.command.TabExecutor;
 

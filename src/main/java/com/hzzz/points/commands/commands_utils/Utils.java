@@ -1,7 +1,7 @@
 package com.hzzz.points.commands.commands_utils;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.text.Text;
+import com.hzzz.points.utils.Text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;

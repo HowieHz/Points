@@ -1,4 +1,4 @@
-package com.hzzz.points.text;
+package com.hzzz.points.utils;
 
 import com.hzzz.points.Points;
 

@@ -1,7 +1,7 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.interfaces.NamedListener;
+import com.hzzz.points.listeners.interfaces.NamedListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.configuration.file.FileConfiguration;

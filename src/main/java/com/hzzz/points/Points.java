@@ -3,8 +3,8 @@ package com.hzzz.points;
 import com.hzzz.points.commands.*;
 import com.hzzz.points.data_manager.sqlite.ConfigSQLite;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
-import com.hzzz.points.data_structure.CommandInfo;
-import com.hzzz.points.interfaces.NamedListener;
+import com.hzzz.points.utils.data_structure.CommandInfo;
+import com.hzzz.points.listeners.interfaces.NamedListener;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
 import org.bstats.bukkit.Metrics;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.hzzz.points.text.Text.*;
+import static com.hzzz.points.utils.Text.*;
 import static com.hzzz.points.utils.Utils.*;
 
 /**

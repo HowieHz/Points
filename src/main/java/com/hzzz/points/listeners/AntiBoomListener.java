@@ -1,9 +1,9 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.data_structure.AntiBoomInfo;
-import com.hzzz.points.interfaces.NamedListener;
-import com.hzzz.points.text.Text;
+import com.hzzz.points.utils.data_structure.AntiBoomInfo;
+import com.hzzz.points.listeners.interfaces.NamedListener;
+import com.hzzz.points.utils.Text;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;

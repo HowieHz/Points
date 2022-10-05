@@ -1,6 +1,6 @@
 package com.hzzz.points.data_manager.sqlite.utils;
 
-import com.hzzz.points.text.Text;
+import com.hzzz.points.utils.Text;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
