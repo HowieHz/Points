@@ -3,22 +3,20 @@ package com.hzzz.points;
 import com.hzzz.points.commands.*;
 import com.hzzz.points.data_manager.sqlite.ConfigSQLite;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
-import com.hzzz.points.utils.data_structure.CommandInfo;
-import com.hzzz.points.listeners.interfaces.NamedListener;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
+import com.hzzz.points.listeners.interfaces.NamedListener;
+import com.hzzz.points.utils.data_structure.CommandInfo;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -37,9 +35,15 @@ public final class Points extends JavaPlugin {
     private FileConfiguration langConfig = null;  // 语言配置文件
     private static Points instance;
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
-
     private final List<NamedListener> eventHandlers = new ArrayList<>();  // 已注册的监听器
-    private final Collection<? extends Player> onlinePlayers = getServer().getOnlinePlayers();  // 在线玩家列表
+    private final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
+            new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
+            new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
+            new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
+            new CommandInfo("death", Death.getInstance(), "death.enable",
+                    DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady()),  // death指令
+            new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
+    };
     public static final Logger pluginLogger = Logger.getLogger("Points");  // Points.pluginLogger
 
     /**
@@ -99,15 +103,6 @@ public final class Points extends JavaPlugin {
         FileConfiguration config = getConfig();
 
         // 注册指令
-        CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
-                new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
-                new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
-                new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
-                new CommandInfo("death", Death.getInstance(), "death.enable",
-                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady()),  // death指令
-                new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
-        };
-
         for (CommandInfo info : commandInfos) {
             if (info.and) {
                 if (info.enabling == null) {
@@ -170,7 +165,7 @@ public final class Points extends JavaPlugin {
      * 注册指令执行器(以及tab补全)<br>
      * 替代需要Bukkit.getPluginManager().registerEvents(listenerInstance, this)<br>
      *
-     * @param command           根指令
+     * @param command          根指令
      * @param executorInstance 执行器实例
      */
     private void setExecutor(String command, CommandExecutor executorInstance) {
