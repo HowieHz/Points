@@ -56,13 +56,13 @@ public final class Death implements TabExecutor {
                 if (config.getBoolean("death.message.enable", false)) {  // 检查子模块是否开启
                     // 检查执行者
                     if (!(sender instanceof Player player)) {
-                        sender.sendMessage(getMessage(player_only));
+                        sender.sendMessage(getMessage(playerOnly));
                         return true;
                     }
                     // 权限检查
                     if (config.getBoolean("death.message.command-permission.enable", false)
                             && !checkPermission(sender, config.getString("death.message.command-permission.node", "points.command.death.message"))) {
-                        sender.sendMessage(getMessage(no_permission));
+                        sender.sendMessage(getMessage(noPermission));
                         return true;
                     }
                     if (args.length > 1) {  // 参数过多语法错误
@@ -94,13 +94,13 @@ public final class Death implements TabExecutor {
                         if (!specialCheckPermission("death.log",
                                 sender,
                                 "points.command.death.log.self")) {
-                            sender.sendMessage(getMessage(no_permission));
+                            sender.sendMessage(getMessage(noPermission));
                             return true;
                         }
 
                         // 检查执行者
                         if (!(sender instanceof Player player)) {
-                            sender.sendMessage(getMessage(player_only));
+                            sender.sendMessage(getMessage(playerOnly));
                             return true;
                         }
 
@@ -120,7 +120,7 @@ public final class Death implements TabExecutor {
                                 "points.command.death.log.other.%s",
                                 args[1])
                         ) {
-                            sender.sendMessage(getMessage(no_permission));
+                            sender.sendMessage(getMessage(noPermission));
                             return true;
                         }
 

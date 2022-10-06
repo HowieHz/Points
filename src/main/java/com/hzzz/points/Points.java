@@ -72,16 +72,16 @@ public final class Points extends JavaPlugin {
         saveLangConfig();
 
         // 插件正在加载 这个要在读取加载语言文件之后，不然输出的就是null
-        logInfo(getMessage(plugin_loading));
+        logInfo(getMessage(pluginLoading));
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {
             if (file.mkdirs()) {
-                logDetailedInfo(getMessage(create_database_folder_successfully));
+                logDetailedInfo(getMessage(createDatabaseFolderSuccessfully));
             } else {
-                logError(getMessage(create_database_folder_failed));
+                logError(getMessage(createDatabaseFolderFailed));
             }
         }
 
@@ -91,7 +91,7 @@ public final class Points extends JavaPlugin {
             new Metrics(this, pluginId);
         }
 
-        logInfo(getMessage(plugin_loaded));  // 插件已加载
+        logInfo(getMessage(pluginLoaded));  // 插件已加载
     }
 
     /**
@@ -99,7 +99,7 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        logInfo(getMessage(plugin_starting));  // 插件正在启动
+        logInfo(getMessage(pluginStarting));  // 插件正在启动
 
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
@@ -137,18 +137,18 @@ public final class Points extends JavaPlugin {
             registerEvents(AntiBoomListener.getInstance());
         }
 
-        logInfo(getMessage(plugin_started));  // 插件已启动
+        logInfo(getMessage(pluginStarted));  // 插件已启动
     }
 
     @Override
     public void onDisable() {
-        logInfo(getMessage(plugin_disabling));  // 插件正在关闭
+        logInfo(getMessage(pluginDisabling));  // 插件正在关闭
 
         Bukkit.getScheduler().cancelTasks(this);  // 关闭插件时, 确保取消我调度的所有任务
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
 
-        logInfo(getMessage(plugin_disabled));  // 插件已关闭
+        logInfo(getMessage(pluginDisabled));  // 插件已关闭
     }
 
     /**

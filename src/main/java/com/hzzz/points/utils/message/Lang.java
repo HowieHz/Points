@@ -5,7 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.HashMap;
+import java.util.EnumMap;
 
 import static com.hzzz.points.utils.Utils.logError;
 import static org.bukkit.ChatColor.BLUE;
@@ -15,8 +15,14 @@ import static org.bukkit.ChatColor.BLUE;
  */
 public final class Lang {
     private static FileConfiguration langConfig = null;  // 语言配置文件
-    private static final HashMap<MsgKey, String> messageMap = new HashMap<>();
+    private static final EnumMap<MsgKey, String> messageMap = new EnumMap<>(MsgKey.class);
 
+    /**
+     * 工具类禁止实例化
+     */
+    private Lang() {
+        throw new IllegalStateException("工具类禁止实例化");
+    }
 
     /**
      * 读取消息
@@ -41,19 +47,19 @@ public final class Lang {
     /**
      * 从lang\*.yml里面读取文字
      *
-     * @param path         配置文件中的路径
-     * @param default_text 备选文字
+     * @param path        配置文件中的路径
+     * @param defaultText 备选文字
      * @return 读取出的文字
      */
-    private static String getLang(String path, String default_text) {
+    private static String getLang(String path, String defaultText) {
         if (Points.getInstance().getConfig().getBoolean("debug.enable", false)
-                && !default_text.equals(getLangConfig().getString(path))) {  // debug模式
+                && !defaultText.equals(getLangConfig().getString(path))) {  // debug模式
             logError(String.format("读取%s和默认不一致", path));
-            logError(String.format("默认为:%s", default_text));
+            logError(String.format("默认为:%s", defaultText));
             logError(String.format("读取为:%s", getLangConfig().getString(path)));
-            logError(String.format("返回为:%s", getLangConfig().getString(path, default_text)));
+            logError(String.format("返回为:%s", getLangConfig().getString(path, defaultText)));
         }
-        return getLangConfig().getString(path, default_text);
+        return getLangConfig().getString(path, defaultText);
     }
 
     /**
@@ -86,19 +92,19 @@ public final class Lang {
      * 加载文字
      */
     public static void loadText() {
-        messageMap.put(MsgKey.plugin_starting, BLUE + getLang("message.plugin.starting", "<Points>插件正在启动"));
-        messageMap.put(MsgKey.plugin_loading, BLUE + getLang("message.plugin.loading", "<Points>插件正在加载"));
-        messageMap.put(MsgKey.plugin_disabling, BLUE + getLang("message.plugin.disabling", "<Points>插件正在关闭"));
-        messageMap.put(MsgKey.plugin_started, BLUE + getLang("message.plugin.started", "<Points>插件已启动"));
-        messageMap.put(MsgKey.plugin_loaded, BLUE + getLang("message.plugin.loaded", "<Points>插件已加载"));
-        messageMap.put(MsgKey.plugin_disabled, BLUE + getLang("message.plugin.disabled", "<Points>插件已关闭"));
-        messageMap.put(MsgKey.create_database_folder_successfully, getLang("message.database.create_folder_successfully", "用于存放数据库的文件夹已初始化"));
-        messageMap.put(MsgKey.create_database_folder_failed, getLang("message.database.create_folder_failed", "用于存放数据库的文件夹创建失败"));
-        messageMap.put(MsgKey.player_only, getLang("commands.global.player_only", "此指令仅允许玩家使用"));
-        messageMap.put(MsgKey.no_permission, getLang("message.no-permission", "你没有使用该指令的权限"));
-        messageMap.put(MsgKey.player_not_online, getLang("message.player-not-online", "该玩家不在线"));
+        messageMap.put(MsgKey.pluginStarting, BLUE + getLang("message.plugin.starting", "<Points>插件正在启动"));
+        messageMap.put(MsgKey.pluginLoading, BLUE + getLang("message.plugin.loading", "<Points>插件正在加载"));
+        messageMap.put(MsgKey.pluginDisabling, BLUE + getLang("message.plugin.disabling", "<Points>插件正在关闭"));
+        messageMap.put(MsgKey.pluginStarted, BLUE + getLang("message.plugin.started", "<Points>插件已启动"));
+        messageMap.put(MsgKey.pluginLoaded, BLUE + getLang("message.plugin.loaded", "<Points>插件已加载"));
+        messageMap.put(MsgKey.pluginDisabled, BLUE + getLang("message.plugin.disabled", "<Points>插件已关闭"));
+        messageMap.put(MsgKey.createDatabaseFolderSuccessfully, getLang("message.database.create_folder_successfully", "用于存放数据库的文件夹已初始化"));
+        messageMap.put(MsgKey.createDatabaseFolderFailed, getLang("message.database.create_folder_failed", "用于存放数据库的文件夹创建失败"));
+        messageMap.put(MsgKey.playerOnly, getLang("commands.global.player_only", "此指令仅允许玩家使用"));
+        messageMap.put(MsgKey.noPermission, getLang("message.no-permission", "你没有使用该指令的权限"));
+        messageMap.put(MsgKey.playerNotOnline, getLang("message.player-not-online", "该玩家不在线"));
         messageMap.put(MsgKey.finished, getLang("message.finished", "已执行"));
-        messageMap.put(MsgKey.coordinates_format, getLang("commands.global.coordinates_format", " [%.0f, %.0f, %.0f] "));
+        messageMap.put(MsgKey.coordinatesFormat, getLang("commands.global.coordinates_format", " [%.0f, %.0f, %.0f] "));
         messageMap.put(MsgKey.voxelmap_support_hover, getLang("commands.global.voxelmap_support.hover", "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点"));
         messageMap.put(MsgKey.voxelmap_support_command, getLang("commands.global.voxelmap_support.command", "/newWaypoint x:%.0f, y:%.0f, z:%.0f, dim:%s"));
         messageMap.put(MsgKey.xaeros_support_hover, getLang("commands.global.xaeros_support.hover", "§6Xaeros Minimap§r: 点击添加路径点"));

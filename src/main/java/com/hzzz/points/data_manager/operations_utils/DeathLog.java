@@ -121,7 +121,7 @@ public final class DeathLog {
         Player targetPlayer = Bukkit.getPlayer(uuid);  // 使用uuid获取
 
         if (targetPlayer == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(getMessage(player_not_online));
+            receiver.sendMessage(getMessage(playerNotOnline));
             return;
         }
         outputDeathLog(targetPlayer, receiver);
@@ -137,7 +137,7 @@ public final class DeathLog {
         Player targetPlayer = Bukkit.getPlayerExact(playerName);  // 使用玩家名获取
 
         if (targetPlayer == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(getMessage(player_not_online));
+            receiver.sendMessage(getMessage(playerNotOnline));
             return;
         }
         outputDeathLog(targetPlayer, receiver);
@@ -151,7 +151,7 @@ public final class DeathLog {
      */
     public static void outputDeathLog(Player targetPlayer, CommandSender receiver) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
-        String player_name = targetPlayer.getName();
+        String playerName = targetPlayer.getName();
         UUID uuid = targetPlayer.getUniqueId();
 
         try (ResultSet rs = readDeathLog(uuid)) {
@@ -163,7 +163,7 @@ public final class DeathLog {
                         .append(Component.text(sdf.format(rs.getInt("deathTime") * 1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
                         .append(Component.text(" -> ").color(NamedTextColor.WHITE))
                         .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
-                        .append(Component.text(String.format(getMessage(coordinates_format), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
+                        .append(Component.text(String.format(getMessage(coordinatesFormat), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
 
                 if (config.getBoolean("death.log.voxelmap-support", false)) {
                     component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
@@ -174,7 +174,7 @@ public final class DeathLog {
                 if (config.getBoolean("death.log.xaeros-support", false)) {
                     component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
                             .hoverEvent(HoverEvent.showText(Component.text(getMessage(xaeros_support_hover))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaeros_support_command), player_name, player_name.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaeros_support_command), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.teleport-support", false)) {
@@ -187,7 +187,7 @@ public final class DeathLog {
                 receiver.sendMessage(component);
             }
             if (count == 0) {  // 没有已经存储的死亡记录
-                receiver.sendMessage(String.format(getMessage(no_death_record), player_name));
+                receiver.sendMessage(String.format(getMessage(no_death_record), playerName));
             } else {
                 receiver.sendMessage(String.format(getMessage(read_death_record), count));
             }

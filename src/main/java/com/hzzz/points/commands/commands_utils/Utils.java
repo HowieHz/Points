@@ -43,7 +43,7 @@ public final class Utils {
                 .append(Component.text(targetPlayer.getName()).color(NamedTextColor.YELLOW))
                 .append(Component.text(separator).color(separatorColor))
                 .append(Component.text(targetPlayer.getWorld().getName()).color(NamedTextColor.YELLOW))
-                .append(Component.text(String.format(getMessage(coordinates_format), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
+                .append(Component.text(String.format(getMessage(coordinatesFormat), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
 
         // 根据配置文件在末尾追加一些信息
         if (config.getBoolean(String.format("%s.voxelmap-support", configRoot), false)) {

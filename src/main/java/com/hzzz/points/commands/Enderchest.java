@@ -43,7 +43,7 @@ public final class Enderchest implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(getMessage(player_only));
+            sender.sendMessage(getMessage(playerOnly));
             return true;
         }
         switch (args.length) {
@@ -52,7 +52,7 @@ public final class Enderchest implements TabExecutor {
                 if (!specialCheckPermission("enderchest",
                         sender,
                         "points.command.enderchest.self")) {
-                    sender.sendMessage(getMessage(no_permission));
+                    sender.sendMessage(getMessage(noPermission));
                     return true;
                 }
 
@@ -68,14 +68,14 @@ public final class Enderchest implements TabExecutor {
                         "points.command.enderchest.other.%s",
                         args[0])
                 ) {
-                    sender.sendMessage(getMessage(no_permission));
+                    sender.sendMessage(getMessage(noPermission));
                     return true;
                 }
 
                 Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (targetPlayer == null) {  // 检查是否获取到玩家
-                    player.sendMessage(getMessage(player_not_online));
+                    player.sendMessage(getMessage(playerNotOnline));
                     return true;
                 }
 
@@ -98,16 +98,14 @@ public final class Enderchest implements TabExecutor {
         /* enderchest
          * enderchest <player_name>
          */
-        if (args.length == 0 || args.length == 1) {
-            // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
-            if (specialCheckPermission("enderchest",
-                    sender,
-                    "points.command.enderchest.other",
-                    "points.command.enderchest.other.%s",
-                    args[0])
-            ) {
-                return null;  // 提示玩家名
-            }
+        if ((args.length == 0 || args.length == 1)  // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
+                && specialCheckPermission("enderchest",
+                sender,
+                "points.command.enderchest.other",
+                "points.command.enderchest.other.%s",
+                args[0])
+        ) {
+            return null;  // 提示玩家名
         }
         // 前两个参数已经输入完成，不继续提示
         return Collections.singletonList("");
