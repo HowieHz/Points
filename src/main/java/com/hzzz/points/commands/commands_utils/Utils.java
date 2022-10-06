@@ -30,7 +30,7 @@ public final class Utils {
      *
      * @param configRoot     配置文件根节点
      * @param targetPlayer   目标玩家对象
-     * @param separator       分隔符
+     * @param separator      分隔符
      * @param separatorColor 分隔符颜色
      * @return 生成的消息
      */
@@ -46,19 +46,19 @@ public final class Utils {
                 .append(Component.text(String.format(getMessage(COORDINATES_FORMAT), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
 
         // 根据配置文件在末尾追加一些信息
-        if (config.getBoolean(String.format("%s.voxelmap-support", configRoot), false)) {
+        if (config.getBoolean(configRoot + ".voxelmap-support", false)) {
             component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
                     .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
                     .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
         }
 
-        if (config.getBoolean(String.format("%s.xaeros-support", configRoot), false)) {
+        if (config.getBoolean(configRoot + ".xaeros-support", false)) {
             component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
                     .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
                     .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
         }
 
-        if (config.getBoolean(String.format("%s.teleport-support", configRoot), false)) {
+        if (config.getBoolean(configRoot + ".teleport-support", false)) {
             component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                     .append(Component.text("[tp] ").color(NamedTextColor.RED)
                             .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
@@ -83,10 +83,10 @@ public final class Utils {
     /**
      * 检查一段字符串末尾是否是指定字符串(通配符检查)<br>如果是就格式化，不是就使用默认字符串进行格式化
      *
-     * @param string         一段字符串
+     * @param string        一段字符串
      * @param endString     检查结尾是否是此字符串
      * @param defaultString 默认字符串
-     * @param args           格式化参数
+     * @param args          格式化参数
      * @return 格式化完毕之后的字符串
      */
     public static String stringFormatEnd(String string, String endString, String defaultString, Object... args) {
@@ -102,92 +102,102 @@ public final class Utils {
     }
 
     /**
-     * 特殊的权限检查<br>指令目标为指定玩家<br>(enable节点如读取失败默认为true)
      * 特殊的权限检查<br>
-     * 检查 configRoot.permission.other.enable <br>
-     * 读取配置文件 configRoot.permission.other.node-other-player 作为权限节点<br>
-     * 读取配置文件 configRoot.permission.other.node-target-player 作为权限节点<br>
+     * <p>
+     * 指令目标为指定玩家, <br>
+     * 意图是：检查有没有对<big>其他玩家</big>使用该指令的权限，先检查通用权限，再检查指定玩家<br><br>
+     * (enable节点如读取失败默认为true)<br><br>
+     * 权限检查顺序<br>
+     * 1. 权限管理有没有开启 (检查 permissionParentNode.permission.other.enable)<br>
+     * 2. 检查有没有这个权限 other通用节点 (读取配置文件 permissionParentNode.permission.other.node-other-player 作为权限节点)<br>
+     * 3. 把玩家名格式化带入 检查有没有这个权限 other特定玩家节点 (读取配置文件 permissionParentNode.permission.other.node-target-player 作为权限节点)<br>
      * (enable节点如读取失败默认为true)
      *
-     * @param configRoot                配置文件根节点 要求此节点下一节点为permission
-     * @param sender                     发送者(被进行权限检查的对象)
+     * @param permissionParentNode    配置文件根节点 要求此节点下一节点为permission
+     * @param sender                  发送者(被进行权限检查的对象)
      * @param defaultOtherPlayerNode  默认权限节点(其他玩家)(文件读取失败的使用值)
      * @param defaultTargetPlayerNode 默认权限节点(指定玩家)(要求结尾为%s)(文件读取失败的使用值)
-     * @param targetPlayerName         目标玩家(用于权限检查)
+     * @param targetPlayerName        目标玩家(用于权限检查)
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean specialCheckPermission(String configRoot,
+    public static boolean specialCheckPermission(String permissionParentNode,
                                                  CommandSender sender,
                                                  String defaultOtherPlayerNode,
                                                  String defaultTargetPlayerNode,
                                                  String targetPlayerName) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         return !((// 检查是否启用了权限检查
-                config.getBoolean(String.format("%s.permission.other.enable", configRoot), true))
-                && !(checkPermission(sender, config.getString(String.format("%s.permission.other.node-other-player", configRoot), defaultOtherPlayerNode))  // 玩家权限检查 目标为其他玩家
+                config.getBoolean(permissionParentNode + ".permission.other.enable", true))
+                && !(checkPermission(sender, config.getString(permissionParentNode + ".permission.other.node-other-player", defaultOtherPlayerNode))  // 玩家权限检查 目标为其他玩家
                 || checkPermission(sender,
-                stringFormatEnd(config.getString(String.format("%s.permission.other.node-target-player", configRoot)),
+                stringFormatEnd(config.getString(permissionParentNode + ".permission.other.node-target-player"),
                         "%s", defaultTargetPlayerNode, targetPlayerName))));  // 玩家权限检查 目标为指定玩家
     }
 
     /**
      * 特殊的权限检查<br>
-     * 检查config_root.permission.configMiddleNode.enable<br>
-     * 读取配置文件 configRoot.permission.configMiddleNode.node 作为权限节点<br>
-     * (enable节点如读取失败默认为true)
+     * <p>
+     * 指令目标为指定玩家, <br>
+     * 意图是：检查这项权限管理有没有开启，检查发送者有没有这项的权限<br><br>
+     * (enable节点如读取失败默认为true)<br><br>
+     * configMiddleNode填self.就是检查对自己的使用权限，填other.就是检查对他人的使用权限(不能检查针对一个玩家的权限)<br><br>
+     * 权限检查顺序<br>
+     * 1. 权限管理有没有开启 (检查config_root.permission.configMiddleNode(no space)enable)<br>
+     * 2. 检查有没有这个权限 (读取配置文件 permissionParentNode.permission.configMiddleNode(no space)node 作为权限节点)<br>
      *
-     * @param configRoot             配置文件根节点 要求此节点下一节点为permission
-     * @param sender                  发送者(被进行权限检查的对象)
+     * @param permissionParentNode  配置文件根节点 要求此节点下一节点为permission
+     * @param sender                发送者(被进行权限检查的对象)
      * @param defaultPermissionNode 默认权限节点(文件读取失败的使用值)
-     * @param configMiddleNode      配置文件中间节点
+     * @param configMiddleNode      配置文件中间节点 如果要加节点要自己加. 比如"other."
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean specialCheckPermission(String configRoot,
+    public static boolean specialCheckPermission(String permissionParentNode,
                                                  CommandSender sender,
                                                  String defaultPermissionNode,
                                                  String configMiddleNode) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
-        return !(config.getBoolean(String.format("%s.permission.%s.enable", configRoot, configMiddleNode), true)  // 子项权限管理
-                && !checkPermission(sender, config.getString(String.format("%s.permission.%s.node", configRoot, configMiddleNode),   // 玩家权限检查
+        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+        return !(config.getBoolean(String.format("%s.permission.%senable", permissionParentNode, configMiddleNode), true)  // 子项权限管理
+                && !checkPermission(sender, config.getString(String.format("%s.permission.%snode", permissionParentNode, configMiddleNode),   // 玩家权限检查
                 defaultPermissionNode)));
     }
 
     /**
      * 特殊的权限检查<br>
-     * 检查 configRoot.permission.self.enable<br>
-     * 读取配置文件 configRoot.permission.self.node 作为权限节点<br>
-     * (enable节点如读取失败默认为true)
+     * <p>
+     * 指令目标为指定玩家, <br>
+     * 意图是：检查有没有对<big>自己</big>使用该指令的权限<br><br>
+     * (enable节点如读取失败默认为true)<br><br>
+     * 权限检查顺序<br>
+     * 1. 权限管理有没有开启 (检查config_root.permission.self.enable)<br>
+     * 2. 检查有没有这个权限 (读取配置文件 permissionParentNode.permission.self.node 作为权限节点)<br>
      *
-     * @param configRoot       配置文件根节点 要求此节点下一节点为permission
-     * @param sender            发送者(被进行权限检查的对象)
-     * @param defaultSelfNode 默认权限节点(目标为自己)(文件读取失败的使用值)
+     * @param permissionParentNode 配置文件根节点 要求此节点下一节点为permission
+     * @param sender               发送者(被进行权限检查的对象)
+     * @param defaultSelfNode      默认权限节点(目标为自己)(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean specialCheckPermission(String configRoot,
+    public static boolean specialCheckPermission(String permissionParentNode,
                                                  CommandSender sender,
                                                  String defaultSelfNode) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
-        return !(config.getBoolean(String.format("%s.permission.self.enable", configRoot), true)  // 子项权限管理
-                && !checkPermission(sender, config.getString(String.format("%s.permission.self.node", configRoot),   // 玩家权限检查
-                defaultSelfNode)));
+        return specialCheckPermission(permissionParentNode, sender, defaultSelfNode, "self.");
     }
 
     /**
      * 普通的权限检查<br>
-     * 检查 configRoot.permission.enable<br>
-     * 读取配置文件 configRoot.permission.node 作为权限节点<br>
+     * <p>
+     * 权限检查顺序<br>
+     * 1. 权限管理有没有开启 (检查 permissionParentNode.permission.enable)<br>
+     * 2. 检查有没有这个权限 (读取配置文件 permissionParentNode.permission.node) 作为权限节点<br>
      * (enable节点如读取失败默认为true)
      *
-     * @param configRoot  配置文件根节点 要求此节点下一节点为permission permission.node permission.enable
-     * @param sender       发送者(被进行权限检查的对象)
-     * @param defaultNode 默认权限节点(文件读取失败的使用值)
+     * @param permissionParentNode  配置文件根节点 要求此节点下一节点为permission permission.node permission.enable
+     * @param sender                发送者(被进行权限检查的对象)
+     * @param defaultPermissionNode 默认权限节点(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean commonCheckPermission(String configRoot,
+    public static boolean commonCheckPermission(String permissionParentNode,
                                                 CommandSender sender,
-                                                String defaultNode) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
-        return !(config.getBoolean(String.format("%s.permission.enable", configRoot), true)  // 总项权限管理
-                && !checkPermission(sender, config.getString(String.format("%s.permission.node", configRoot), defaultNode)));
+                                                String defaultPermissionNode) {
+        return specialCheckPermission(permissionParentNode, sender, defaultPermissionNode, "");
     }
 }

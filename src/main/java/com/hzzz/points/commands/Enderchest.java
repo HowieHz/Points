@@ -22,6 +22,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
  * @since 2022-10-01 09:24
  */
 public final class Enderchest implements TabExecutor {
+    private static final String PERMISSION_PARENT_NODE = "enderchest";
     private static final Enderchest instance = new Enderchest();
 
     /**
@@ -49,7 +50,7 @@ public final class Enderchest implements TabExecutor {
         switch (args.length) {
             case 0 -> {
                 // 权限检查
-                if (!specialCheckPermission("enderchest",
+                if (!specialCheckPermission(PERMISSION_PARENT_NODE,
                         sender,
                         "points.command.enderchest.self")) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
@@ -62,7 +63,7 @@ public final class Enderchest implements TabExecutor {
             }
             case 1 -> {
                 // 权限检查
-                if (!specialCheckPermission("enderchest",
+                if (!specialCheckPermission(PERMISSION_PARENT_NODE,
                         sender,
                         "points.command.enderchest.other",
                         "points.command.enderchest.other.%s",
@@ -99,7 +100,7 @@ public final class Enderchest implements TabExecutor {
          * enderchest <player_name>
          */
         if ((args.length == 0 || args.length == 1)  // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
-                && specialCheckPermission("enderchest",
+                && specialCheckPermission(PERMISSION_PARENT_NODE,
                 sender,
                 "points.command.enderchest.other",
                 "points.command.enderchest.other.%s",

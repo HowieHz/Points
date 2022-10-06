@@ -38,7 +38,7 @@ public final class Lang {
         if (messageMap.containsKey(key)) {
             return messageMap.get(key);
         } else {
-            logDebug(String.format("文字类在尝试读取不存在键:%s", key));
+            logDebug("文字类在尝试读取不存在键:" + key);
             return "这是一个bug！如果你看到了这条消息，请在github发送issue并且描述此时的使用场景";
         }
     }

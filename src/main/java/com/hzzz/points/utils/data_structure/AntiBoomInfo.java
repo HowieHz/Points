@@ -7,14 +7,14 @@ import org.bukkit.entity.EntityType;
  */
 public class AntiBoomInfo {
     public final EntityType type;
-    public final String configPath;
+    public final String configParentNode;
 
     /**
      * @param type        需要检查的EntityType
      * @param configPath 需要检查的configPath
      */
-    public AntiBoomInfo(EntityType type, String configPath) {
+    public AntiBoomInfo(EntityType type, String configParentNode) {
         this.type = type;
-        this.configPath = configPath;
+        this.configParentNode = configParentNode;
     }
 }
