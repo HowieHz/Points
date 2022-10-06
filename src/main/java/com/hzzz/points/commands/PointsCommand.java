@@ -21,6 +21,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
  */
 public final class PointsCommand implements TabExecutor {
     private static final String PERMISSION_PARENT_NODE_RELOAD = "points.reload";
+    private static final String DEFAULT_PERMISSION_RELOAD = "points.reload";
     private static final PointsCommand instance = new PointsCommand();
 
     /**
@@ -43,7 +44,7 @@ public final class PointsCommand implements TabExecutor {
         if (args.length == 1) {
             if (args[0].equals("reload")) {
                 // 权限检查
-                if (!commonCheckPermission(PERMISSION_PARENT_NODE_RELOAD, sender, "points.reload")) {
+                if (!commonCheckPermission(PERMISSION_PARENT_NODE_RELOAD, sender, DEFAULT_PERMISSION_RELOAD)) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
                 }
@@ -80,7 +81,7 @@ public final class PointsCommand implements TabExecutor {
          */
         if (args.length == 0 || args.length == 1) {
             // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /points ），或者第一个参数输入到一半（此时长度为一 /points he……））
-            if (commonCheckPermission(PERMISSION_PARENT_NODE_RELOAD, sender, "points.reload")) {
+            if (commonCheckPermission(PERMISSION_PARENT_NODE_RELOAD, sender, DEFAULT_PERMISSION_RELOAD)) {
                 return Arrays.asList("help", "reload");
             }
             return Collections.singletonList("help");

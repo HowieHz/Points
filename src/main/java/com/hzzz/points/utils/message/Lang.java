@@ -53,7 +53,7 @@ public final class Lang {
     private static String getLang(String path, String defaultText) {
         if (isDebug()  // debug模式
                 && !defaultText.equals(getLangConfig().getString(path))) {
-            logDebug(String.format("读取%s和默认不一致\n默认为:%s\n读取为:%s\n返回为:%s",
+            logDebug(String.format("读取%s和默认不一致%n默认为:%s%n读取为:%s%n返回为:%s",
                     path,
                     defaultText,
                     getLangConfig().getString(path),
