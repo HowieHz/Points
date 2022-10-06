@@ -3,9 +3,9 @@ package com.hzzz.points.data_manager.sqlite;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
-import static com.hzzz.points.utils.msgKey.database_setup_error;
+import static com.hzzz.points.utils.message.MsgKey.database_setup_error;
 
 /**
  * 管理config.sqlite

@@ -14,10 +14,10 @@ import java.util.*;
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.updateDeathMessageConfig;
-import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.utils.Utils.logError;
-import static com.hzzz.points.utils.msgKey.*;
+import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * death指令的执行器以及tab补全

@@ -17,9 +17,9 @@ import java.util.List;
 
 import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
-import static com.hzzz.points.utils.Text.getMessage;
-import static com.hzzz.points.utils.msgKey.no_permission;
-import static com.hzzz.points.utils.msgKey.player_only;
+import static com.hzzz.points.utils.message.Lang.getMessage;
+import static com.hzzz.points.utils.message.MsgKey.no_permission;
+import static com.hzzz.points.utils.message.MsgKey.player_only;
 
 /**
  * here指令的执行器以及tab补全

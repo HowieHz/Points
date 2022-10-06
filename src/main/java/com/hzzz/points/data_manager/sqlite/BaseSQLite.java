@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
-import static com.hzzz.points.utils.msgKey.database_driver_error;
+import static com.hzzz.points.utils.message.MsgKey.database_driver_error;
 
 /**
  * <p>sqlite数据库对象 基类</p>

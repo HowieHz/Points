@@ -12,9 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.hzzz.points.commands.commands_utils.Utils.commonCheckPermission;
-import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logInfo;
-import static com.hzzz.points.utils.msgKey.*;
+import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * points指令的执行器以及tab补全

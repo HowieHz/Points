@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.hzzz.points.utils.Text.*;
+import static com.hzzz.points.utils.message.Lang.*;
 import static com.hzzz.points.utils.Utils.*;
-import static com.hzzz.points.utils.msgKey.*;
+import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * <p>插件主类</p>

@@ -10,9 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.utils.msgKey.*;
+import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * 指令执行器工具集

@@ -15,9 +15,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Objects;
 
-import static com.hzzz.points.utils.Text.getMessage;
-import static com.hzzz.points.utils.msgKey.enter_bed_canceled;
-import static com.hzzz.points.utils.msgKey.use_respawn_anchor_canceled;
+import static com.hzzz.points.utils.message.Lang.getMessage;
+import static com.hzzz.points.utils.message.MsgKey.enter_bed_canceled;
+import static com.hzzz.points.utils.message.MsgKey.use_respawn_anchor_canceled;
 import static org.bukkit.Material.*;
 
 /**

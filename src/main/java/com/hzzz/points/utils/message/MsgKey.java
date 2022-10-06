@@ -1,9 +1,9 @@
-package com.hzzz.points.utils;
+package com.hzzz.points.utils.message;
 
 /**
  * 枚举文字键
  */
-public enum msgKey {
+public enum MsgKey {
     plugin_starting,
     plugin_loading,
     plugin_disabling,

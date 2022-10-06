@@ -18,9 +18,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-import static com.hzzz.points.utils.Text.*;
+import static com.hzzz.points.utils.message.Lang.*;
 import static com.hzzz.points.utils.Utils.*;
-import static com.hzzz.points.utils.msgKey.*;
+import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * 有关DeathLog的数据库操作
