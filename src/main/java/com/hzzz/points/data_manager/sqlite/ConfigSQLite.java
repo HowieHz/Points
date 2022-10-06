@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
-import static com.hzzz.points.utils.message.MsgKey.database_setup_error;
+import static com.hzzz.points.utils.message.MsgKey.databaseSetupError;
 
 /**
  * 管理config.sqlite
@@ -17,7 +17,7 @@ public final class ConfigSQLite extends BaseSQLite {
         try {
             instance = new ConfigSQLite();
         } catch (SQLException e) {
-            logError(getMessage(database_setup_error));
+            logError(getMessage(databaseSetupError));
             e.printStackTrace();
         }
     }

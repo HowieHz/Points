@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.Objects;
 
 import static com.hzzz.points.utils.message.Lang.getMessage;
-import static com.hzzz.points.utils.message.MsgKey.enter_bed_canceled;
-import static com.hzzz.points.utils.message.MsgKey.use_respawn_anchor_canceled;
+import static com.hzzz.points.utils.message.MsgKey.enterBedCanceled;
+import static com.hzzz.points.utils.message.MsgKey.useRespawnAnchorCanceled;
 import static org.bukkit.Material.*;
 
 /**
@@ -160,7 +160,7 @@ public final class AntiBoomListener implements NamedListener {
                     || (config.getBoolean("anti-boom.respawn-anchor.world-the-end", false)  // 末地使用
                     && worldName.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end"))))) {
                 e.setCancelled(true);
-                player.sendMessage(getMessage(use_respawn_anchor_canceled));
+                player.sendMessage(getMessage(useRespawnAnchorCanceled));
             }
 
             // anti-boom.bed.enable
@@ -174,7 +174,7 @@ public final class AntiBoomListener implements NamedListener {
                                 || (config.getBoolean("anti-boom.bed.world-the-end", false)  // 末地睡觉
                                 && worldName.equals(config.getString("anti-boom.world-name.world-the-end", "world_the_end")))) {
                             e.setCancelled(true);
-                            player.sendMessage(getMessage(enter_bed_canceled));
+                            player.sendMessage(getMessage(enterBedCanceled));
                         }
                         break;
                     }

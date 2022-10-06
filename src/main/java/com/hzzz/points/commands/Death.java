@@ -47,7 +47,7 @@ public final class Death implements TabExecutor {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (args.length == 0) {
             // /death
-            sender.sendMessage(getMessage(help_death));
+            sender.sendMessage(getMessage(helpDeath));
             return true;
         }
 
@@ -66,25 +66,25 @@ public final class Death implements TabExecutor {
                         return true;
                     }
                     if (args.length > 1) {  // 参数过多语法错误
-                        sender.sendMessage(getMessage(help_death));
+                        sender.sendMessage(getMessage(helpDeath));
                         return true;
                     }
 
                     try {
                         if (updateDeathMessageConfig(player)) {  // 更改数据库config
-                            sender.sendMessage(getMessage(enable_death_message));
+                            sender.sendMessage(getMessage(enableDeathMessage));
                         } else {
-                            sender.sendMessage(getMessage(disable_death_message));
+                            sender.sendMessage(getMessage(disableDeathMessage));
                         }
                     } catch (SQLException e) {
-                        sender.sendMessage(getMessage(database_error));
-                        sender.sendMessage(getMessage(disable_death_message));
-                        logError(getMessage(database_error));
+                        sender.sendMessage(getMessage(databaseError));
+                        sender.sendMessage(getMessage(disableDeathMessage));
+                        logError(getMessage(databaseError));
                         e.printStackTrace();
                     }
 
                 } else {
-                    sender.sendMessage(getMessage(disable_module));
+                    sender.sendMessage(getMessage(disableModule));
                 }
             }
             case "log" -> {
@@ -106,7 +106,7 @@ public final class Death implements TabExecutor {
 
                         // 使用频率检查
                         if (checkCommandFrequencyLimit(player)) {
-                            player.sendMessage(getMessage(command_frequency_limit));
+                            player.sendMessage(getMessage(commandFrequencyLimit));
                             return true;
                         }
 
@@ -127,7 +127,7 @@ public final class Death implements TabExecutor {
                         // 检查执行者 是玩家就进行频率检查
                         if (sender instanceof Player player
                                 && checkCommandFrequencyLimit(player)) {
-                            player.sendMessage(getMessage(command_frequency_limit));
+                            player.sendMessage(getMessage(commandFrequencyLimit));
                             return true;
                         }
 
@@ -135,10 +135,10 @@ public final class Death implements TabExecutor {
                     }
 
                 } else {
-                    sender.sendMessage(getMessage(disable_module));
+                    sender.sendMessage(getMessage(disableModule));
                 }
             }
-            default -> sender.sendMessage(getMessage(help_death));
+            default -> sender.sendMessage(getMessage(helpDeath));
         }
         return true;
     }

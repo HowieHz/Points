@@ -83,7 +83,7 @@ public final class Enderchest implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(getMessage(help_enderchest));
+                sender.sendMessage(getMessage(helpEnderchest));
                 return true;
             }
         }

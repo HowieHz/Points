@@ -84,7 +84,7 @@ public final class Where implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(getMessage(help_where));
+                sender.sendMessage(getMessage(helpWhere));
                 return true;
             }
         }

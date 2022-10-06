@@ -105,39 +105,39 @@ public final class Lang {
         messageMap.put(MsgKey.playerNotOnline, getLang("message.player-not-online", "该玩家不在线"));
         messageMap.put(MsgKey.finished, getLang("message.finished", "已执行"));
         messageMap.put(MsgKey.coordinatesFormat, getLang("commands.global.coordinates_format", " [%.0f, %.0f, %.0f] "));
-        messageMap.put(MsgKey.voxelmap_support_hover, getLang("commands.global.voxelmap_support.hover", "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点"));
-        messageMap.put(MsgKey.voxelmap_support_command, getLang("commands.global.voxelmap_support.command", "/newWaypoint x:%.0f, y:%.0f, z:%.0f, dim:%s"));
-        messageMap.put(MsgKey.xaeros_support_hover, getLang("commands.global.xaeros_support.hover", "§6Xaeros Minimap§r: 点击添加路径点"));
-        messageMap.put(MsgKey.xaeros_support_command, getLang("commands.global.xaeros_support.command", "xaero-waypoint:%s's Location:%s:%.0f:%.0f:%.0f:6:false:0:Internal_minecraft:%s_waypoints"));
-        messageMap.put(MsgKey.teleport_support_hover, getLang("commands.global.teleport_support.hover", "§c点击以传送到 §e[%.0f, %.0f, %.0f]"));
-        messageMap.put(MsgKey.teleport_support_command, getLang("commands.global.teleport_support.command", "/tp %f %f %f"));
-        messageMap.put(MsgKey.reload_ready, getLang("message.reload_ready", "插件已完成重载！"));
-        messageMap.put(MsgKey.wrong_database_type, getLang("message.database.wrong_database_type", "配置文件数据库类型错误，已启动默认数据库sqlite"));
+        messageMap.put(MsgKey.voxelmapSupportHover, getLang("commands.global.voxelmap_support.hover", "§bVoxelmap§r: 点此以高亮坐标点, 或者Ctrl点击添加路径点"));
+        messageMap.put(MsgKey.voxelmapSupportCommand, getLang("commands.global.voxelmap_support.command", "/newWaypoint x:%.0f, y:%.0f, z:%.0f, dim:%s"));
+        messageMap.put(MsgKey.xaerosSupportHover, getLang("commands.global.xaeros_support.hover", "§6Xaeros Minimap§r: 点击添加路径点"));
+        messageMap.put(MsgKey.xaerosSupportCommand, getLang("commands.global.xaeros_support.command", "xaero-waypoint:%s's Location:%s:%.0f:%.0f:%.0f:6:false:0:Internal_minecraft:%s_waypoints"));
+        messageMap.put(MsgKey.teleportSupportHover, getLang("commands.global.teleport_support.hover", "§c点击以传送到 §e[%.0f, %.0f, %.0f]"));
+        messageMap.put(MsgKey.teleportSupportCommand, getLang("commands.global.teleport_support.command", "/tp %f %f %f"));
+        messageMap.put(MsgKey.reloadReady, getLang("message.reload_ready", "插件已完成重载！"));
+        messageMap.put(MsgKey.wrongDatabaseType, getLang("message.database.wrong_database_type", "配置文件数据库类型错误，已启动默认数据库sqlite"));
 
-        messageMap.put(MsgKey.enable_death_message, getLang("commands.death.message.enable", "已开启死亡信息提示"));
-        messageMap.put(MsgKey.disable_death_message, getLang("commands.death.message.disable", "已关闭死亡信息提示"));
-        messageMap.put(MsgKey.disable_module, getLang("commands.global.disable_module", "此模块被关闭"));
-        messageMap.put(MsgKey.sqlite_ready, getLang("message.database.sqlite.ready", "sqlite数据库 §e%s§f 已连接"));
-        messageMap.put(MsgKey.sqlite_not_ready, getLang("message.database.sqlite.not_ready", "你sqlite数据库 §e%s§f 炸了，对应的子模块将不会开启"));
-        messageMap.put(MsgKey.set_executor, getLang("message.executor.set", "已注册 §e%s§f 指令"));
-        messageMap.put(MsgKey.already_disable_executor, getLang("message.executor.already_disable", "已注销 §e%s§f 指令"));
-        messageMap.put(MsgKey.all_executor_disabled, getLang("message.executor.all_disabled", "已注销全部指令"));
-        messageMap.put(MsgKey.register_listeners, getLang("message.listeners.register", "已注册 §e%s§f 监听器"));
-        messageMap.put(MsgKey.already_disable_listeners, getLang("message.listeners.already_disable", "已注销 §e%s§f 监听器"));
-        messageMap.put(MsgKey.all_listeners_disabled, getLang("message.listeners.all_disabled", "已注销全部监听器"));
-        messageMap.put(MsgKey.config_reloaded, getLang("message.reloaded.config", "配置已重新加载"));
-        messageMap.put(MsgKey.insert_death_record_fail, getLang("commands.death.log.insert_death_record_fail", "记录玩家 §e%s§f 的死亡信息时失败"));
-        messageMap.put(MsgKey.no_death_record, getLang("commands.death.log.no_death_record", "玩家 §e%s§f 没有已保存的死亡记录"));
-        messageMap.put(MsgKey.read_death_record, getLang("commands.death.log.read_death_record", "§6========§f已读取 §e%d §f条死亡记录§6========"));
-        messageMap.put(MsgKey.division_line, getLang("division_line", "§6================================"));
-        messageMap.put(MsgKey.enter_bed_canceled, getLang("message.canceled.enter_bed", "你尝试进入梦乡，但是被未知力量阻止了"));
-        messageMap.put(MsgKey.use_respawn_anchor_canceled, getLang("message.canceled.use_respawn_anchor", "你尝试使用重生锚，但是被未知力量阻止了"));
-        messageMap.put(MsgKey.command_frequency_limit, getLang("commands.global.frequency_limit", "你使用的太快了！ 请稍后再试"));
-        messageMap.put(MsgKey.read_death_log_result, getLang("commands.death.log.read_death_log_result", "%s 在数据库中记录 %d 条, 限制为 %d 条"));
-        messageMap.put(MsgKey.database_error, getLang("message.database.error", "数据库发生错误"));
-        messageMap.put(MsgKey.database_setup_error, getLang("message.database.setup_error", "数据库初始化发生错误"));
-        messageMap.put(MsgKey.database_driver_error, getLang("message.database.driver_error", "数据库驱动加载发生错误"));
-        messageMap.put(MsgKey.help_points, getLang("commands.points.help", """
+        messageMap.put(MsgKey.enableDeathMessage, getLang("commands.death.message.enable", "已开启死亡信息提示"));
+        messageMap.put(MsgKey.disableDeathMessage, getLang("commands.death.message.disable", "已关闭死亡信息提示"));
+        messageMap.put(MsgKey.disableModule, getLang("commands.global.disable_module", "此模块被关闭"));
+        messageMap.put(MsgKey.sqliteReady, getLang("message.database.sqlite.ready", "sqlite数据库 §e%s§f 已连接"));
+        messageMap.put(MsgKey.sqliteNotReady, getLang("message.database.sqlite.not_ready", "你sqlite数据库 §e%s§f 炸了，对应的子模块将不会开启"));
+        messageMap.put(MsgKey.setExecutor, getLang("message.executor.set", "已注册 §e%s§f 指令"));
+        messageMap.put(MsgKey.alreadyDisableExecutor, getLang("message.executor.already_disable", "已注销 §e%s§f 指令"));
+        messageMap.put(MsgKey.allExecutorDisabled, getLang("message.executor.all_disabled", "已注销全部指令"));
+        messageMap.put(MsgKey.registerListeners, getLang("message.listeners.register", "已注册 §e%s§f 监听器"));
+        messageMap.put(MsgKey.alreadyDisableListeners, getLang("message.listeners.already_disable", "已注销 §e%s§f 监听器"));
+        messageMap.put(MsgKey.allListenersDisabled, getLang("message.listeners.all_disabled", "已注销全部监听器"));
+        messageMap.put(MsgKey.configReloaded, getLang("message.reloaded.config", "配置已重新加载"));
+        messageMap.put(MsgKey.insertDeathRecordFail, getLang("commands.death.log.insert_death_record_fail", "记录玩家 §e%s§f 的死亡信息时失败"));
+        messageMap.put(MsgKey.noDeathRecord, getLang("commands.death.log.no_death_record", "玩家 §e%s§f 没有已保存的死亡记录"));
+        messageMap.put(MsgKey.readDeathRecord, getLang("commands.death.log.read_death_record", "§6========§f已读取 §e%d §f条死亡记录§6========"));
+        messageMap.put(MsgKey.divisionLine, getLang("division_line", "§6================================"));
+        messageMap.put(MsgKey.enterBedCanceled, getLang("message.canceled.enter_bed", "你尝试进入梦乡，但是被未知力量阻止了"));
+        messageMap.put(MsgKey.useRespawnAnchorCanceled, getLang("message.canceled.use_respawn_anchor", "你尝试使用重生锚，但是被未知力量阻止了"));
+        messageMap.put(MsgKey.commandFrequencyLimit, getLang("commands.global.frequency_limit", "你使用的太快了！ 请稍后再试"));
+        messageMap.put(MsgKey.readDeathLogResult, getLang("commands.death.log.read_death_log_result", "%s 在数据库中记录 %d 条, 限制为 %d 条"));
+        messageMap.put(MsgKey.databaseError, getLang("message.database.error", "数据库发生错误"));
+        messageMap.put(MsgKey.databaseSetupError, getLang("message.database.setup_error", "数据库初始化发生错误"));
+        messageMap.put(MsgKey.databaseDriverError, getLang("message.database.driver_error", "数据库驱动加载发生错误"));
+        messageMap.put(MsgKey.helpPoints, getLang("commands.points.help", """
                 §6================================
                 §e/points §f: 显示此消息
                 §e/points reload §f: 重载插件
@@ -148,14 +148,14 @@ public final class Lang {
                 §e/death §f: 死亡模块相关的指令帮助
                 §6================================
                 """));
-        messageMap.put(MsgKey.help_death, getLang("commands.death.help", """
+        messageMap.put(MsgKey.helpDeath, getLang("commands.death.help", """
                 §6================================
                 §e/death §f: 显示此消息
                 §e/death message §f: 切换是否在死亡的时候发送死亡坐标
                 §e/death log §f: 获取死亡日志
                 §6================================
                 """));
-        messageMap.put(MsgKey.help_where, getLang("commands.where.help", "使用方法: /where 玩家名 或 /where"));
-        messageMap.put(MsgKey.help_enderchest, getLang("commands.enderchest.help", "使用方法: /enderchest 玩家名 或 /enderchest"));
+        messageMap.put(MsgKey.helpWhere, getLang("commands.where.help", "使用方法: /where 玩家名 或 /where"));
+        messageMap.put(MsgKey.helpEnderchest, getLang("commands.enderchest.help", "使用方法: /enderchest 玩家名 或 /enderchest"));
     }
 }

@@ -50,19 +50,19 @@ public final class PointsCommand implements TabExecutor {
                 Points.getInstance().onReload();
 
                 // 发消息
-                sender.sendMessage(getMessage(reload_ready));
+                sender.sendMessage(getMessage(reloadReady));
                 if (sender instanceof Player) {  // 玩家重载 在控制台也输出重载结果
-                    logInfo(getMessage(reload_ready));
+                    logInfo(getMessage(reloadReady));
 
                 }
                 return true;
             }
 
             // args[0].equals("help")
-            sender.sendMessage(getMessage(help_points));
+            sender.sendMessage(getMessage(helpPoints));
             return true;
         } else {
-            sender.sendMessage(getMessage(help_points));
+            sender.sendMessage(getMessage(helpPoints));
         }
         return true;
     }

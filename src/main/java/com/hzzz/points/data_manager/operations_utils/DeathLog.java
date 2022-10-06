@@ -50,13 +50,13 @@ public final class DeathLog {
         try {
             count = countDeathLog(targetPlayer.getUniqueId());  // 获取目前记录条数
         } catch (SQLException e) {
-            logError(getMessage(database_error));
+            logError(getMessage(databaseError));
             e.printStackTrace();
             return;
         }
 
         try {
-            logDetailedInfo(String.format(getMessage(read_death_log_result), targetPlayer.getName(), count, limit));
+            logDetailedInfo(String.format(getMessage(readDeathLogResult), targetPlayer.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
                 psDeleteDeathLog.setString(1, targetPlayer.getUniqueId().toString());
@@ -76,7 +76,7 @@ public final class DeathLog {
             psInsertDeathLog.setDouble(7, playerLocation.getZ());
             psInsertDeathLog.execute();
         } catch (SQLException e) {
-            logError(String.format(getMessage(insert_death_record_fail), targetPlayer.getName()));  // 未成功录入死亡信息
+            logError(String.format(getMessage(insertDeathRecordFail), targetPlayer.getName()));  // 未成功录入死亡信息
             e.printStackTrace();
         }
     }
@@ -167,33 +167,33 @@ public final class DeathLog {
 
                 if (config.getBoolean("death.log.voxelmap-support", false)) {
                     component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(voxelmap_support_hover))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(voxelmap_support_command), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(voxelmapSupportHover))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(voxelmapSupportCommand), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.xaeros-support", false)) {
                     component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(xaeros_support_hover))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaeros_support_command), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(xaerosSupportHover))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaerosSupportCommand), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.teleport-support", false)) {
                     component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                             .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(teleport_support_hover), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
-                                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(teleport_support_command), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
+                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(teleportSupportHover), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
+                                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(teleportSupportCommand), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
                 }
                 count++;
                 receiver.sendMessage(component);
             }
             if (count == 0) {  // 没有已经存储的死亡记录
-                receiver.sendMessage(String.format(getMessage(no_death_record), playerName));
+                receiver.sendMessage(String.format(getMessage(noDeathRecord), playerName));
             } else {
-                receiver.sendMessage(String.format(getMessage(read_death_record), count));
+                receiver.sendMessage(String.format(getMessage(readDeathRecord), count));
             }
         } catch (SQLException e) {
-            logInfo(getMessage(database_error));
-            receiver.sendMessage(getMessage(database_error));
+            logInfo(getMessage(databaseError));
+            receiver.sendMessage(getMessage(databaseError));
             e.printStackTrace();
         }
     }
