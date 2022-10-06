@@ -1,7 +1,9 @@
 package com.hzzz.points.utils;
 
 import com.hzzz.points.Points;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 工具类
@@ -75,5 +77,9 @@ public final class Utils {
         if (Points.getInstance().getConfig().getBoolean("log.more-information", false)) {
             Points.pluginLogger.info(message);
         }
+    }
+
+    public static void runTaskAsynchronously(@NotNull Runnable task){
+        Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), task);
     }
 }

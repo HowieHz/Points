@@ -4,7 +4,6 @@ import com.hzzz.points.Points;
 import com.hzzz.points.listeners.interfaces.NamedListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,9 +12,10 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import java.sql.SQLException;
 
 import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
-import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.isEnableDeathMessage;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.insertDeathLog;
+import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.isEnableDeathMessage;
+import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.utils.Utils.runTaskAsynchronously;
 
 /**
  * 玩家死亡事件监听器
@@ -80,7 +80,7 @@ public final class DeathListener implements NamedListener {
             if (deathMessage == null) {  // 被手动设置deathMessage才可能为null吧
                 return;
             }
-            Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> insertDeathLog(player, deathMessage.toString()));
+            runTaskAsynchronously(() -> insertDeathLog(player, deathMessage.toString()));
         }
     }
 }

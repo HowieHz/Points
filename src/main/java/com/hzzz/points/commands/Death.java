@@ -1,7 +1,6 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -15,8 +14,7 @@ import java.util.*;
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.updateDeathMessageConfig;
-import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.utils.Utils.logError;
+import static com.hzzz.points.utils.Utils.*;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -71,7 +69,7 @@ public final class Death implements TabExecutor {
                         return true;
                     }
 
-                    Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> {
+                    runTaskAsynchronously(() -> {
                         try {
                             if (updateDeathMessageConfig(player)) {  // 更改数据库config
                                 sender.sendMessage(getMessage(ENABLE_DEATH_MESSAGE));
@@ -112,7 +110,7 @@ public final class Death implements TabExecutor {
                             return true;
                         }
 
-                        Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> outputDeathLog(player, player));  // 查看自己的log
+                        runTaskAsynchronously(() -> outputDeathLog(player, player));  // 查看自己的log
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
@@ -133,7 +131,7 @@ public final class Death implements TabExecutor {
                             return true;
                         }
 
-                        Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> outputDeathLog(args[1], sender));  // 查看玩家的log
+                        runTaskAsynchronously(() -> outputDeathLog(args[1], sender));  // 查看玩家的log
                     }
 
                 } else {
