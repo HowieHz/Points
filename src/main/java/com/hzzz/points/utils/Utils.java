@@ -49,6 +49,24 @@ public final class Utils {
     }
 
     /**
+     * 向控制台发送debug消息
+     *
+     * @param message 消息内容
+     */
+    public static void logDebug(String message) {
+        if (isDebug()) {
+            Points.pluginLogger.severe(message);
+        }
+    }
+
+    /**
+     * 检查debug是否开启
+     */
+    public static boolean isDebug(){
+        return Points.getInstance().getConfig().getBoolean("debug.enable", false);
+    }
+
+    /**
      * 向控制台发送消息(需要config.yml -> log.more-information 为true)
      *
      * @param message 消息内容

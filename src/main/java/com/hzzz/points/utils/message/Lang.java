@@ -7,7 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.EnumMap;
 
-import static com.hzzz.points.utils.Utils.logError;
+import static com.hzzz.points.utils.Utils.isDebug;
+import static com.hzzz.points.utils.Utils.logDebug;
 import static org.bukkit.ChatColor.BLUE;
 
 /**
@@ -37,9 +38,7 @@ public final class Lang {
         if (messageMap.containsKey(key)) {
             return messageMap.get(key);
         } else {
-            if (Points.getInstance().getConfig().getBoolean("debug.enable", false)) {
-                logError(String.format("文字类在尝试读取不存在键:%s", key));
-            }
+            logDebug(String.format("文字类在尝试读取不存在键:%s", key));
             return "这是一个bug！如果你看到了这条消息，请在github发送issue并且描述此时的使用场景";
         }
     }
@@ -52,12 +51,13 @@ public final class Lang {
      * @return 读取出的文字
      */
     private static String getLang(String path, String defaultText) {
-        if (Points.getInstance().getConfig().getBoolean("debug.enable", false)
-                && !defaultText.equals(getLangConfig().getString(path))) {  // debug模式
-            logError(String.format("读取%s和默认不一致", path));
-            logError(String.format("默认为:%s", defaultText));
-            logError(String.format("读取为:%s", getLangConfig().getString(path)));
-            logError(String.format("返回为:%s", getLangConfig().getString(path, defaultText)));
+        if (isDebug()  // debug模式
+                && !defaultText.equals(getLangConfig().getString(path))) {
+            logDebug(String.format("读取%s和默认不一致\n默认为:%s\n读取为:%s\n返回为:%s",
+                    path,
+                    defaultText,
+                    getLangConfig().getString(path),
+                    getLangConfig().getString(path, defaultText)));
         }
         return getLangConfig().getString(path, defaultText);
     }
