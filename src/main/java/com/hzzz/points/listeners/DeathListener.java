@@ -4,6 +4,7 @@ import com.hzzz.points.Points;
 import com.hzzz.points.listeners.interfaces.NamedListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -79,7 +80,7 @@ public final class DeathListener implements NamedListener {
             if (deathMessage == null) {  // 被手动设置deathMessage才可能为null吧
                 return;
             }
-            insertDeathLog(player, deathMessage.toString());
+            Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> insertDeathLog(player, deathMessage.toString()));
         }
     }
 }

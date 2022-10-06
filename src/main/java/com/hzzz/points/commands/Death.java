@@ -1,6 +1,7 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -14,9 +15,9 @@ import java.util.*;
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.updateDeathMessageConfig;
-import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.utils.Utils.logError;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
@@ -70,19 +71,20 @@ public final class Death implements TabExecutor {
                         return true;
                     }
 
-                    try {
-                        if (updateDeathMessageConfig(player)) {  // 更改数据库config
-                            sender.sendMessage(getMessage(ENABLE_DEATH_MESSAGE));
-                        } else {
+                    Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> {
+                        try {
+                            if (updateDeathMessageConfig(player)) {  // 更改数据库config
+                                sender.sendMessage(getMessage(ENABLE_DEATH_MESSAGE));
+                            } else {
+                                sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
+                            }
+                        } catch (SQLException e) {
+                            sender.sendMessage(getMessage(DATABASE_ERROR));
                             sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
+                            logError(getMessage(DATABASE_ERROR));
+                            e.printStackTrace();
                         }
-                    } catch (SQLException e) {
-                        sender.sendMessage(getMessage(DATABASE_ERROR));
-                        sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
-                        logError(getMessage(DATABASE_ERROR));
-                        e.printStackTrace();
-                    }
-
+                    });
                 } else {
                     sender.sendMessage(getMessage(DISABLE_MODULE));
                 }
@@ -110,7 +112,7 @@ public final class Death implements TabExecutor {
                             return true;
                         }
 
-                        outputDeathLog(player, player);  // 查看自己的log
+                        Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> outputDeathLog(player, player));  // 查看自己的log
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
@@ -131,7 +133,7 @@ public final class Death implements TabExecutor {
                             return true;
                         }
 
-                        outputDeathLog(args[1], sender);  // 查看玩家的log
+                        Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), () -> outputDeathLog(args[1], sender));  // 查看玩家的log
                     }
 
                 } else {

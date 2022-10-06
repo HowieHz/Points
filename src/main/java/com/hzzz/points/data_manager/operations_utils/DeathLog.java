@@ -18,8 +18,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-import static com.hzzz.points.utils.message.Lang.*;
 import static com.hzzz.points.utils.Utils.*;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
@@ -35,6 +35,37 @@ public final class DeathLog {
      */
     private DeathLog() {
         throw new IllegalStateException("工具类");
+    }
+
+
+    /**
+     * 读取目标玩家的死亡日志
+     *
+     * @param uuid 目标玩家的uuid
+     * @return 读取到的记录集
+     */
+    private static ResultSet readDeathLog(UUID uuid) throws SQLException {
+        // 查询死亡记录的操作
+        psSelectDeathLog.setString(1, uuid.toString());
+        return psSelectDeathLog.executeQuery();
+    }
+
+    /**
+     * 计算目标玩家在数据库中的死亡记录数
+     *
+     * @param uuid 目标玩家的uuid
+     * @return 记录数
+     */
+    private static int countDeathLog(UUID uuid) throws SQLException {
+        // 查询死亡记录数量的操作
+        int count = 0;  // 结果行数
+        try (ResultSet rs = readDeathLog(uuid)) {
+            // 计算结果行数
+            while (rs.next()) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
@@ -82,56 +113,10 @@ public final class DeathLog {
     }
 
     /**
-     * 读取目标玩家的死亡日志
-     *
-     * @param uuid 目标玩家的uuid
-     * @return 读取到的记录集
-     */
-    public static ResultSet readDeathLog(UUID uuid) throws SQLException {
-        // 查询死亡记录的操作
-        psSelectDeathLog.setString(1, uuid.toString());
-        return psSelectDeathLog.executeQuery();
-    }
-
-    /**
-     * 计算目标玩家在数据库中的死亡记录数
-     *
-     * @param uuid 目标玩家的uuid
-     * @return 记录数
-     */
-    public static int countDeathLog(UUID uuid) throws SQLException {
-        // 查询死亡记录数量的操作
-        int count = 0;  // 结果行数
-        try (ResultSet rs = readDeathLog(uuid)) {
-            // 计算结果行数
-            while (rs.next()) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    /**
-     * 向接受者发送目标玩家玩家的死亡日志
-     *
-     * @param uuid     目标玩家的uuid
-     * @param receiver 接受者
-     */
-    public static void outputDeathLog(UUID uuid, CommandSender receiver) {
-        Player targetPlayer = Bukkit.getPlayer(uuid);  // 使用uuid获取
-
-        if (targetPlayer == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(getMessage(PLAYER_NOT_ONLINE));
-            return;
-        }
-        outputDeathLog(targetPlayer, receiver);
-    }
-
-    /**
      * 向接受者发送目标玩家玩家的死亡日志
      *
      * @param playerName 目标玩家的用户名
-     * @param receiver    接受者
+     * @param receiver   接受者
      */
     public static void outputDeathLog(String playerName, CommandSender receiver) {
         Player targetPlayer = Bukkit.getPlayerExact(playerName);  // 使用玩家名获取
@@ -147,7 +132,7 @@ public final class DeathLog {
      * 向接受者发送目标玩家玩家的死亡日志
      *
      * @param targetPlayer 目标玩家对象
-     * @param receiver      接受者
+     * @param receiver     接受者
      */
     public static void outputDeathLog(Player targetPlayer, CommandSender receiver) {
         FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
