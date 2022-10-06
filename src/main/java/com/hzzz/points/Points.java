@@ -44,6 +44,9 @@ public final class Points extends JavaPlugin {
             new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
     };
 
+    /**
+     * 设置instance，方便获取实例
+     */
     public Points() {
         super();
         instance = this;

@@ -20,6 +20,9 @@ import static com.hzzz.points.utils.message.MsgKey.ENTER_BED_CANCELED;
 import static com.hzzz.points.utils.message.MsgKey.USE_RESPAWN_ANCHOR_CANCELED;
 import static org.bukkit.Material.*;
 
+/**
+ * 枚举世界类型
+ */
 enum WorldName {
     WORLD,
     NETHER,
@@ -193,6 +196,13 @@ public final class AntiBoomListener implements NamedListener {
         }
     }
 
+    /**
+     * 检查世界名是否符合配置文件中对应世界类型的世界名
+     *
+     * @param worldName  世界名
+     * @param whichWorld 世界类型
+     * @return 符合返回true
+     */
     private boolean checkWordName(String worldName, WorldName whichWorld) {
         final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         final String configWorldNameParentNode = "anti-boom.world-name";
