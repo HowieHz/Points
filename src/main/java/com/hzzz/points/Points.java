@@ -46,7 +46,7 @@ public final class Points extends JavaPlugin {
 
     public Points() {
         super();
-        System.out.println("1111111");
+        instance = this;
     }
 
 
@@ -64,8 +64,6 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onLoad() {
-        instance = this;
-
         // 如果配置文件不存在, 保存默认的配置
         // config.yml
         saveDefaultConfig();

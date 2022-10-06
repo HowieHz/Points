@@ -4,6 +4,7 @@
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="org.bukkit.event.EventHandler" />
     </list>
+    <pattern value="com.hzzz.points.Points" method="Points" />
   </component>
   <component name="ExcludeFromValidation">
     <file url="file://$PROJECT_DIR$/src/main/java/com/hzzz/points/utils/Metrics.java" />
