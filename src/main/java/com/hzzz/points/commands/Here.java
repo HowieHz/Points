@@ -18,8 +18,8 @@ import java.util.List;
 import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
 import static com.hzzz.points.utils.message.Lang.getMessage;
-import static com.hzzz.points.utils.message.MsgKey.noPermission;
-import static com.hzzz.points.utils.message.MsgKey.playerOnly;
+import static com.hzzz.points.utils.message.MsgKey.NO_PERMISSION;
+import static com.hzzz.points.utils.message.MsgKey.PLAYER_ONLY;
 
 /**
  * here指令的执行器以及tab补全
@@ -48,13 +48,13 @@ public final class Here implements TabExecutor {
 
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(getMessage(playerOnly));
+            sender.sendMessage(getMessage(PLAYER_ONLY));
             return true;
         }
 
         // 权限检查
         if (!specialCheckPermission("here", player, "points.command.here")) {
-            sender.sendMessage(getMessage(noPermission));
+            sender.sendMessage(getMessage(NO_PERMISSION));
             return true;
         }
 

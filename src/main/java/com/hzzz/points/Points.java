@@ -72,16 +72,16 @@ public final class Points extends JavaPlugin {
         saveLangConfig();
 
         // 插件正在加载 这个要在读取加载语言文件之后，不然输出的就是null
-        logInfo(getMessage(pluginLoading));
+        logInfo(getMessage(PLUGIN_LOADING));
 
         // 初始化数据库存放的文件夹
         File file = new File("./plugins/Points/database");
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {
             if (file.mkdirs()) {
-                logDetailedInfo(getMessage(createDatabaseFolderSuccessfully));
+                logDetailedInfo(getMessage(CREATE_DATABASE_FOLDER_SUCCESSFULLY));
             } else {
-                logError(getMessage(createDatabaseFolderFailed));
+                logError(getMessage(CREATE_DATABASE_FOLDER_FAILED));
             }
         }
 
@@ -91,7 +91,7 @@ public final class Points extends JavaPlugin {
             new Metrics(this, pluginId);
         }
 
-        logInfo(getMessage(pluginLoaded));  // 插件已加载
+        logInfo(getMessage(PLUGIN_LOADED));  // 插件已加载
     }
 
     /**
@@ -99,7 +99,7 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        logInfo(getMessage(pluginStarting));  // 插件正在启动
+        logInfo(getMessage(PLUGIN_STARTING));  // 插件正在启动
 
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
@@ -121,13 +121,13 @@ public final class Points extends JavaPlugin {
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
             if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
-                logDetailedInfo(String.format(getMessage(sqliteReady), "config.sqlite, death_log.sqlite"));
+                logDetailedInfo(String.format(getMessage(SQLITE_READY), "config.sqlite, death_log.sqlite"));
 
                 // 数据库成功启动才启动death模块
                 // 注册监听
                 registerEvents(DeathListener.getInstance());
             } else {
-                logError(String.format(getMessage(sqliteNotReady), "config.sqlite, death_log.sqlite"));
+                logError(String.format(getMessage(SQLITE_NOT_READY), "config.sqlite, death_log.sqlite"));
             }
         }
 
@@ -137,18 +137,18 @@ public final class Points extends JavaPlugin {
             registerEvents(AntiBoomListener.getInstance());
         }
 
-        logInfo(getMessage(pluginStarted));  // 插件已启动
+        logInfo(getMessage(PLUGIN_STARTED));  // 插件已启动
     }
 
     @Override
     public void onDisable() {
-        logInfo(getMessage(pluginDisabling));  // 插件正在关闭
+        logInfo(getMessage(PLUGIN_DISABLING));  // 插件正在关闭
 
         Bukkit.getScheduler().cancelTasks(this);  // 关闭插件时, 确保取消我调度的所有任务
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
 
-        logInfo(getMessage(pluginDisabled));  // 插件已关闭
+        logInfo(getMessage(PLUGIN_DISABLED));  // 插件已关闭
     }
 
     /**
@@ -160,7 +160,7 @@ public final class Points extends JavaPlugin {
     private void registerEvents(NamedListener listenerInstance) {
         eventHandlers.add(listenerInstance);
         Bukkit.getPluginManager().registerEvents(listenerInstance, this);
-        logDetailedInfo(String.format(getMessage(registerListeners), listenerInstance.getName()));  // 详细log
+        logDetailedInfo(String.format(getMessage(REGISTER_LISTENERS), listenerInstance.getName()));  // 详细log
     }
 
     /**
@@ -173,7 +173,7 @@ public final class Points extends JavaPlugin {
     private void setExecutor(String command, CommandExecutor executorInstance) {
         commands.add(command);
         Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(executorInstance);
-        logDetailedInfo(String.format(getMessage(setExecutor), command));  // 详细log
+        logDetailedInfo(String.format(getMessage(SET_EXECUTOR), command));  // 详细log
     }
 
     /**
@@ -182,10 +182,10 @@ public final class Points extends JavaPlugin {
     private void disableEventHandler() {
         for (NamedListener listener : eventHandlers) {
             HandlerList.unregisterAll(listener);
-            logDetailedInfo(String.format(getMessage(alreadyDisableListeners), listener.getName()));  // 详细log
+            logDetailedInfo(String.format(getMessage(ALREADY_DISABLE_LISTENERS), listener.getName()));  // 详细log
         }
         eventHandlers.clear();
-        logDetailedInfo(getMessage(allListenersDisabled));  // 详细log
+        logDetailedInfo(getMessage(ALL_LISTENERS_DISABLED));  // 详细log
     }
 
     /**
@@ -194,10 +194,10 @@ public final class Points extends JavaPlugin {
     private void disableExecutor() {
         for (String command : commands) {
             Objects.requireNonNull(Bukkit.getPluginCommand(command)).setExecutor(null);
-            logDetailedInfo(String.format(getMessage(alreadyDisableExecutor), command));  // 详细log
+            logDetailedInfo(String.format(getMessage(ALREADY_DISABLE_EXECUTOR), command));  // 详细log
         }
         commands.clear();
-        logDetailedInfo(getMessage(allExecutorDisabled));  // 详细log
+        logDetailedInfo(getMessage(ALL_EXECUTOR_DISABLED));  // 详细log
     }
 
     /**
@@ -211,7 +211,7 @@ public final class Points extends JavaPlugin {
         // 读取配置，加载文字
         reloadLangConfig();
 
-        logInfo(getMessage(configReloaded));  // 详细log
+        logInfo(getMessage(CONFIG_RELOADED));  // 详细log
 
         onEnable();
     }

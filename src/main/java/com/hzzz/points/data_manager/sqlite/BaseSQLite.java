@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
-import static com.hzzz.points.utils.message.MsgKey.databaseDriverError;
+import static com.hzzz.points.utils.message.MsgKey.DATABASE_DRIVER_ERROR;
 
 /**
  * <p>sqlite数据库对象 基类</p>
@@ -27,7 +27,7 @@ public abstract class BaseSQLite {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            logError(getMessage(databaseDriverError));
+            logError(getMessage(DATABASE_DRIVER_ERROR));
             e.printStackTrace();
         }
     }

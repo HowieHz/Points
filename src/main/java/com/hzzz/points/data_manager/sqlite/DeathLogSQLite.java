@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
-import static com.hzzz.points.utils.message.MsgKey.databaseSetupError;
+import static com.hzzz.points.utils.message.MsgKey.DATABASE_SETUP_ERROR;
 
 /**
  * 管理death_log.sqlite
@@ -17,7 +17,7 @@ public final class DeathLogSQLite extends BaseSQLite {
         try {
             instance = new DeathLogSQLite();
         } catch (SQLException e) {
-            logError(getMessage(databaseSetupError));
+            logError(getMessage(DATABASE_SETUP_ERROR));
             e.printStackTrace();
         }
     }

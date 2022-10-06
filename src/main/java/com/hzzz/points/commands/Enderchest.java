@@ -43,7 +43,7 @@ public final class Enderchest implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(getMessage(playerOnly));
+            sender.sendMessage(getMessage(PLAYER_ONLY));
             return true;
         }
         switch (args.length) {
@@ -52,7 +52,7 @@ public final class Enderchest implements TabExecutor {
                 if (!specialCheckPermission("enderchest",
                         sender,
                         "points.command.enderchest.self")) {
-                    sender.sendMessage(getMessage(noPermission));
+                    sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
                 }
 
@@ -68,14 +68,14 @@ public final class Enderchest implements TabExecutor {
                         "points.command.enderchest.other.%s",
                         args[0])
                 ) {
-                    sender.sendMessage(getMessage(noPermission));
+                    sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
                 }
 
                 Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (targetPlayer == null) {  // 检查是否获取到玩家
-                    player.sendMessage(getMessage(playerNotOnline));
+                    player.sendMessage(getMessage(PLAYER_NOT_ONLINE));
                     return true;
                 }
 
@@ -83,7 +83,7 @@ public final class Enderchest implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(getMessage(helpEnderchest));
+                sender.sendMessage(getMessage(HELP_ENDERCHEST));
                 return true;
             }
         }

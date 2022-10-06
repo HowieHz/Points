@@ -50,13 +50,13 @@ public final class DeathLog {
         try {
             count = countDeathLog(targetPlayer.getUniqueId());  // 获取目前记录条数
         } catch (SQLException e) {
-            logError(getMessage(databaseError));
+            logError(getMessage(DATABASE_ERROR));
             e.printStackTrace();
             return;
         }
 
         try {
-            logDetailedInfo(String.format(getMessage(readDeathLogResult), targetPlayer.getName(), count, limit));
+            logDetailedInfo(String.format(getMessage(READ_DEATH_LOG_RESULT), targetPlayer.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
                 psDeleteDeathLog.setString(1, targetPlayer.getUniqueId().toString());
@@ -76,7 +76,7 @@ public final class DeathLog {
             psInsertDeathLog.setDouble(7, playerLocation.getZ());
             psInsertDeathLog.execute();
         } catch (SQLException e) {
-            logError(String.format(getMessage(insertDeathRecordFail), targetPlayer.getName()));  // 未成功录入死亡信息
+            logError(String.format(getMessage(INSERT_DEATH_RECORD_FAIL), targetPlayer.getName()));  // 未成功录入死亡信息
             e.printStackTrace();
         }
     }
@@ -121,7 +121,7 @@ public final class DeathLog {
         Player targetPlayer = Bukkit.getPlayer(uuid);  // 使用uuid获取
 
         if (targetPlayer == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(getMessage(playerNotOnline));
+            receiver.sendMessage(getMessage(PLAYER_NOT_ONLINE));
             return;
         }
         outputDeathLog(targetPlayer, receiver);
@@ -137,7 +137,7 @@ public final class DeathLog {
         Player targetPlayer = Bukkit.getPlayerExact(playerName);  // 使用玩家名获取
 
         if (targetPlayer == null) {  // 检查是否获取到玩家
-            receiver.sendMessage(getMessage(playerNotOnline));
+            receiver.sendMessage(getMessage(PLAYER_NOT_ONLINE));
             return;
         }
         outputDeathLog(targetPlayer, receiver);
@@ -163,37 +163,37 @@ public final class DeathLog {
                         .append(Component.text(sdf.format(rs.getInt("deathTime") * 1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
                         .append(Component.text(" -> ").color(NamedTextColor.WHITE))
                         .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
-                        .append(Component.text(String.format(getMessage(coordinatesFormat), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
+                        .append(Component.text(String.format(getMessage(COORDINATES_FORMAT), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
 
                 if (config.getBoolean("death.log.voxelmap-support", false)) {
                     component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(voxelmapSupportHover))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(voxelmapSupportCommand), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.xaeros-support", false)) {
                     component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(xaerosSupportHover))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaerosSupportCommand), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
                 if (config.getBoolean("death.log.teleport-support", false)) {
                     component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                             .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(teleportSupportHover), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
-                                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(teleportSupportCommand), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
+                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
+                                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(TELEPORT_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
                 }
                 count++;
                 receiver.sendMessage(component);
             }
             if (count == 0) {  // 没有已经存储的死亡记录
-                receiver.sendMessage(String.format(getMessage(noDeathRecord), playerName));
+                receiver.sendMessage(String.format(getMessage(NO_DEATH_RECORD), playerName));
             } else {
-                receiver.sendMessage(String.format(getMessage(readDeathRecord), count));
+                receiver.sendMessage(String.format(getMessage(READ_DEATH_RECORD), count));
             }
         } catch (SQLException e) {
-            logInfo(getMessage(databaseError));
-            receiver.sendMessage(getMessage(databaseError));
+            logInfo(getMessage(DATABASE_ERROR));
+            receiver.sendMessage(getMessage(DATABASE_ERROR));
             e.printStackTrace();
         }
     }

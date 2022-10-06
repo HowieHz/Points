@@ -45,14 +45,14 @@ public final class Where implements TabExecutor {
 
                 // 检查执行者
                 if (!(sender instanceof Player player)) {
-                    sender.sendMessage(getMessage(playerOnly));
+                    sender.sendMessage(getMessage(PLAYER_ONLY));
                     return true;
                 }
                 // 权限检查
                 if (!specialCheckPermission("where",
                         sender,
                         "points.command.where.self")) {
-                    sender.sendMessage(getMessage(noPermission));
+                    sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
                 }
 
@@ -68,14 +68,14 @@ public final class Where implements TabExecutor {
                         "points.command.where.other.%s",
                         args[0])
                 ) {
-                    sender.sendMessage(getMessage(noPermission));
+                    sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
                 }
 
                 Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (targetPlayer == null) {  // 检查是否获取到玩家
-                    sender.sendMessage(getMessage(playerNotOnline));
+                    sender.sendMessage(getMessage(PLAYER_NOT_ONLINE));
                     return true;
                 }
 
@@ -84,7 +84,7 @@ public final class Where implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(getMessage(helpWhere));
+                sender.sendMessage(getMessage(HELP_WHERE));
                 return true;
             }
         }

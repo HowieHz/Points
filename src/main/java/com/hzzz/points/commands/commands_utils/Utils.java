@@ -43,26 +43,26 @@ public final class Utils {
                 .append(Component.text(targetPlayer.getName()).color(NamedTextColor.YELLOW))
                 .append(Component.text(separator).color(separatorColor))
                 .append(Component.text(targetPlayer.getWorld().getName()).color(NamedTextColor.YELLOW))
-                .append(Component.text(String.format(getMessage(coordinatesFormat), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
+                .append(Component.text(String.format(getMessage(COORDINATES_FORMAT), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
 
         // 根据配置文件在末尾追加一些信息
         if (config.getBoolean(String.format("%s.voxelmap-support", configRoot), false)) {
             component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(voxelmapSupportHover))))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(voxelmapSupportCommand), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
+                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
         }
 
         if (config.getBoolean(String.format("%s.xaeros-support", configRoot), false)) {
             component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(xaerosSupportHover))))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaerosSupportCommand), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
+                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
         }
 
         if (config.getBoolean(String.format("%s.teleport-support", configRoot), false)) {
             component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                     .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                            .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(teleportSupportHover), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(teleportSupportCommand), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))));
+                            .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(TELEPORT_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))));
         }
 
         return component;
