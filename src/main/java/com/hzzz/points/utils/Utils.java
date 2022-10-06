@@ -64,7 +64,7 @@ public final class Utils {
     /**
      * 检查debug是否开启
      */
-    public static boolean isDebug(){
+    public static boolean isDebug() {
         return Points.getInstance().getConfig().getBoolean("debug.enable", false);
     }
 
@@ -79,7 +79,12 @@ public final class Utils {
         }
     }
 
-    public static void runTaskAsynchronously(@NotNull Runnable task){
+    /**
+     * 主线程调度一个异步任务
+     *
+     * @param task 任务
+     */
+    public static void runTaskAsynchronously(@NotNull Runnable task) {
         Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), task);
     }
 }
