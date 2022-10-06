@@ -1,8 +1,5 @@
 package com.hzzz.points.data_manager.sqlite;
 
-import com.hzzz.points.Points;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +8,6 @@ import java.sql.Statement;
 import static com.hzzz.points.utils.Text.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
 import static com.hzzz.points.utils.msgKey.database_driver_error;
-import static com.hzzz.points.utils.msgKey.database_error;
 
 /**
  * <p>sqlite数据库对象 基类</p>
@@ -37,24 +33,6 @@ public abstract class BaseSQLite {
     }
 
     /**
-     * 获取操作接口Statement
-     *
-     * @return statement of sqlite
-     */
-    public Statement getStatement() {
-        return st;
-    }
-
-    /**
-     * 获取操作接口Connection
-     *
-     * @return Connection of sqlite
-     */
-    public Connection getConnection() {
-        return con;
-    }
-
-    /**
      * 初始化
      *
      * @param url 地址
@@ -64,25 +42,6 @@ public abstract class BaseSQLite {
         // 连接数据库 初始化st
         con = DriverManager.getConnection(url);
         st = con.createStatement();
-    }
-
-    /**
-     * 异步执行sql语句
-     *
-     * @param sql sql语句
-     */
-    public void asyncExecuteUpdate(String sql) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    st.executeUpdate(sql);
-                } catch (SQLException e) {
-                    logError(getMessage(database_error));
-                    e.printStackTrace();
-                }
-            }
-        }.runTaskAsynchronously(Points.getInstance());
     }
 
     /**

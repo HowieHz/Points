@@ -21,7 +21,7 @@ public final class Text {  // TODO 重构这个类 可以是map
     /**
      * 读取消息
      *
-     * @param msgKey 消息键
+     * @param key 消息键
      * @return 消息
      */
     public static String getMessage(msgKey key) {
