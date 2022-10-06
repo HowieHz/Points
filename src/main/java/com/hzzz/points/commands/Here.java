@@ -1,7 +1,6 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.utils.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -18,6 +17,9 @@ import java.util.List;
 
 import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.msgKey.no_permission;
+import static com.hzzz.points.utils.msgKey.player_only;
 
 /**
  * here指令的执行器以及tab补全
@@ -46,13 +48,13 @@ public final class Here implements TabExecutor {
 
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Text.getPlayerOnly());
+            sender.sendMessage(getMessage(player_only));
             return true;
         }
 
         // 权限检查
         if (!specialCheckPermission("here", player, "points.command.here")) {
-            sender.sendMessage(Text.getNoPermission());
+            sender.sendMessage(getMessage(no_permission));
             return true;
         }
 

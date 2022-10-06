@@ -1,11 +1,11 @@
 package com.hzzz.points.data_manager.sqlite;
 
-import com.hzzz.points.utils.Text;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static com.hzzz.points.utils.Text.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
+import static com.hzzz.points.utils.msgKey.database_setup_error;
 
 /**
  * 管理config.sqlite
@@ -17,7 +17,7 @@ public final class ConfigSQLite extends BaseSQLite {
         try {
             instance = new ConfigSQLite();
         } catch (SQLException e) {
-            logError(Text.getDatabaseSetupError());
+            logError(getMessage(database_setup_error));
             e.printStackTrace();
         }
     }

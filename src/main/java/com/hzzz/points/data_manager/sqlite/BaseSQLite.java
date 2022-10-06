@@ -1,7 +1,6 @@
 package com.hzzz.points.data_manager.sqlite;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.utils.Text;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.Connection;
@@ -9,7 +8,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static com.hzzz.points.utils.Text.getMessage;
 import static com.hzzz.points.utils.Utils.logError;
+import static com.hzzz.points.utils.msgKey.database_driver_error;
+import static com.hzzz.points.utils.msgKey.database_error;
 
 /**
  * <p>sqlite数据库对象 基类</p>
@@ -29,7 +31,7 @@ public abstract class BaseSQLite {
         try {
             Class.forName(DRIVER);
         } catch (ClassNotFoundException e) {
-            logError(Text.getDatabaseDriverError());
+            logError(getMessage(database_driver_error));
             e.printStackTrace();
         }
     }
@@ -76,7 +78,7 @@ public abstract class BaseSQLite {
                 try {
                     st.executeUpdate(sql);
                 } catch (SQLException e) {
-                    logError(Text.getDatabaseError());
+                    logError(getMessage(database_error));
                     e.printStackTrace();
                 }
             }

@@ -1,7 +1,6 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.utils.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -13,7 +12,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.hzzz.points.commands.commands_utils.Utils.commonCheckPermission;
+import static com.hzzz.points.utils.Text.getMessage;
 import static com.hzzz.points.utils.Utils.logInfo;
+import static com.hzzz.points.utils.msgKey.*;
 
 /**
  * points指令的执行器以及tab补全
@@ -42,26 +43,26 @@ public final class PointsCommand implements TabExecutor {
             if (args[0].equals("reload")) {
                 // 权限检查
                 if (!commonCheckPermission("points.reload", sender, "points.reload")) {
-                    sender.sendMessage(Text.getNoPermission());
+                    sender.sendMessage(getMessage(no_permission));
                     return true;
                 }
                 // 重载的逻辑
                 Points.getInstance().onReload();
 
                 // 发消息
-                sender.sendMessage(Text.getReloadReady());
+                sender.sendMessage(getMessage(reload_ready));
                 if (sender instanceof Player) {  // 玩家重载 在控制台也输出重载结果
-                    logInfo(Text.getReloadReady());
+                    logInfo(getMessage(reload_ready));
 
                 }
                 return true;
             }
 
             // args[0].equals("help")
-            sender.sendMessage(Text.getHelpPoints());
+            sender.sendMessage(getMessage(help_points));
             return true;
         } else {
-            sender.sendMessage(Text.getHelpPoints());
+            sender.sendMessage(getMessage(help_points));
         }
         return true;
     }

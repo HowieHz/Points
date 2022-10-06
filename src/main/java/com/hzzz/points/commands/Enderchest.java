@@ -1,6 +1,5 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.utils.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.utils.Text.getMessage;
+import static com.hzzz.points.utils.msgKey.*;
 
 /**
  * <p>随身潜影箱</p>
@@ -42,7 +43,7 @@ public final class Enderchest implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         // 检查执行者
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Text.getPlayerOnly());
+            sender.sendMessage(getMessage(player_only));
             return true;
         }
         switch (args.length) {
@@ -51,7 +52,7 @@ public final class Enderchest implements TabExecutor {
                 if (!specialCheckPermission("enderchest",
                         sender,
                         "points.command.enderchest.self")) {
-                    sender.sendMessage(Text.getNoPermission());
+                    sender.sendMessage(getMessage(no_permission));
                     return true;
                 }
 
@@ -67,14 +68,14 @@ public final class Enderchest implements TabExecutor {
                         "points.command.enderchest.other.%s",
                         args[0])
                 ) {
-                    sender.sendMessage(Text.getNoPermission());
+                    sender.sendMessage(getMessage(no_permission));
                     return true;
                 }
 
                 Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
 
                 if (targetPlayer == null) {  // 检查是否获取到玩家
-                    player.sendMessage(Text.getPlayerNotOnline());
+                    player.sendMessage(getMessage(player_not_online));
                     return true;
                 }
 
@@ -82,7 +83,7 @@ public final class Enderchest implements TabExecutor {
                 return true;
             }
             default -> {
-                sender.sendMessage(Text.getHelpEnderchest());
+                sender.sendMessage(getMessage(help_enderchest));
                 return true;
             }
         }

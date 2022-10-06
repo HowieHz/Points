@@ -1,7 +1,6 @@
 package com.hzzz.points.commands.commands_utils;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.utils.Text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -11,7 +10,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import static com.hzzz.points.utils.Text.getMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.utils.msgKey.*;
 
 /**
  * 指令执行器工具集
@@ -42,26 +43,26 @@ public final class Utils {
                 .append(Component.text(targetPlayer.getName()).color(NamedTextColor.YELLOW))
                 .append(Component.text(separator).color(separatorColor))
                 .append(Component.text(targetPlayer.getWorld().getName()).color(NamedTextColor.YELLOW))
-                .append(Component.text(String.format(Text.getCoordinatesFormat(), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
+                .append(Component.text(String.format(getMessage(coordinates_format), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ())).color(NamedTextColor.YELLOW));
 
         // 根据配置文件在末尾追加一些信息
         if (config.getBoolean(String.format("%s.voxelmap-support", configRoot), false)) {
             component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                    .hoverEvent(HoverEvent.showText(Component.text(Text.getVoxelmapSupportHover())))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(Text.getVoxelmapSupportCommand(), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
+                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(voxelmap_support_hover))))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(voxelmap_support_command), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
         }
 
         if (config.getBoolean(String.format("%s.xaeros-support", configRoot), false)) {
             component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                    .hoverEvent(HoverEvent.showText(Component.text(Text.getXaerosSupportHover())))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(Text.getXaerosSupportCommand(), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
+                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(xaeros_support_hover))))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(xaeros_support_command), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
         }
 
         if (config.getBoolean(String.format("%s.teleport-support", configRoot), false)) {
             component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                     .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                            .hoverEvent(HoverEvent.showText(Component.text(String.format(Text.getTeleportSupportHover(), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(Text.getTeleportSupportCommand(), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))));
+                            .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(teleport_support_hover), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(teleport_support_command), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))));
         }
 
         return component;
