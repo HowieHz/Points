@@ -12,8 +12,8 @@ here:
     self: # here对象为玩家自己
       enable: false  # 是否开启此项的权限管理
       node: points.command.here
-  voxelmap-support: false  # 是否开启Voxelmap支持
-  xaeros-support: false  # 是否开启Xaeros支持
+  voxelmap-support: true  # 是否开启Voxelmap支持
+  xaeros-support: true  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
   glowing:
     enable: true  # 是否高亮
@@ -26,11 +26,11 @@ where:
       enable: false  # 是否开启此项的权限管理
       node: points.command.where.self
     other: # where对象为其他玩家
-      enable: true  # 是否开启此项的权限管理
+      enable: false  # 是否开启此项的权限管理
       node-other-player: points.command.where.other  # 其他玩家
       node-target-player: points.command.where.other.%s  # 指定玩家 %s为玩家名的占位符
-  voxelmap-support: false  # 是否开启Voxelmap支持
-  xaeros-support: false  # 是否开启Xaeros支持
+  voxelmap-support: true  # 是否开启Voxelmap支持
+  xaeros-support: true  # 是否开启Xaeros支持
   teleport-support: false  # 是否开启tp支持
 
 death:
@@ -46,8 +46,8 @@ death:
     listener-permission: # 监听器权限
       enable: false  # 是否开启权限管理 开启权限管理后，依然可以使用指令，如无对应权限，死亡将不会发送消息
       node: points.listener.death.message  # 权限节点
-    voxelmap-support: false  # 是否开启Voxelmap支持
-    xaeros-support: false  # 是否开启Xaeros支持
+    voxelmap-support: true  # 是否开启Voxelmap支持
+    xaeros-support: true  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持
 
   log:
@@ -68,8 +68,8 @@ death:
         second: 1  # 每n秒
         maximum-usage: 1 # 允许查询n次
     record-limit: 5  # 死亡记录上限
-    voxelmap-support: false  # 是否开启Voxelmap支持
-    xaeros-support: false  # 是否开启Xaeros支持
+    voxelmap-support: true  # 是否开启Voxelmap支持
+    xaeros-support: true  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持
 
 enderchest:
