@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.hzzz.points.utils.message.Lang.*;
 import static com.hzzz.points.utils.Utils.*;
+import static com.hzzz.points.utils.message.Lang.getMessage;
+import static com.hzzz.points.utils.message.Lang.reloadLangConfig;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
@@ -35,14 +36,6 @@ public final class Points extends JavaPlugin {
     public static final Logger pluginLogger = Logger.getLogger("Points");  // Points.pluginLogger
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
     private final List<NamedListener> eventHandlers = new ArrayList<>();  // 已注册的监听器
-    private final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
-            new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
-            new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
-            new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
-            new CommandInfo("death", Death.getInstance(), "death.enable",
-                    DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady()),  // death指令
-            new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
-    };
 
     /**
      * 设置instance，方便获取实例
@@ -107,6 +100,14 @@ public final class Points extends JavaPlugin {
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
 
+        final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
+                new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
+                new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
+                new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
+                new CommandInfo("death", Death.getInstance(), "death.enable",
+                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady()),  // death指令
+                new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
+        };
         // 注册指令
         for (CommandInfo info : commandInfos) {
             if (info.and) {

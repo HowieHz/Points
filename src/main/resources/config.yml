@@ -1,5 +1,7 @@
 version: 2
 
+# 此项是否需要权限才能使用 = 如果这里是false，那么全部玩家都有使用权限，如果是true，就需要对应的权限才能使用
+
 language:
   file_name: zh_cn # 语言文件名 **.yml 语言文件存储于lang文件夹下面
 
@@ -10,7 +12,7 @@ here:
   enable: true  # 是否允许使用here
   permission:
     self: # here对象为玩家自己
-      enable: false  # 是否开启此项的权限管理
+      enable: false  # 此项是否需要权限才能使用
       node: points.command.here
   voxelmap-support: true  # 是否开启Voxelmap支持
   xaeros-support: true  # 是否开启Xaeros支持
@@ -23,10 +25,10 @@ where:
   enable: true  # 是否允许使用where
   permission:
     self: # where对象为玩家自己
-      enable: false  # 是否开启此项的权限管理
+      enable: false  # 此项是否需要权限才能使用
       node: points.command.where.self
     other: # where对象为其他玩家
-      enable: false  # 是否开启此项的权限管理
+      enable: false  # 此项是否需要权限才能使用
       node-other-player: points.command.where.other  # 其他玩家
       node-target-player: points.command.where.other.%s  # 指定玩家 %s为玩家名的占位符
   voxelmap-support: true  # 是否开启Voxelmap支持
@@ -41,10 +43,10 @@ death:
     # 当你死亡的时候会向你发送死亡地点等信息
     enable: true  # 是否启用death message子模块
     command-permission: # /death message 指令权限
-      enable: false  # 是否开启权限管理
+      enable: false  # 此项是否需要权限才能使用
       node: points.command.death.message  # 权限节点
     listener-permission: # 监听器权限
-      enable: false  # 是否开启权限管理 开启权限管理后，依然可以使用指令，如无对应权限，死亡将不会发送消息
+      enable: false  # 此项是否需要权限才能使用 开启此项后，依然可以使用指令，如无对应权限，死亡将不会记录和发送消息
       node: points.listener.death.message  # 权限节点
     voxelmap-support: true  # 是否开启Voxelmap支持
     xaeros-support: true  # 是否开启Xaeros支持
@@ -55,10 +57,10 @@ death:
     enable: true  # 是否启用death log子模块
     permission:
       self: # death log对象为玩家自己
-        enable: false  # 是否开启此项的权限管理
+        enable: false  # 此项是否需要权限才能使用
         node: points.command.death.log.self
       other: # death log对象为其他玩家
-        enable: true  # 是否开启此项的权限管理
+        enable: true  # 此项是否需要权限才能使用
         node-other-player: points.command.death.log.other  # 其他玩家
         node-target-player: points.command.death.log.other.%s  # 指定玩家 %s为玩家名的占位符
     command:
@@ -77,10 +79,10 @@ enderchest:
   enable: true  # 是否启用enderchest随身末影箱
   permission:
     self:  # enderchest对象为玩家自己
-      enable: false  # 是否开启此项的权限管理
+      enable: false  # 此项是否需要权限才能使用
       node: points.command.enderchest.self
     other: # enderchest对象为其他玩家
-      enable: true  # 是否开启此项的权限管理
+      enable: true  # 此项是否需要权限才能使用
       node-other-player: points.command.enderchest.other  # 其他玩家
       node-target-player: points.command.enderchest.other.%s  # 指定玩家 %s为玩家名的占位符
 
@@ -148,8 +150,12 @@ anti-boom:
 points:
   reload:
     permission:
-      enable: true  # 是否开启权限管理
-      node: points.reload  # 权限节点
+      enable: true  # 此项是否需要权限才能使用
+      node: points.command.reload  # 权限节点
+  help:
+    permission:
+      enable: true  # 此项是否需要权限才能使用
+      node: points.command.help  # 权限节点
 
 debug:  # debug模式
   enable: false

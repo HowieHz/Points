@@ -7,21 +7,22 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hzzz.points.commands.commands_utils.Utils.commonCheckPermission;
-import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.logInfo;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * points指令的执行器以及tab补全
  */
 public final class PointsCommand implements TabExecutor {
-    private static final String PERMISSION_PARENT_NODE_RELOAD = "points.reload";
+    private static final String PERMISSION_PARENT_NODE_RELOAD = "points.command.reload";
+    private static final String PERMISSION_PARENT_NODE_HELP = "points.command.help";
     private static final String DEFAULT_PERMISSION_RELOAD = "points.reload";
+    private static final String DEFAULT_PERMISSION_HELP = "points.help";
     private static final PointsCommand instance = new PointsCommand();
 
     /**
@@ -79,15 +80,16 @@ public final class PointsCommand implements TabExecutor {
          * points help
          * points reload
          */
+        List<String> completeArrays = new ArrayList<>();
         if (args.length == 0 || args.length == 1) {
             // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /points ），或者第一个参数输入到一半（此时长度为一 /points he……））
             if (commonCheckPermission(PERMISSION_PARENT_NODE_RELOAD, sender, DEFAULT_PERMISSION_RELOAD)) {
-                return Arrays.asList("help", "reload");
+                completeArrays.add("reload");
             }
-            return Collections.singletonList("help");
-        } else {
-            // 前一个参数已经输入完成，不继续提示
-            return Collections.singletonList("");
+            if (commonCheckPermission(PERMISSION_PARENT_NODE_HELP, sender, DEFAULT_PERMISSION_HELP)) {
+                completeArrays.add("help");
+            }
         }
+        return completeArrays;
     }
 }

@@ -1,9 +1,17 @@
+# Name and version
 name: Points
 version: ${version}
-main: com.hzzz.points.Points
-api-version: 1.16
+
+# Project metadata
 authors: [ HowieHz ]
 description: Some useful points
+website: https://github.com/HowieHz/Points
+
+# Technical settings
+main: com.hzzz.points.Points
+api-version: 1.16
+
+# Our commands
 commands:
   where:
     description: Get player position
@@ -25,3 +33,12 @@ commands:
     description: plugin commands
     aliases: [ po ]
     usage: "Not enable 'points'"
+
+# Default permissions
+permissions:
+  points.command.reload:
+    description: Allows you to do /points reload
+    default: op
+  points.command.help:
+    description: Allows you to do /points help
+    default: true

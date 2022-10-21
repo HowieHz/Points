@@ -26,8 +26,11 @@ A paper plugin, some useful points
 **其他**
 
 1. 高可配置性，各个模块都可以单独关闭
-2. 权限支持 * 通配符
-3. 开箱即用 -> 默认配置文件: 作用于自身的指令无需权限，作用于他人的权限和reload指令需要权限
+2. 完全可配置的语言文件
+3. 开箱即用 -> 默认配置文件: 
+   1. 作用于自身的指令无需权限
+   2. 作用于他人的指令（除*where*指令）和*points reload*指令需要权限
+   3. op 默认有*points reload*使用权限
 4. tab补全根据 模块是否开启 和 是否有权限 自动隐藏
 
 有权限的玩家看到的
@@ -36,7 +39,7 @@ A paper plugin, some useful points
 无权限玩家看到的
 ![tab-complete-control2](./img/tab-complete-control2.png)
 
-5. 完全可配置的语言文件
+5. 权限支持 * 通配符
 
 ## 功能介绍
 
@@ -112,10 +115,11 @@ A paper plugin, some useful points
 
     /points reload
     重载插件
-    points.reload
+    points.command.reload
 
     /points help
     获取帮助
+    points.command.help
 
 ## 构建
 
@@ -126,6 +130,10 @@ paper-api版本为1.16.5 向后兼容到1.19.2
 ## 代码质量
 
 Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_Points), [codacy.com](https://app.codacy.com/gh/HowieHz/Points/dashboard), [deepsource.io](https://deepsource.io/gh/HowieHz/Points) 监控代码质量
+
+## bStats
+
+[![bStats](https://bstats.org/signatures/bukkit/Points.svg)](https://bstats.org/plugin/bukkit/Points/16544)
 
 ## 更新计划
 
