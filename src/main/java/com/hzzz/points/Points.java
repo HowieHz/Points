@@ -121,6 +121,13 @@ public final class Points extends JavaPlugin {
             }
         }
 
+        if (isLoadDepend("PlaceholderAPI") && isLoadDepend("AureliumSkills")) {
+            if (config.getBoolean("fair-pvp.enable", false)) {
+                setExecutor("fair-pvp", FairPVP.getInstance());
+            }
+
+        }
+
         // death模块 监听器注册
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
@@ -202,6 +209,16 @@ public final class Points extends JavaPlugin {
         }
         commands.clear();
         logDetailedInfo(getMessage(ALL_EXECUTOR_DISABLED));  // 详细log
+    }
+
+    /**
+     * 检查插件是否加载 用于检查依赖
+     *
+     * @param pluginName 被检查的插件名
+     * @return 是否加载
+     */
+    private boolean isLoadDepend(String pluginName) {
+        return Bukkit.getPluginManager().isPluginEnabled(pluginName);
     }
 
     /**

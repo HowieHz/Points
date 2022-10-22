@@ -11,6 +11,8 @@ website: https://github.com/HowieHz/Points
 main: com.hzzz.points.Points
 api-version: 1.16
 
+softdepend: [PlaceholderAPI, AureliumSkills]
+
 # Our commands
 commands:
   where:
@@ -33,6 +35,9 @@ commands:
     description: plugin commands
     aliases: [ po ]
     usage: "Not enable 'points'"
+  fair-pvp:
+    description: fair pvp settings
+    usage: "Not enable 'fair-pvp'"
 
 # Default permissions
 permissions:

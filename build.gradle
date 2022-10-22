@@ -19,6 +19,10 @@ repositories {
         url = 'https://repo.papermc.io/repository/maven-public/'
     }
     maven {
+        name = 'PlaceholderAPI'
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
+    maven {
         name = 'ProtocolLib'
         url "https://repo.dmulloy2.net/repository/public/"
     }
@@ -37,6 +41,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.bstats/bstats-bukkit
     implementation 'org.bstats:bstats-bukkit:3.0.0'
+
+    compileOnly 'me.clip:placeholderapi:2.11.2'
 
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
