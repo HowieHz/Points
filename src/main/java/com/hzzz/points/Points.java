@@ -120,11 +120,8 @@ public final class Points extends JavaPlugin {
                 }
             }
         }
-
-        if (isLoadDepend("PlaceholderAPI") && isLoadDepend("AureliumSkills")) {
-            if (config.getBoolean("fair-pvp.enable", false)) {
-                setExecutor("fair-pvp", FairPVP.getInstance());
-            }
+        if (config.getBoolean("fair-pvp.enable", false) && (isLoadDepend("PlaceholderAPI") && isLoadDepend("AureliumSkills"))) {
+            setExecutor("fair-pvp", FairPVP.getInstance());
 
         }
 
@@ -218,7 +215,13 @@ public final class Points extends JavaPlugin {
      * @return 是否加载
      */
     private boolean isLoadDepend(String pluginName) {
-        return Bukkit.getPluginManager().isPluginEnabled(pluginName);
+        if (Bukkit.getPluginManager().isPluginEnabled(pluginName)) {
+            logInfo(getMessage(LOADED_DEPEND) + pluginName);
+            return true;
+        } else {
+            logError(getMessage(NO_DEPEND) + pluginName);
+            return false;
+        }
     }
 
     /**

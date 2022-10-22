@@ -55,4 +55,6 @@ public enum MsgKey {
     HELP_WHERE,
     HELP_ENDERCHEST,
     HELP_FAIR_PVP,
+    NO_DEPEND,
+    LOADED_DEPEND,
 }

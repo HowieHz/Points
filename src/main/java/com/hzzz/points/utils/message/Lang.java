@@ -158,7 +158,9 @@ public final class Lang {
         messageMap.put(MsgKey.HELP_WHERE, getLang("commands.where.help", "使用方法: §e/where 玩家名 §f或 §e/where"));
         messageMap.put(MsgKey.HELP_ENDERCHEST, getLang("commands.enderchest.help", "使用方法: §e/enderchest 玩家名 §f或 §e/enderchest"));
         messageMap.put(MsgKey.HELP_FAIR_PVP, getLang("commands.fair-pvp.help", "使用方法: §e/fair-pvp [on, off] §f或 §e/fair-pvp [on, off] 玩家名"));
-        messageMap.put(MsgKey.ENABLE_FAIR_PVP, getLang("message.fair-pvp.enable", "§e已启动公平PVP模式"));
-        messageMap.put(MsgKey.DISABLE_FAIR_PVP, getLang("message.fair-pvp.disable", "§e已关闭公平PVP模式"));
+        messageMap.put(MsgKey.ENABLE_FAIR_PVP, getLang("commands.fair-pvp.enable", "§e已启动公平PVP模式"));
+        messageMap.put(MsgKey.DISABLE_FAIR_PVP, getLang("commands.fair-pvp.disable", "§e已关闭公平PVP模式"));
+        messageMap.put(MsgKey.NO_DEPEND, getLang("message.no-depend", "缺少依赖§e"));
+        messageMap.put(MsgKey.LOADED_DEPEND, getLang("message.loaded-depend", "已检测到依赖§e"));
     }
 }
