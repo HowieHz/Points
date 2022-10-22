@@ -23,7 +23,7 @@ A paper plugin, some useful points
 5. 随身开启末影箱 (/enderchest指令)
 6. 防爆
 
-# 特殊需求功能
+### 特殊需求功能
 
 7. 公平PVP模式 (/fair-pvp指令, 关闭AureliumSkills插件的属性加成, 需要PlaceholderAPI和AureliumSkills插件)
 
