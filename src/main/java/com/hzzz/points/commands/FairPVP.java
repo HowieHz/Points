@@ -67,12 +67,12 @@ public class FairPVP implements TabExecutor {
                 }
                 if (args[0].equals("on")) {
                     for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier add %player_name% " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
+                        executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier add " + player.getName() + " " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
                     }
                     player.sendMessage(getMessage(ENABLE_FAIR_PVP));
                 } else if (args[0].equals("off")) {
                     for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier remove %player_name%  fair_pvp_" + word));
+                        executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier remove " + player.getName() + "  fair_pvp_" + word));
                     }
                     player.sendMessage(getMessage(DISABLE_FAIR_PVP));
                 } else {
@@ -101,13 +101,13 @@ public class FairPVP implements TabExecutor {
 
                 if (args[0].equals("on")) {
                     for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(targetPlayer.getPlayer(), "sk modifier add %player_name% " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
+                        executeCommand(PlaceholderAPI.setPlaceholders(targetPlayer, "sk modifier add " + targetPlayer.getName() + " " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
                     }
                     targetPlayer.sendMessage(getMessage(ENABLE_FAIR_PVP));
                     sender.sendMessage(targetPlayer.getName() + " " + getMessage(ENABLE_FAIR_PVP));
                 } else if (args[0].equals("off")) {
                     for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(targetPlayer.getPlayer(), "sk modifier remove %player_name%  fair_pvp_" + word));
+                        executeCommand(PlaceholderAPI.setPlaceholders(targetPlayer, "sk modifier remove " + targetPlayer.getName() + "  fair_pvp_" + word));
                     }
                     targetPlayer.sendMessage(getMessage(DISABLE_FAIR_PVP));
                     sender.sendMessage(targetPlayer.getName() + " " + getMessage(DISABLE_FAIR_PVP));
