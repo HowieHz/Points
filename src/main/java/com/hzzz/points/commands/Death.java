@@ -212,17 +212,13 @@ public final class Death implements TabExecutor {
                             return null;  // death log Ho……提示玩家名
                         }
                         // 没权限 不继续提示
-                        return Collections.singletonList("");
                     }
                     // 没开启模块 不继续提示
-                    return Collections.singletonList("");
-                } // 第一个参数是message或者其他什么奇奇怪怪的东西 不提示
-                return Collections.singletonList("");
+                }
+                // 第一个参数是message或者其他什么奇奇怪怪的东西 不提示
             }
-            default -> {
-                // 前两个参数已经输入完成，不继续提示
-                return Collections.singletonList("");
-            }
+            // 前两个参数已经输入完成，不继续提示
         }
+        return Collections.singletonList("");
     }
 }

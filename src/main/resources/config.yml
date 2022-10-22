@@ -162,3 +162,17 @@ debug:  # debug模式
 
 log:  # 详细信息
   more-information: false
+
+# 以下功能比较需求比较特殊
+
+# 此指令需要PlaceholderAPI, AureliumSkills插件才能使用
+fair-pvp:
+  enable: true  # 是否允许使用here
+  permission:
+    self: # fair-pvp对象为玩家自己
+      enable: false  # 此项是否需要权限才能使用
+      node: points.command.fair-pvp.self
+    other: # fair-pvp对象为其他玩家
+      enable: true  # 此项是否需要权限才能使用
+      node-other-player: points.command.fair-pvp.other  # 其他玩家
+      node-target-player: points.command.fair-pvp.other.%s  # 指定玩家 %s为玩家名的占位符

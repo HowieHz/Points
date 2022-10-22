@@ -87,4 +87,13 @@ public final class Utils {
     public static void runTaskAsynchronously(@NotNull Runnable task) {
         Bukkit.getScheduler().runTaskAsynchronously(Points.getInstance(), task);
     }
+
+    /**
+     * 以控制台的角度执行指令
+     * @param command 要执行的指令
+     * @return 若指令未找到返回false
+     */
+    public static boolean executeCommand(@NotNull String command){
+        return Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),command);
+    }
 }

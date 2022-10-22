@@ -34,6 +34,9 @@ message:
   canceled:
     enter_bed: "你尝试进入梦乡，但是被未知力量阻止了"
     use_respawn_anchor: "你尝试使用重生锚，但是被未知力量阻止了"
+  fair-pvp:
+    enable: "§e已启动公平PVP模式"
+    disable: "§e已关闭公平PVP模式"
 commands:
   global:
     frequency_limit: "你使用的太快了！ 请稍后再试"
@@ -67,9 +70,9 @@ commands:
       # 此消息为服务器日志
       read_death_log_result: "%s 在数据库中记录 %d 条, 限制为 %d 条"
   where:
-    help: "使用方法: /where 玩家名 或 /where"
+    help: "使用方法: §e/where 玩家名 §f或 §e/where"
   enderchest:
-    help: "使用方法: /enderchest 玩家名 或 /enderchest"
+    help: "使用方法: §e/enderchest 玩家名 §f或 §e/enderchest"
   points:
     help: |
       §6================================
@@ -81,3 +84,5 @@ commands:
       §e/where <player_name> §f: 获取他人的坐标
       §e/death §f: 死亡模块相关的指令帮助
       §6================================
+  fair-pvp:
+    help: "使用方法: §e/fair-pvp [on, off] §f或 §e/fair-pvp [on, off] 玩家名"
