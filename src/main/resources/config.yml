@@ -167,7 +167,7 @@ log:  # 详细信息
 
 # 此指令需要PlaceholderAPI, AureliumSkills插件才能使用
 fair-pvp:
-  enable: true  # 是否允许使用here
+  enable: false  # 是否允许使用fair-pvp
   permission:
     self: # fair-pvp对象为玩家自己
       enable: false  # 此项是否需要权限才能使用

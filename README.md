@@ -23,14 +23,18 @@ A paper plugin, some useful points
 5. 随身开启末影箱 (/enderchest指令)
 6. 防爆
 
+# 特殊需求功能
+
+7. 公平PVP模式 (/fair-pvp指令, 关闭AureliumSkills插件的属性加成, 需要PlaceholderAPI和AureliumSkills插件)
+
 **其他**
 
 1. 高可配置性，各个模块都可以单独关闭
 2. 完全可配置的语言文件
-3. 开箱即用 -> 默认配置文件: 
-   1. 作用于自身的指令无需权限
-   2. 作用于他人的指令（除*where*指令）和*points reload*指令需要权限
-   3. op 默认有*points reload*使用权限
+3. 开箱即用 -> 默认配置文件:
+    1. 作用于自身的指令无需权限
+    2. 作用于他人的指令（除*where*指令）和*points reload*指令需要权限
+    3. op 默认有*points reload*使用权限
 4. tab补全根据 模块是否开启 和 是否有权限 自动隐藏
 
 有权限的玩家看到的
@@ -120,6 +124,19 @@ A paper plugin, some useful points
     /points help
     获取帮助
     points.command.help
+
+#### /fair-pvp
+
+    /fair-pvp on
+    /fair-pvp off
+    切换自己的pvp模式
+    points.command.fair-pvp.self
+    
+    /fair-pvp on Shacha086
+    /fair-pvp off Shacha086
+    切换指定玩家的pvp模式 (要求该玩家在线)
+    points.command.fair-pvp.other
+    points.command.fair-pvp.Shacha086 //对于特定玩家
 
 ## 构建
 
