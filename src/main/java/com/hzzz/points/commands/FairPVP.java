@@ -135,7 +135,7 @@ public class FairPVP implements TabExecutor {
          * fair-pvp [on, off] <player_name>
          */
         if (args.length == 0 || args.length == 1) {
-            // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /points ），或者第一个参数输入到一半（此时长度为一 /points o……））
+            // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /fair-pvp ），或者第一个参数输入到一半（此时长度为一 /fair-pvp o……））
             if (specialCheckPermission("fair-pvp",
                     sender,
                     "points.command.fair-pvp.self")
@@ -152,7 +152,7 @@ public class FairPVP implements TabExecutor {
                     "points.command.fair-pvp.other.%s",
                     args[1])) {
                 // 过权限检查
-                return null;  // death log Ho……提示玩家名
+                return null;  // fair-pvp on Ho……提示玩家名
             }
         }
         return Collections.singletonList("");
