@@ -67,7 +67,7 @@ public final class Utils {
             component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                     .append(Component.text("[tp] ").color(NamedTextColor.RED)
                             .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
-                            .clickEvent(ClickEvent.suggestCommand(command))
+                            .clickEvent(ClickEvent.runCommand(command))
                             .insertion(command));  // shift-clicked
         }
 
