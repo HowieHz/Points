@@ -10,8 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
@@ -47,22 +47,28 @@ public final class Utils {
 
         // 根据配置文件在末尾追加一些信息
         if (config.getBoolean(configRoot + ".voxelmap-support", false)) {
+            String command = String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName());
             component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
                     .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
+                    .clickEvent(ClickEvent.runCommand(command))
+                    .insertion(command));  // shift-clicked
         }
 
         if (config.getBoolean(configRoot + ".xaeros-support", false)) {
+            String command = String.format(getMessage(XAEROS_SUPPORT_COMMAND), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName());
             component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
                     .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
-                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), targetPlayer.getName(), targetPlayer.getName().charAt(0), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ(), targetPlayer.getWorld().getName()))));
+                    .clickEvent(ClickEvent.suggestCommand(command))
+                    .insertion(command));  // shift-clicked
         }
 
         if (config.getBoolean(configRoot + ".teleport-support", false)) {
+            String command = String.format(getMessage(TELEPORT_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ());
             component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                     .append(Component.text("[tp] ").color(NamedTextColor.RED)
                             .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(TELEPORT_SUPPORT_COMMAND), playerLocation.getX(), playerLocation.getY(), playerLocation.getZ()))));
+                            .clickEvent(ClickEvent.suggestCommand(command))
+                            .insertion(command));  // shift-clicked
         }
 
         return component;

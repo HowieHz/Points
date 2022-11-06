@@ -41,12 +41,12 @@ public final class Lang {
     }
 
     /**
-     * 读取消息
+     * 读取消息，如无则返回""
      *
      * @param key 消息键
      * @return 消息
      */
-    @Nullable
+    @NotNull
     public static String getMessage(@NotNull MsgKey key) {
         if (messageMap.isEmpty()) {
             reloadLangConfig();
@@ -56,7 +56,7 @@ public final class Lang {
         } else {
             logError("文字类在尝试读取不存在键:" + key);
             logError("这是一个bug！如果你看到了这条消息，请在github发送issue并且描述此时的使用场景");
-            return null;
+            return "";
         }
     }
 
