@@ -87,7 +87,7 @@ public final class DeathLog {
         }
 
         try {
-            logDetailedInfo(String.format(getMessage(READ_DEATH_LOG_RESULT), targetPlayer.getName(), count, limit));
+            logDebug(String.format(getMessage(READ_DEATH_LOG_RESULT), targetPlayer.getName(), count, limit));
             if (count >= limit) {  // 达到上限了
                 // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
                 psDeleteDeathLog.setString(1, targetPlayer.getUniqueId().toString());
