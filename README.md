@@ -160,3 +160,5 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 3. 配置文件占位符检查
 4. 在服务器隐身（玩家列表也看不到的那种可以用来抓挂）
 5. 右键打开潜影箱
+6. 白名单插件，邀请制白名单功能，可以通过指令刷新储存的uuid
+7. 均衡饮食功能
