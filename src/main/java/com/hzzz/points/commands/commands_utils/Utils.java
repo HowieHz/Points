@@ -141,19 +141,17 @@ public final class Utils {
                                                      String targetPlayerName,
                                                      String defaultPermissionNodeTargetOtherPlayers,
                                                      String defaultPermissionNodeTargetSingerPlayer) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (!config.getBoolean(parentConfigNode + ".permission.other.enable", true)) {  // 权限管理有没有开启
             return true;
         }
         if (checkPermission(sender, config.getString(parentConfigNode + ".permission.other.node-other-player", defaultPermissionNodeTargetOtherPlayers))) {  // 检查有没有这个权限 other通用节点
             return true;
         }
-        if (checkPermission(sender,
+        // 把玩家名格式化带入 检查有没有这个权限 other特定玩家节点
+        return checkPermission(sender,
                 stringFormatEnd(config.getString(parentConfigNode + ".permission.other.node-target-player"),
-                        "%s", defaultPermissionNodeTargetSingerPlayer, targetPlayerName))) {  // 把玩家名格式化带入 检查有没有这个权限 other特定玩家节点
-            return true;
-        }
-        return false;
+                        "%s", defaultPermissionNodeTargetSingerPlayer, targetPlayerName));
     }
 
     /**
@@ -179,10 +177,8 @@ public final class Utils {
             return true;
         }
         final String ConfigNode = parentConfigNode + ".permission.self.node";
-        if (checkPermission(sender, config.getString(ConfigNode, defaultPermissionNode))) {   // 玩家权限检查
-            return true;
-        }
-        return false;
+        // 玩家权限检查
+        return checkPermission(sender, config.getString(ConfigNode, defaultPermissionNode));
     }
 
     /**
@@ -206,9 +202,7 @@ public final class Utils {
             return true;
         }
         final String ConfigNode = parentConfigNode + ".permission.node";
-        if (checkPermission(sender, config.getString(ConfigNode, defaultPermissionNode))) {   // 玩家权限检查
-            return true;
-        }
-        return false;
+        // 玩家权限检查
+        return checkPermission(sender, config.getString(ConfigNode, defaultPermissionNode));
     }
 }
