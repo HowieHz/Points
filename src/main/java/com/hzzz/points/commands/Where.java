@@ -10,8 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
-import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.commands.commands_utils.Utils.*;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -49,24 +48,22 @@ public final class Where implements TabExecutor {
                     return true;
                 }
                 // 权限检查
-                if (!specialCheckPermission("where",
-                        sender,
+                if (!checkPermissionTargetSelf(sender, "where",
                         "points.command.where.self")) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
                 }
 
                 // 生成并发送消息给执行者
-                sender.sendMessage(builderPlayerCoordinatesMessage("where", player));
+                sender.sendMessage(buildPlayerCoordinatesMessage("where", player));
                 return true;
             }
             case 1 -> {
                 // 权限检查
-                if (!specialCheckPermission("where",
-                        sender,
-                        "points.command.where.other",
-                        "points.command.where.other.%s",
-                        args[0])
+                if (!checkPermissionTargetOther(sender, "where",
+                        args[0], "points.command.where.other",
+                        "points.command.where.other.%s"
+                )
                 ) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
@@ -80,7 +77,7 @@ public final class Where implements TabExecutor {
                 }
 
                 // 生成并发送消息给执行者
-                sender.sendMessage(builderPlayerCoordinatesMessage("where", targetPlayer));
+                sender.sendMessage(buildPlayerCoordinatesMessage("where", targetPlayer));
                 return true;
             }
             default -> {
@@ -100,11 +97,10 @@ public final class Where implements TabExecutor {
          * where <player_name>
          */
         if ((args.length == 0 || args.length == 1)  // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
-                && (specialCheckPermission("where",
-                sender,
-                "points.command.where.other",
-                "points.command.where.other.%s",
-                args[0])
+                && (checkPermissionTargetOther(sender, "where",
+                "", "points.command.where.other",
+                "points.command.where.other.%s"
+        )
         )) {
             return null;  // 提示玩家名
         }

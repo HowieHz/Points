@@ -11,10 +11,11 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.SQLException;
 import java.util.*;
 
-import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.commands.commands_utils.Utils.*;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.updateDeathMessageConfig;
-import static com.hzzz.points.utils.Utils.*;
+import static com.hzzz.points.utils.Utils.logError;
+import static com.hzzz.points.utils.Utils.runTaskAsynchronously;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -59,8 +60,7 @@ public final class Death implements TabExecutor {
                         return true;
                     }
                     // 权限检查
-                    if (config.getBoolean("death.message.command-permission.enable", false)
-                            && !checkPermission(sender, config.getString("death.message.command-permission.node", "points.command.death.message"))) {
+                    if (checkPermissionOneConfigNode(sender, "death.message.command-permission", "points.command.death.message")) {
                         sender.sendMessage(getMessage(NO_PERMISSION));
                         return true;
                     }
@@ -91,8 +91,7 @@ public final class Death implements TabExecutor {
                 if (config.getBoolean("death.log.enable", false)) {  // 检查子模块是否开启
                     if (args.length == 1) {  // /death log
                         // 权限检查
-                        if (!specialCheckPermission("death.log",
-                                sender,
+                        if (!checkPermissionTargetSelf(sender, "death.log",
                                 "points.command.death.log.self")) {
                             sender.sendMessage(getMessage(NO_PERMISSION));
                             return true;
@@ -114,11 +113,10 @@ public final class Death implements TabExecutor {
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
-                        if (!specialCheckPermission("death.log",
-                                sender,
-                                "points.command.death.log.other",
-                                "points.command.death.log.other.%s",
-                                args[1])
+                        if (!checkPermissionTargetOther(sender, "death.log",
+                                args[1], "points.command.death.log.other",
+                                "points.command.death.log.other.%s"
+                        )
                         ) {
                             sender.sendMessage(getMessage(NO_PERMISSION));
                             return true;
@@ -188,13 +186,8 @@ public final class Death implements TabExecutor {
                     completeArrays.add("message");
                 }
                 if (config.getBoolean("death.log.enable", false)
-                        && (specialCheckPermission("death.log",
-                        sender,
-                        "points.command.death.log.self")
-                        || specialCheckPermission("death.log",
-                        sender,
-                        "points.command.death.log.other",
-                        "other"))) {
+                        && (checkPermissionTargetSelf(sender, "death.log", "points.command.death.log.self")
+                        || checkPermissionTargetOther(sender, "death.log", "", "points.command.death.log.other", "points.command.death.log.other.%s"))) {
                     completeArrays.add("log");
                 }
                 return completeArrays;
@@ -203,11 +196,10 @@ public final class Death implements TabExecutor {
                 // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））
                 if ("log".equals(args[0])) {
                     if (config.getBoolean("death.log.enable", false)) {  // 是否开启模块
-                        if (specialCheckPermission("death.log",
-                                sender,
-                                "points.command.death.log.other",
-                                "points.command.death.log.other.%s",
-                                args[1])) {
+                        if (checkPermissionTargetOther(sender, "death.log",
+                                "", "points.command.death.log.other",
+                                "points.command.death.log.other.%s"
+                        )) {
                             // 过权限检查
                             return null;  // death log Ho……提示玩家名
                         }

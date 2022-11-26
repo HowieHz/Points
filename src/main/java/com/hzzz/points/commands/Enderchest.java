@@ -1,5 +1,6 @@
 package com.hzzz.points.commands;
 
+import com.hzzz.points.commands.commands_utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.commands.commands_utils.Utils.checkPermissionTargetOther;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -50,8 +51,7 @@ public final class Enderchest implements TabExecutor {
         switch (args.length) {
             case 0 -> {
                 // 权限检查
-                if (!specialCheckPermission(PERMISSION_PARENT_NODE,
-                        sender,
+                if (!Utils.checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
                         "points.command.enderchest.self")) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
@@ -63,11 +63,10 @@ public final class Enderchest implements TabExecutor {
             }
             case 1 -> {
                 // 权限检查
-                if (!specialCheckPermission(PERMISSION_PARENT_NODE,
-                        sender,
-                        "points.command.enderchest.other",
-                        "points.command.enderchest.other.%s",
-                        args[0])
+                if (!checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
+                        args[0], "points.command.enderchest.other",
+                        "points.command.enderchest.other.%s"
+                )
                 ) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
@@ -99,12 +98,11 @@ public final class Enderchest implements TabExecutor {
         /* enderchest
          * enderchest <player_name>
          */
-        if ((args.length == 0 || args.length == 1)  // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /where Ho……））
-                && specialCheckPermission(PERMISSION_PARENT_NODE,
-                sender,
-                "points.command.enderchest.other",
-                "points.command.enderchest.other.%s",
-                args[0])
+        if ((args.length == 0 || args.length == 1)  // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /where ），或者第一个参数输入到一半（此时长度为一 /enderchest Ho……））
+                && checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
+                "", "points.command.enderchest.other",
+                "points.command.enderchest.other.%s"
+        )
         ) {
             return null;  // 提示玩家名
         }

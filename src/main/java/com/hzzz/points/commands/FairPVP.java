@@ -1,6 +1,7 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.commands.commands_utils.Utils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.commands.commands_utils.Utils.checkPermissionTargetOther;
 import static com.hzzz.points.utils.Utils.executeCommand;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
@@ -59,8 +60,7 @@ public class FairPVP implements TabExecutor {
                     return true;
                 }
                 // 权限检查
-                if (!specialCheckPermission(PERMISSION_PARENT_NODE,
-                        sender,
+                if (!Utils.checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
                         "points.command.fair-pvp.self")) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
@@ -82,11 +82,10 @@ public class FairPVP implements TabExecutor {
             }
             case 2 -> {
                 // 权限检查
-                if (!specialCheckPermission(PERMISSION_PARENT_NODE,
-                        sender,
-                        "points.command.fair-pvp.other",
-                        "points.command.fair-pvp.other.%s",
-                        args[1])
+                if (!checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
+                        args[1], "points.command.fair-pvp.other",
+                        "points.command.fair-pvp.other.%s"
+                )
                 ) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;
@@ -136,21 +135,19 @@ public class FairPVP implements TabExecutor {
          */
         if (args.length == 0 || args.length == 1) {
             // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /fair-pvp ），或者第一个参数输入到一半（此时长度为一 /fair-pvp o……））
-            if (specialCheckPermission("fair-pvp",
-                    sender,
+            if (Utils.checkPermissionTargetSelf(sender, "fair-pvp",
                     "points.command.fair-pvp.self")
-                    || specialCheckPermission("fair-pvp",
-                    sender,
-                    "points.command.fair-pvp.other",
-                    "other")) {
+                    || checkPermissionTargetOther(sender, "fair-pvp",
+                    "", "points.command.fair-pvp.other",
+                    "points.command.fair-pvp.other.%s"
+            )) {
                 return Arrays.asList("on", "off");
             }
         } else if (args.length == 2) {
-            if (specialCheckPermission("fair-pvp",
-                    sender,
-                    "points.command.fair-pvp.other",
-                    "points.command.fair-pvp.other.%s",
-                    args[1])) {
+            if (checkPermissionTargetOther(sender, "fair-pvp",
+                    "", "points.command.fair-pvp.other",
+                    "points.command.fair-pvp.other.%s"
+            )) {
                 // 过权限检查
                 return null;  // fair-pvp on Ho……提示玩家名
             }

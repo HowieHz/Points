@@ -1,6 +1,7 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.commands.commands_utils.Utils;
 import com.hzzz.points.listeners.interfaces.NamedListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -11,10 +12,9 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.sql.SQLException;
 
-import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
+import static com.hzzz.points.commands.commands_utils.Utils.checkPermissionOneConfigNode;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.insertDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.isEnableDeathMessage;
-import static com.hzzz.points.utils.Utils.checkPermission;
 import static com.hzzz.points.utils.Utils.runTaskAsynchronously;
 
 /**
@@ -60,15 +60,14 @@ public final class DeathListener implements NamedListener {
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查
-        if (config.getBoolean("death.message.listener-permission.enable", false)
-                && !checkPermission(player, config.getString("death.message.listener-permission.node", "points.listener.death.message"))) {
+        if (!checkPermissionOneConfigNode(player, "death.message.listener-permission", "points.listener.death.message")){
             return;
         }
 
         try {
             if (config.getBoolean("death.message.enable", false) && isEnableDeathMessage(player)) {  // 出现错误默认不发送死亡消息
                 // 生成并发送消息给执行者
-                player.sendMessage(builderPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
+                player.sendMessage(Utils.buildPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

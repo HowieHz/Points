@@ -1,6 +1,7 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.commands.commands_utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
@@ -15,8 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.builderPlayerCoordinatesMessage;
-import static com.hzzz.points.commands.commands_utils.Utils.specialCheckPermission;
+import static com.hzzz.points.commands.commands_utils.Utils.buildPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.NO_PERMISSION;
 import static com.hzzz.points.utils.message.MsgKey.PLAYER_ONLY;
@@ -53,13 +53,13 @@ public final class Here implements TabExecutor {
         }
 
         // 权限检查
-        if (!specialCheckPermission("here", player, "points.command.here")) {
+        if (!Utils.checkPermissionTargetSelf(player, "here", "points.command.here")) {
             sender.sendMessage(getMessage(NO_PERMISSION));
             return true;
         }
 
         // 生成消息并在在公屏发送
-        Bukkit.broadcast(builderPlayerCoordinatesMessage("here", player), Server.BROADCAST_CHANNEL_USERS);
+        Bukkit.broadcast(buildPlayerCoordinatesMessage("here", player), Server.BROADCAST_CHANNEL_USERS);
 
         // 给发送者附上发光效果
         if (config.getBoolean("here.glowing.enable", false)) {
