@@ -19,8 +19,8 @@ public final class Utils {
     /**
      * 检查是否对象有权限(支持*通配符)
      *
-     * @param sender         被检查权限的对象
-     * @param name 权限节点名
+     * @param sender 被检查权限的对象
+     * @param name   权限节点名
      * @return 是否有权限，有权限为ture，无权限为false
      */
     public static boolean checkPermission(CommandSender sender, String name) {
@@ -29,6 +29,29 @@ public final class Utils {
         } else {
             StringBuilder sb = new StringBuilder(name);
             return sender.hasPermission(sb.replace(name.lastIndexOf(".") + 1, name.length(), "*").toString());  // 检查通配符
+        }
+    }
+
+    // TODO 重构通配符模式
+
+    /**
+     * 检查一段字符串末尾是否是指定字符串(通配符检查)<br>如果是就格式化，不是就使用默认字符串进行格式化
+     *
+     * @param string        一段字符串
+     * @param endString     检查结尾是否是此字符串
+     * @param defaultString 默认字符串
+     * @param args          格式化参数
+     * @return 格式化完毕之后的字符串
+     */
+    public static String stringFormatEnd(String string, String endString, String defaultString, Object... args) {
+        if (string == null) {
+            return String.format(defaultString, args);
+        }
+
+        if (string.endsWith(endString)) {
+            return String.format(string, args);
+        } else {
+            return String.format(defaultString, args);
         }
     }
 
@@ -90,10 +113,11 @@ public final class Utils {
 
     /**
      * 以控制台的角度执行指令
+     *
      * @param command 要执行的指令
      * @return 若指令未找到返回false
      */
-    public static boolean executeCommand(@NotNull String command){
-        return Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),command);
+    public static boolean executeCommand(@NotNull String command) {
+        return Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
     }
 }

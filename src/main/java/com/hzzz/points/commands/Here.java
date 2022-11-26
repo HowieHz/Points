@@ -1,13 +1,10 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.Points;
-import com.hzzz.points.commands.commands_utils.Utils;
+import com.hzzz.points.commands.base_executor.HowieUtilsExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -16,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.buildPlayerCoordinatesMessage;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.NO_PERMISSION;
 import static com.hzzz.points.utils.message.MsgKey.PLAYER_ONLY;
@@ -24,7 +20,7 @@ import static com.hzzz.points.utils.message.MsgKey.PLAYER_ONLY;
 /**
  * here指令的执行器以及tab补全
  */
-public final class Here implements TabExecutor {
+public final class Here extends HowieUtilsExecutor {
     private static final Here instance = new Here();
 
     /**
@@ -44,8 +40,6 @@ public final class Here implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
-
         // 检查执行者
         if (!(sender instanceof Player player)) {
             sender.sendMessage(getMessage(PLAYER_ONLY));
@@ -53,7 +47,7 @@ public final class Here implements TabExecutor {
         }
 
         // 权限检查
-        if (!Utils.checkPermissionTargetSelf(player, "here", "points.command.here")) {
+        if (!checkPermissionTargetSelf(player, "here", "points.command.here")) {
             sender.sendMessage(getMessage(NO_PERMISSION));
             return true;
         }

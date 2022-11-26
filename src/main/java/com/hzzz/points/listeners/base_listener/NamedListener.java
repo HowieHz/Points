@@ -1,4 +1,4 @@
-package com.hzzz.points.listeners.interfaces;
+package com.hzzz.points.listeners.base_listener;
 
 import org.bukkit.event.Listener;
 

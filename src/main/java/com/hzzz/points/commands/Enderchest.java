@@ -1,17 +1,15 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.commands.commands_utils.Utils;
+import com.hzzz.points.commands.base_executor.HowieUtilsExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.checkPermissionTargetOther;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -22,7 +20,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
  * @version 0.2.0
  * @since 2022-10-01 09:24
  */
-public final class Enderchest implements TabExecutor {
+public final class Enderchest extends HowieUtilsExecutor {
     private static final String PERMISSION_PARENT_NODE = "enderchest";
     private static final Enderchest instance = new Enderchest();
 
@@ -51,7 +49,7 @@ public final class Enderchest implements TabExecutor {
         switch (args.length) {
             case 0 -> {
                 // 权限检查
-                if (!Utils.checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
+                if (!checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
                         "points.command.enderchest.self")) {
                     sender.sendMessage(getMessage(NO_PERMISSION));
                     return true;

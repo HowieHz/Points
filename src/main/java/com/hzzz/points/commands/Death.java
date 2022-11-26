@@ -1,17 +1,14 @@
 package com.hzzz.points.commands;
 
-import com.hzzz.points.Points;
+import com.hzzz.points.commands.base_executor.HowieUtilsExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.*;
 
-import static com.hzzz.points.commands.commands_utils.Utils.*;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.outputDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.updateDeathMessageConfig;
 import static com.hzzz.points.utils.Utils.logError;
@@ -22,7 +19,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
 /**
  * death指令的执行器以及tab补全
  */
-public final class Death implements TabExecutor {
+public final class Death extends HowieUtilsExecutor {
     private static final Death instance = new Death();
 
     private static final HashMap<UUID, Long> lastSuccessGetDeathLogTimestamp = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
@@ -44,7 +41,6 @@ public final class Death implements TabExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (args.length == 0) {
             // /death
             sender.sendMessage(getMessage(HELP_DEATH));
@@ -147,8 +143,7 @@ public final class Death implements TabExecutor {
      * @param player 使用该指令的玩家
      * @return 超限返回true
      */
-    private static boolean checkCommandFrequencyLimit(Player player) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+    private boolean checkCommandFrequencyLimit(Player player) {
         if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
             if (lastSuccessGetDeathLogTimestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
                 if ((System.currentTimeMillis() - lastSuccessGetDeathLogTimestamp.get(player.getUniqueId()))
@@ -167,7 +162,6 @@ public final class Death implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (!(sender instanceof Player)) {
             // 控制台不注册
             return null;

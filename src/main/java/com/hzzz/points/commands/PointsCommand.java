@@ -1,16 +1,15 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.Points;
+import com.hzzz.points.commands.base_executor.HowieUtilsExecutor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.checkPermissionOneConfigNode;
 import static com.hzzz.points.utils.Utils.logInfo;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
@@ -18,7 +17,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
 /**
  * points指令的执行器以及tab补全
  */
-public final class PointsCommand implements TabExecutor {
+public final class PointsCommand extends HowieUtilsExecutor {
     private static final String PARENT_CONFIG_NODE_RELOAD = "points.reload";
     private static final String PARENT_CONFIG_NODE_HELP = "points.help";
     private static final String DEFAULT_PERMISSION_RELOAD = "points.command.reload";

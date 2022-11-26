@@ -5,7 +5,7 @@ import com.hzzz.points.data_manager.sqlite.ConfigSQLite;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
-import com.hzzz.points.listeners.interfaces.NamedListener;
+import com.hzzz.points.listeners.base_listener.NamedListener;
 import com.hzzz.points.utils.data_structure.CommandInfo;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;

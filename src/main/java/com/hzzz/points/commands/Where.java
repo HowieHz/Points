@@ -1,23 +1,22 @@
 package com.hzzz.points.commands;
 
+import com.hzzz.points.commands.base_executor.HowieUtilsExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.hzzz.points.commands.commands_utils.Utils.*;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
  * where指令的执行器以及tab补全
  */
-public final class Where implements TabExecutor {
+public final class Where extends HowieUtilsExecutor {
     private static final Where instance = new Where();
 
     /**

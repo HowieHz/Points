@@ -1,8 +1,7 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.commands.commands_utils.Utils;
-import com.hzzz.points.listeners.interfaces.NamedListener;
+import com.hzzz.points.listeners.base_listener.HowieUtilsListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,7 +11,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.sql.SQLException;
 
-import static com.hzzz.points.commands.commands_utils.Utils.checkPermissionOneConfigNode;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.insertDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.isEnableDeathMessage;
 import static com.hzzz.points.utils.Utils.runTaskAsynchronously;
@@ -20,7 +18,7 @@ import static com.hzzz.points.utils.Utils.runTaskAsynchronously;
 /**
  * 玩家死亡事件监听器
  */
-public final class DeathListener implements NamedListener {
+public final class DeathListener extends HowieUtilsListener {
     private static final DeathListener instance = new DeathListener();
     private static final String NAME = "玩家死亡事件";
 
@@ -67,7 +65,7 @@ public final class DeathListener implements NamedListener {
         try {
             if (config.getBoolean("death.message.enable", false) && isEnableDeathMessage(player)) {  // 出现错误默认不发送死亡消息
                 // 生成并发送消息给执行者
-                player.sendMessage(Utils.buildPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
+                player.sendMessage(buildPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -1,7 +1,7 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.Points;
-import com.hzzz.points.listeners.interfaces.NamedListener;
+import com.hzzz.points.listeners.base_listener.HowieUtilsListener;
 import com.hzzz.points.utils.data_structure.AntiBoomInfo;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,7 +32,7 @@ enum WorldName {
 /**
  * 防爆监听器
  */
-public final class AntiBoomListener implements NamedListener {
+public final class AntiBoomListener extends HowieUtilsListener {
     private static final AntiBoomListener instance = new AntiBoomListener();
     private static final String NAME = "防爆";
     private static final AntiBoomInfo[] antiBoomInfo = {

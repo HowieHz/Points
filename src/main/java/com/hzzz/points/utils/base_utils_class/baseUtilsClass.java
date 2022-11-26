@@ -1,4 +1,4 @@
-package com.hzzz.points.commands.commands_utils;
+package com.hzzz.points.utils.base_utils_class;
 
 import com.hzzz.points.Points;
 import net.kyori.adventure.text.Component;
@@ -11,19 +11,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import static com.hzzz.points.utils.Utils.checkPermission;
+import static com.hzzz.points.utils.Utils.stringFormatEnd;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
 /**
- * 指令执行器工具集
+ * <p>权限检查的封装 消息生成的封装</p>
+ * <p>放一起的好是因为config只要读一次</p>
+ *
+ * @author <a href="https://github.com/HowieHz/">HowieHz</a>
+ * @since 2022-11-26 20:46
  */
-public final class Utils {
-    /**
-     * 工具类禁止实例化
-     */
-    private Utils() {
-        throw new IllegalStateException("工具类");
-    }
+public abstract class baseUtilsClass {
+    protected FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
 
     /**
      * 生成一条消息 用于指示位置<br>
@@ -38,9 +38,8 @@ public final class Utils {
      * @param separatorColor     分隔符颜色
      * @return 生成的消息
      */
-    public static Component buildPlayerCoordinatesMessage(String rootConfigNode, Player targetPlayerObject, String separator, NamedTextColor separatorColor) {
+    public Component buildPlayerCoordinatesMessage(String rootConfigNode, Player targetPlayerObject, String separator, NamedTextColor separatorColor) {
         Location playerLocation = targetPlayerObject.getLocation();  // 获取位置
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
 
         // 编辑消息
         Component component = Component.text("")
@@ -90,32 +89,11 @@ public final class Utils {
      * @param targetPlayerObject 目标玩家对象
      * @return 生成的消息
      */
-    public static Component buildPlayerCoordinatesMessage(String rootConfigNode, Player targetPlayerObject) {
+    public Component buildPlayerCoordinatesMessage(String rootConfigNode, Player targetPlayerObject) {
         return buildPlayerCoordinatesMessage(rootConfigNode, targetPlayerObject, " -> ", NamedTextColor.WHITE);
     }
 
-    // TODO 重构通配符模式
 
-    /**
-     * 检查一段字符串末尾是否是指定字符串(通配符检查)<br>如果是就格式化，不是就使用默认字符串进行格式化
-     *
-     * @param string        一段字符串
-     * @param endString     检查结尾是否是此字符串
-     * @param defaultString 默认字符串
-     * @param args          格式化参数
-     * @return 格式化完毕之后的字符串
-     */
-    public static String stringFormatEnd(String string, String endString, String defaultString, Object... args) {
-        if (string == null) {
-            return String.format(defaultString, args);
-        }
-
-        if (string.endsWith(endString)) {
-            return String.format(string, args);
-        } else {
-            return String.format(defaultString, args);
-        }
-    }
 
     /**
      * 指令目标为指定玩家, 检查是否有权限 (用于完整输入指令后，运行时检查) <br>
@@ -136,12 +114,11 @@ public final class Utils {
      * @param defaultPermissionNodeTargetSingerPlayer 默认权限节点(指定玩家)(要求结尾为%s)(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean checkPermissionTargetOther(CommandSender sender,
-                                                     String parentConfigNode,
-                                                     String targetPlayerName,
-                                                     String defaultPermissionNodeTargetOtherPlayers,
-                                                     String defaultPermissionNodeTargetSingerPlayer) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+    public boolean checkPermissionTargetOther(CommandSender sender,
+                                              String parentConfigNode,
+                                              String targetPlayerName,
+                                              String defaultPermissionNodeTargetOtherPlayers,
+                                              String defaultPermissionNodeTargetSingerPlayer) {
         if (!config.getBoolean(parentConfigNode + ".permission.other.enable", true)) {  // 权限管理有没有开启
             return true;
         }
@@ -169,10 +146,9 @@ public final class Utils {
      * @param defaultPermissionNode 默认权限节点(目标为自己)(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean checkPermissionTargetSelf(CommandSender sender,
+    public boolean checkPermissionTargetSelf(CommandSender sender,
                                                     String parentConfigNode,
                                                     String defaultPermissionNode) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (!config.getBoolean(parentConfigNode + ".permission.self.enable", true)) {  // 权限管理有没有开启
             return true;
         }
@@ -194,10 +170,9 @@ public final class Utils {
      * @param defaultPermissionNode 默认权限节点(文件读取失败的使用值)
      * @return 是否通过权限检查 (通过为true)
      */
-    public static boolean checkPermissionOneConfigNode(CommandSender sender,
+    public boolean checkPermissionOneConfigNode(CommandSender sender,
                                                        String parentConfigNode,
                                                        String defaultPermissionNode) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         if (!config.getBoolean(parentConfigNode + ".permission.enable", true)) {  // 权限管理有没有开启
             return true;
         }
