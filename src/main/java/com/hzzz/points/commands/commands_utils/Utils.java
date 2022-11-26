@@ -161,7 +161,7 @@ public final class Utils {
      * 意图是：检查有没有对<big>自己</big>使用该指令的权限<br><br>
      * (enable节点如读取失败默认为true)<br><br>
      * 权限检查顺序<br>
-     * 1. 权限管理有没有开启 (检查config_root.permission.self.enable)<br>
+     * 1. 权限管理有没有开启 (检查parentConfigNode.permission.self.enable)<br>
      * 2. 检查有没有这个权限 (读取配置文件 parentConfigNode.permission.self.node 作为权限节点)<br>
      *
      * @param sender                发送者(被进行权限检查的对象)

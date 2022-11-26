@@ -20,15 +20,15 @@ public final class Utils {
      * 检查是否对象有权限(支持*通配符)
      *
      * @param sender         被检查权限的对象
-     * @param permissionName 权限节点名
+     * @param name 权限节点名
      * @return 是否有权限，有权限为ture，无权限为false
      */
-    public static boolean checkPermission(CommandSender sender, String permissionName) {
-        if (sender.hasPermission(permissionName)) {  // 有权限就返回true
+    public static boolean checkPermission(CommandSender sender, String name) {
+        if (sender.hasPermission(name)) {  // 有权限就返回true
             return true;
         } else {
-            StringBuilder sb = new StringBuilder(permissionName);
-            return sender.hasPermission(sb.replace(permissionName.lastIndexOf(".") + 1, permissionName.length(), "*").toString());  // 检查通配符
+            StringBuilder sb = new StringBuilder(name);
+            return sender.hasPermission(sb.replace(name.lastIndexOf(".") + 1, name.length(), "*").toString());  // 检查通配符
         }
     }
 

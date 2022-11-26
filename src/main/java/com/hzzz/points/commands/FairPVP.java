@@ -92,7 +92,6 @@ public class FairPVP implements TabExecutor {
                 }
 
                 Player targetPlayer = Bukkit.getPlayerExact(args[1]);  // 使用玩家名获取
-
                 if (targetPlayer == null) {  // 检查是否获取到玩家
                     sender.sendMessage(getMessage(PLAYER_NOT_ONLINE));
                     return true;
@@ -113,7 +112,6 @@ public class FairPVP implements TabExecutor {
                 } else {
                     sender.sendMessage(getMessage(HELP_FAIR_PVP));
                 }
-
                 return true;
             }
             default -> {
