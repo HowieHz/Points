@@ -22,7 +22,8 @@ import static com.hzzz.points.utils.message.MsgKey.*;
 public final class Death extends HowieUtilsExecutor {
     private static final Death instance = new Death();
 
-    private static final HashMap<UUID, Long> lastSuccessGetDeathLogTimestamp = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
+    private static final HashMap<UUID, Long> lastUseDeathLogStamps = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
+    private final long cooldown = config.getInt("death.log.command.frequency-limit.second", 1) / config.getInt("death.log.command.frequency-limit.maximum-usage", 1);
 
     /**
      * 获取实例
@@ -101,7 +102,6 @@ public final class Death extends HowieUtilsExecutor {
 
                         // 使用频率检查
                         if (checkCommandFrequencyLimit(player)) {
-                            player.sendMessage(getMessage(COMMAND_FREQUENCY_LIMIT));
                             return true;
                         }
 
@@ -121,7 +121,6 @@ public final class Death extends HowieUtilsExecutor {
                         // 检查执行者 是玩家就进行频率检查
                         if (sender instanceof Player player
                                 && checkCommandFrequencyLimit(player)) {
-                            player.sendMessage(getMessage(COMMAND_FREQUENCY_LIMIT));
                             return true;
                         }
 
@@ -141,20 +140,20 @@ public final class Death extends HowieUtilsExecutor {
      * 检查指令使用频率是否超过上限
      *
      * @param player 使用该指令的玩家
-     * @return 超限返回true
+     * @return 超限返回true，返回false是允许使用
      */
     private boolean checkCommandFrequencyLimit(Player player) {
         if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-            if (lastSuccessGetDeathLogTimestamp.containsKey(player.getUniqueId())) {  // 检查是否有记录
-                if ((System.currentTimeMillis() - lastSuccessGetDeathLogTimestamp.get(player.getUniqueId()))
-                        < (config.getInt("death.log.command.frequency-limit.second", 1)
-                        / config.getInt("death.log.command.frequency-limit.maximum-usage", 1) * 1000L)) {
+            if (lastUseDeathLogStamps.containsKey(player.getUniqueId())) {  // 检查是否有记录
+                if ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) < (cooldown * 1000)) {
+                    double cd = cooldown - ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) / 1000.0);
+                    player.sendMessage(getMessage(COMMAND_FREQUENCY_LIMIT).replace("[time]", String.format("%.2f", cd)));
                     return true;
                 } else {  // 更新
-                    lastSuccessGetDeathLogTimestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                    lastUseDeathLogStamps.put(player.getUniqueId(), System.currentTimeMillis());
                 }
             } else {  // 初始化
-                lastSuccessGetDeathLogTimestamp.put(player.getUniqueId(), System.currentTimeMillis());
+                lastUseDeathLogStamps.put(player.getUniqueId(), System.currentTimeMillis());
             }
         }
         return false;

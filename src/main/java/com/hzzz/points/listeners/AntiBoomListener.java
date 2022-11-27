@@ -46,7 +46,6 @@ public final class AntiBoomListener extends HowieUtilsListener {
             new AntiBoomInfo(EntityType.WITHER_SKULL, "anti-boom.wither.skull"),
             new AntiBoomInfo(EntityType.FIREBALL, "anti-boom.ghast"),
     };
-
     private static final Material[] beds = {
             WHITE_BED,
             ORANGE_BED,

@@ -58,7 +58,10 @@ public final class Here extends HowieUtilsExecutor {
         // 给发送者附上发光效果
         if (config.getBoolean("here.glowing.enable", false)) {
             PotionEffect pe = new PotionEffect(PotionEffectType.GLOWING, config.getInt("here.glowing.time", 1200) * 20, 1);  // 20tick*60s=1200
-            pe.apply(player);
+            if (player.hasPotionEffect(pe.getType())) {  // 先检查有没有效果，有就去掉再加效果
+                player.removePotionEffect(pe.getType());
+            }
+            player.addPotionEffect(pe);
         }
         return true;
     }

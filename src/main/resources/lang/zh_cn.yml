@@ -35,7 +35,7 @@ canceled:
   use_respawn_anchor: "你尝试使用重生锚，但是被未知力量阻止了"
 no-depend: "缺少依赖§e"
 loaded-depend: "已检测到依赖§e"
-frequency_limit: "你使用的太快了！ 请稍后再试"
+frequency_limit: "冷却时间未到，还剩下§6[time]§f秒！"
 player_only: "此指令仅允许玩家使用"
 disable_module: "此模块被关闭"
 # here, where, death.log, death.message
