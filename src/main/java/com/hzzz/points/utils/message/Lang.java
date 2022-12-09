@@ -123,8 +123,8 @@ public final class Lang {
                 new KeyAndMsgInfo(MsgKey.TELEPORT_SUPPORT_COMMAND, getLang("teleport_support.command")),
                 new KeyAndMsgInfo(MsgKey.RELOAD_READY, getLang("reload_ready")),
                 new KeyAndMsgInfo(MsgKey.WRONG_DATABASE_TYPE, getLang("database.wrong_database_type")),
-                new KeyAndMsgInfo(MsgKey.ENABLE_DEATH_MESSAGE, getLang("death.enable")),
-                new KeyAndMsgInfo(MsgKey.DISABLE_DEATH_MESSAGE, getLang("death.disable")),
+                new KeyAndMsgInfo(MsgKey.ENABLE_DEATH_MESSAGE, getLang("death.message.enable")),
+                new KeyAndMsgInfo(MsgKey.DISABLE_DEATH_MESSAGE, getLang("death.message.disable")),
                 new KeyAndMsgInfo(MsgKey.DISABLE_MODULE, getLang("disable_module")),
                 new KeyAndMsgInfo(MsgKey.SQLITE_READY, getLang("database.sqlite.ready")),
                 new KeyAndMsgInfo(MsgKey.SQLITE_NOT_READY, getLang("database.sqlite.not_ready")),
@@ -154,7 +154,7 @@ public final class Lang {
                 new KeyAndMsgInfo(MsgKey.ENABLE_FAIR_PVP, getLang("fair-pvp.enable")),
                 new KeyAndMsgInfo(MsgKey.DISABLE_FAIR_PVP, getLang("fair-pvp.disable")),
                 new KeyAndMsgInfo(MsgKey.NO_DEPEND, getLang("no-depend")),
-                new KeyAndMsgInfo(MsgKey.LOADED_DEPEND, getLang("message.loaded-depend")),
+                new KeyAndMsgInfo(MsgKey.LOADED_DEPEND, getLang("loaded-depend")),
         };
         for (KeyAndMsgInfo info :
                 keyAndMsgInfos) {
