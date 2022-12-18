@@ -58,7 +58,7 @@ public final class DeathListener extends HowieUtilsListener {
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查
-        if (!checkPermissionOneConfigNode(player, "death.message.listener-permission", "points.listener.death.message")){
+        if (!checkPermissionOneConfigNode(player, "death.message.listener", "points.listener.death.message")){
             return;
         }
 

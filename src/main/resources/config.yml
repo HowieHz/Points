@@ -42,12 +42,14 @@ death:
   message:
     # 当你死亡的时候会向你发送死亡地点等信息
     enable: true  # 是否启用death message子模块
-    command-permission: # /death message 指令权限
-      enable: false  # 此项是否需要权限才能使用
-      node: points.command.death.message  # 权限节点
-    listener-permission: # 监听器权限
-      enable: false  # 此项是否需要权限才能使用 开启此项后，依然可以使用指令，如无对应权限，死亡将不会记录和发送消息
-      node: points.listener.death.message  # 权限节点
+    command:
+      permission: # /death message 指令权限
+        enable: false  # 此项是否需要权限才能使用
+        node: points.command.death.message  # 权限节点
+    listener:
+      permission: # 监听器权限
+        enable: false  # 此项是否需要权限才能使用 开启此项后，依然可以使用指令，如无对应权限，死亡将不会记录和发送消息
+        node: points.listener.death.message  # 权限节点
     voxelmap-support: true  # 是否开启Voxelmap支持
     xaeros-support: true  # 是否开启Xaeros支持
     teleport-support: false  # 是否开启tp支持

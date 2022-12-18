@@ -57,7 +57,7 @@ public final class Death extends HowieUtilsExecutor {
                         return true;
                     }
                     // 权限检查
-                    if (checkPermissionOneConfigNode(sender, "death.message.command-permission", "points.command.death.message")) {
+                    if (checkPermissionOneConfigNode(sender, "death.message.command", "points.command.death.message")) {
                         sender.sendMessage(getMessage(NO_PERMISSION));
                         return true;
                     }
