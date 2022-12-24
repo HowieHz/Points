@@ -1,10 +1,8 @@
 package com.hzzz.points.listeners;
 
-import com.hzzz.points.Points;
 import com.hzzz.points.listeners.base_listener.HowieUtilsListener;
 import com.hzzz.points.utils.data_structure.AntiBoomInfo;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -104,7 +102,6 @@ public final class AntiBoomListener extends HowieUtilsListener {
      */
     @EventHandler
     public void onBoom(EntityExplodeEvent e) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         final String worldName = e.getEntity().getWorld().getName();  // 事件发生的世界
 
         for (AntiBoomInfo info : antiBoomInfo) {  // 遍历
@@ -131,7 +128,6 @@ public final class AntiBoomListener extends HowieUtilsListener {
      */
     @EventHandler
     public void onWitherDestroyBlocks(EntityChangeBlockEvent e) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         final String worldName = e.getEntity().getWorld().getName();  // 事件发生的世界
         final String configParentNode = "anti-boom.wither.body";
 
@@ -155,7 +151,6 @@ public final class AntiBoomListener extends HowieUtilsListener {
      */
     @EventHandler
     public void onBadOrRespawnAnchor(PlayerInteractEvent e) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         final Player player = e.getPlayer();
         final String worldName = player.getWorld().getName();
         final String configRespawnParentNode = "anti-boom.respawn-anchor";
@@ -203,7 +198,6 @@ public final class AntiBoomListener extends HowieUtilsListener {
      * @return 符合返回true
      */
     private boolean checkWordName(String worldName, WorldName whichWorld) {
-        final FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         final String configWorldNameParentNode = "anti-boom.world-name";
 
         switch (whichWorld) {

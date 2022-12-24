@@ -1,10 +1,8 @@
 package com.hzzz.points.listeners;
 
-import com.hzzz.points.Points;
 import com.hzzz.points.listeners.base_listener.HowieUtilsListener;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -54,7 +52,6 @@ public final class DeathListener extends HowieUtilsListener {
      */
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查
