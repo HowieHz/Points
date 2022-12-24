@@ -1,6 +1,5 @@
 package com.hzzz.points.data_manager.operations_utils;
 
-import com.hzzz.points.Points;
 import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -9,7 +8,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -73,10 +71,9 @@ public final class DeathLog {
      *
      * @param targetPlayer 目标玩家对象
      * @param deathReason  死亡原因
+     * @param recordLimit  死亡记录上限
      */
-    public static void insertDeathLog(Player targetPlayer, String deathReason) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
-        int limit = config.getInt("death.log.record-limit", 5);  // 读取配置
+    public static void insertDeathLog(Player targetPlayer, String deathReason, int recordLimit) {
         int count;  // 目前记录条数
         try {
             count = countDeathLog(targetPlayer.getUniqueId());  // 获取目前记录条数
@@ -87,11 +84,11 @@ public final class DeathLog {
         }
 
         try {
-            logDebug(String.format(getMessage(READ_DEATH_LOG_RESULT), targetPlayer.getName(), count, limit));
-            if (count >= limit) {  // 达到上限了
-                // 删除记录 直到记录数为limit-1 现在有count条，所以要删掉count-(limit-1) = count-limit+1
+            logDebug(String.format(getMessage(READ_DEATH_LOG_RESULT), targetPlayer.getName(), count, recordLimit));
+            if (count >= recordLimit) {  // 达到上限了
+                // 删除记录 直到记录数为recordLimit-1 现在有count条，所以要删掉count-(recordLimit-1) = count-recordLimit+1
                 psDeleteDeathLog.setString(1, targetPlayer.getUniqueId().toString());
-                psDeleteDeathLog.setInt(2, count - limit + 1);
+                psDeleteDeathLog.setInt(2, count - recordLimit + 1);
                 psDeleteDeathLog.execute();
             }
 
@@ -117,25 +114,30 @@ public final class DeathLog {
      *
      * @param playerName 目标玩家的用户名
      * @param receiver   接受者
+     * @param voxelmapSupport voxelmap mod支持
+     * @param xaerosSupport   xaeros mod支持
+     * @param teleportSupport tp支持
      */
-    public static void outputDeathLog(String playerName, CommandSender receiver) {
+    public static void outputDeathLog(String playerName, CommandSender receiver, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) {
         Player targetPlayer = Bukkit.getPlayerExact(playerName);  // 使用玩家名获取
 
         if (targetPlayer == null) {  // 检查是否获取到玩家
             receiver.sendMessage(getMessage(PLAYER_NOT_ONLINE));
             return;
         }
-        outputDeathLog(targetPlayer, receiver);
+        outputDeathLog(targetPlayer, receiver, voxelmapSupport, xaerosSupport, teleportSupport);
     }
 
     /**
      * 向接受者发送目标玩家玩家的死亡日志
      *
-     * @param targetPlayer 目标玩家对象
-     * @param receiver     接受者
+     * @param targetPlayer    目标玩家对象
+     * @param receiver        接受者
+     * @param voxelmapSupport voxelmap mod支持
+     * @param xaerosSupport   xaeros mod支持
+     * @param teleportSupport tp支持
      */
-    public static void outputDeathLog(Player targetPlayer, CommandSender receiver) {
-        FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+    public static void outputDeathLog(Player targetPlayer, CommandSender receiver, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) {
         String playerName = targetPlayer.getName();
         UUID uuid = targetPlayer.getUniqueId();
 
@@ -150,19 +152,19 @@ public final class DeathLog {
                         .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
                         .append(Component.text(String.format(getMessage(COORDINATES_FORMAT), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
 
-                if (config.getBoolean("death.log.voxelmap-support", false)) {
+                if (voxelmapSupport) {
                     component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
                             .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
                             .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
-                if (config.getBoolean("death.log.xaeros-support", false)) {
+                if (xaerosSupport) {
                     component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
                             .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
                             .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
                 }
 
-                if (config.getBoolean("death.log.teleport-support", false)) {
+                if (teleportSupport) {
                     component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
                             .append(Component.text("[tp] ").color(NamedTextColor.RED)
                                     .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))

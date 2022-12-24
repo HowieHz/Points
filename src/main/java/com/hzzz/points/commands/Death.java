@@ -104,7 +104,10 @@ public final class Death extends HowieUtilsExecutor {
                             return true;
                         }
 
-                        runTaskAsynchronously(() -> outputDeathLog(player, player));  // 查看自己的log
+                        runTaskAsynchronously(() -> outputDeathLog(player, player,
+                                config.getBoolean("death.log.voxelmap-support", false),
+                                config.getBoolean("death.log.xaeros-support", false),
+                                config.getBoolean("death.log.teleport-support", false)));  // 查看自己的log
 
                     } else {  // /death log Howie_HzGo
                         // 权限检查
@@ -123,7 +126,10 @@ public final class Death extends HowieUtilsExecutor {
                             return true;
                         }
 
-                        runTaskAsynchronously(() -> outputDeathLog(args[1], sender));  // 查看玩家的log
+                        runTaskAsynchronously(() -> outputDeathLog(args[1], sender,
+                                config.getBoolean("death.log.voxelmap-support", false),
+                                config.getBoolean("death.log.xaeros-support", false),
+                                config.getBoolean("death.log.teleport-support", false)));  // 查看玩家的log
                     }
 
                 } else {

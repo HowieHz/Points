@@ -74,7 +74,7 @@ public final class DeathListener extends HowieUtilsListener {
             if (deathMessage == null) {  // 被手动设置deathMessage才可能为null吧
                 return;
             }
-            runTaskAsynchronously(() -> insertDeathLog(player, deathMessage.toString()));
+            runTaskAsynchronously(() -> insertDeathLog(player, deathMessage.toString(), config.getInt("death.log.record-limit", 5)));
         }
     }
 }
