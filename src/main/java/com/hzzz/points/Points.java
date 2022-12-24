@@ -6,6 +6,7 @@ import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
 import com.hzzz.points.listeners.base_listener.NamedListener;
+import com.hzzz.points.utils.base_utils_class.baseUtilsClass;
 import com.hzzz.points.utils.data_structure.CommandInfo;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -100,6 +101,7 @@ public final class Points extends JavaPlugin {
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
 
+        // 可能需要重写，这样不论是否关闭模块，对应模块都会实例化，大概是不能写懒汉式单例
         final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
                 new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
                 new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
@@ -229,9 +231,11 @@ public final class Points extends JavaPlugin {
      */
     public void onReload() {
         onDisable();
+        // 可能需要重写，实例化的类没有摧毁。重新执行一遍onEnable是为了配置文件中可能出现关掉子模块的修改
 
         // reload一遍配置文件，用于重载 这个和onDisable谁先都一样
         reloadConfig();
+        baseUtilsClass.reloadConfig();
         // 读取配置，加载文字
         reloadLangConfig();
 

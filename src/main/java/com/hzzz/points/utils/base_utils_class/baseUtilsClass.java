@@ -23,7 +23,14 @@ import static com.hzzz.points.utils.message.MsgKey.*;
  * @since 2022-11-26 20:46
  */
 public abstract class baseUtilsClass {
-    protected FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+    static protected FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
+
+    /**
+     * 重新读取配置文件
+     */
+    static public void reloadConfig(){
+        config = Points.getInstance().getConfig();  // 读取配置文件
+    }
 
     /**
      * 生成一条消息 用于指示位置<br>
