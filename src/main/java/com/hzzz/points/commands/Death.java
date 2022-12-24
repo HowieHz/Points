@@ -23,7 +23,6 @@ public final class Death extends HowieUtilsExecutor {
     private static final Death instance = new Death();
 
     private static final HashMap<UUID, Long> lastUseDeathLogStamps = new HashMap<>();  // 储存玩家上次成功使用 death log的时间戳 用于限制玩家使用频率
-    private final long cooldown = config.getInt("death.log.command.frequency-limit.second", 1) / config.getInt("death.log.command.frequency-limit.maximum-usage", 1);
 
     /**
      * 获取实例
@@ -145,6 +144,8 @@ public final class Death extends HowieUtilsExecutor {
     private boolean checkCommandFrequencyLimit(Player player) {
         if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
             if (lastUseDeathLogStamps.containsKey(player.getUniqueId())) {  // 检查是否有记录
+                final long cooldown = config.getInt("death.log.command.frequency-limit.second", 1) / config.getInt("death.log.command.frequency-limit.maximum-usage", 1);
+
                 if ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) < (cooldown * 1000)) {
                     double cd = cooldown - ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) / 1000.0);
                     player.sendMessage(getMessage(COMMAND_FREQUENCY_LIMIT).replace("[time]", String.format("%.2f", cd)));
