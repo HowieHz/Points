@@ -264,6 +264,9 @@ public final class Points extends JavaPlugin {
         }
     }
 
+    /**
+     * 检查插件更新
+     */
     private void updateChecker() {
         // TODO 向游戏内玩家发送（加上对应权限）
         // TODO 定期检查更新（配置文件也要加上）
