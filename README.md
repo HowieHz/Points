@@ -24,7 +24,7 @@ A paper plugin, some useful points
 5. 随身开启末影箱 (/enderchest指令)
 6. 防爆
 
-### 特殊需求功能
+   ### 特殊需求功能
 
 7. 公平PVP模式 (/fair-pvp指令, 关闭AureliumSkills插件的属性加成, 需要PlaceholderAPI和AureliumSkills插件)
 
@@ -38,11 +38,11 @@ A paper plugin, some useful points
     3. op 默认有*points reload*使用权限
 4. tab补全根据 模块是否开启 和 是否有权限 自动隐藏
 
-有权限的玩家看到的
-![tab-complete-control1](./img/tab-complete-control1.png)
-
-无权限玩家看到的
-![tab-complete-control2](./img/tab-complete-control2.png)
+   有权限的玩家看到的
+   ![tab-complete-control1](./img/tab-complete-control1.png)
+   
+   无权限玩家看到的
+   ![tab-complete-control2](./img/tab-complete-control2.png)
 
 5. 权限支持 * 通配符
 
@@ -167,3 +167,6 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 10. 跟随版本自动更新的配置文件
 11. 能自定义的常量都允许自定义
 12. 在配置中允许用户调试启用的世界和禁用的世界
+13. 调用paperlib进行优化
+14. 兼容到spigot端
+15. 兼容到1.8
