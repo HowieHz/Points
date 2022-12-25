@@ -8,6 +8,13 @@ package com.hzzz.points.utils.data_structure.tuple;
  * @since 2022-12-25 15:33
  */
 public class Tuple4<T1, T2, T3, T4> {
+    /**
+     * 建立一个四元素元组
+     * @param t1 元素一
+     * @param t2 元素二
+     * @param t3 元素三
+     * @param t4 元素四
+     */
     public Tuple4(T1 t1, T2 t2, T3 t3, T4 t4) {
         this._1 = t1;
         this._2 = t2;
