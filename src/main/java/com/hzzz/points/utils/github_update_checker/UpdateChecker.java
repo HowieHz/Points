@@ -2,13 +2,13 @@ package com.hzzz.points.utils.github_update_checker;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.hzzz.points.utils.data_structure.Tuple4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.AbstractMap;
 
 /**
  * <p>检查github上是否更新了</p>
@@ -29,17 +29,21 @@ public class UpdateChecker {
      * 检查版本是否是最新
      *
      * @param current_version 当前版本，如v1.0
-     * @return 不是最新就返回true
+     * @return (第一个值为true则为获取信息成功 ， 第二个值为true为需要更新 ， 最新版本版本号 ， 最新版本的releases界面)
      */
-    static public AbstractMap.SimpleImmutableEntry<Boolean, Boolean> check(String current_version) {
-
+    static public Tuple4<Boolean, Boolean, String, String> check(String current_version) {
+        //TODO 自己进行json解析
         String url = "https://api.github.com/repos/HowieHz/Points/releases/latest";
         JSONObject obj = JSON.parseObject(getJson(url));
-        obj.getIntValue("");
-        if (obj.getIntValue("response_code", 200) == 200) {
-            return new AbstractMap.SimpleImmutableEntry<>(true, compare(current_version.substring(1), obj.getString("tag_name").substring(1)) < 0);
+        String latest_version = obj.getString("tag_name");
+        int response_code = obj.getIntValue("response_code", 200);
+        if (response_code == 200) {
+            return new Tuple4<>(true,
+                    compare(current_version.substring(1), latest_version.substring(1)) < 0,
+                    latest_version,
+                    obj.getString("html_url"));
         }
-        return new AbstractMap.SimpleImmutableEntry<>(false, false);
+        return new Tuple4<>(false, false, "", "");
     }
 
     /**

@@ -170,3 +170,4 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 13. 调用paperlib进行优化
 14. 兼容到spigot端
 15. 兼容到1.8
+16. 世界准许使用选项为列表，意思是可以指定哪些世界使用

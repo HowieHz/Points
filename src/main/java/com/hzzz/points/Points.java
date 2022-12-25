@@ -8,6 +8,8 @@ import com.hzzz.points.listeners.DeathListener;
 import com.hzzz.points.listeners.base_listener.NamedListener;
 import com.hzzz.points.utils.base_utils_class.baseUtilsClass;
 import com.hzzz.points.utils.data_structure.CommandInfo;
+import com.hzzz.points.utils.github_update_checker.UpdateChecker;
+import com.hzzz.points.utils.data_structure.Tuple4;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -61,14 +63,18 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onLoad() {
+        // 检查更新
+        updateChecker();
+
         // 如果配置文件不存在, 保存默认的配置
         // config.yml
         saveDefaultConfig();
 
         // 保存语言文件 加载文字 要在加载配置文件之后，因为要读取配置文件中language.file_name项
         saveLangConfig();
+        reloadLangConfig();
 
-        // 插件正在加载 这个要在读取加载语言文件之后，不然输出的就是null
+        // 插件正在加载
         logInfo(getMessage(PLUGIN_LOADING));
 
         // 初始化数据库存放的文件夹
@@ -256,5 +262,32 @@ public final class Points extends JavaPlugin {
             langConfigFile.getParentFile().mkdirs();
             saveResource(fileName, false);
         }
+    }
+
+    private void updateChecker() {
+        // TODO 向游戏内玩家发送（加上对应权限）
+        // TODO 定期检查更新（配置文件也要加上）
+        // TODO 向哪里检查更新，对应源url
+        logInfo(getMessage(UPDATE_CHECKER_START));
+        String current_version = this.getDescription().getVersion();
+        runTaskAsynchronously(() -> {
+            Tuple4<Boolean, Boolean, String, String> result = UpdateChecker.check(current_version);
+            if (result._1) {
+                if (result._2) {
+                    // 需要更新
+                    logInfo(getMessage(UPDATE_CHECKER_NEED_UPDATE)
+                            .replace("[current_version]", current_version)
+                            .replace("[latest_version]", result._3)
+                            .replace("[html_url]", result._4)
+                    );
+                } else {
+                    // 是最新版
+                    logInfo(getMessage(UPDATE_CHECKER_IS_LATEST).replace("[current_version]", current_version));
+                }
+            } else {
+                // 信息获取失败
+                logInfo(getMessage(UPDATE_CHECKER_FAIL));
+            }
+        });
     }
 }
