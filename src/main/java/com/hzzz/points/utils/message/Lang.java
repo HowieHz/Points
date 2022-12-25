@@ -81,7 +81,7 @@ public final class Lang {
      * @return 语言配置文件实例
      */
     @NotNull
-    private static FileConfiguration getLangConfig() {
+    public static FileConfiguration getLangConfig() {
         if (langConfig == null) {
             reloadLangConfig();
         }

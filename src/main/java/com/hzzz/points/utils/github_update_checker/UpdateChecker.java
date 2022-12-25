@@ -2,7 +2,7 @@ package com.hzzz.points.utils.github_update_checker;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.hzzz.points.utils.data_structure.Tuple4;
+import com.hzzz.points.utils.data_structure.tuple.Tuple4;
 
 import java.io.BufferedReader;
 import java.io.IOException;

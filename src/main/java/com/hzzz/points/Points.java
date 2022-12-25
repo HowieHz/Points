@@ -6,10 +6,10 @@ import com.hzzz.points.data_manager.sqlite.DeathLogSQLite;
 import com.hzzz.points.listeners.AntiBoomListener;
 import com.hzzz.points.listeners.DeathListener;
 import com.hzzz.points.listeners.base_listener.NamedListener;
-import com.hzzz.points.utils.base_utils_class.baseUtilsClass;
+import com.hzzz.points.utils.base_utils_class.BaseUtilsClass;
 import com.hzzz.points.utils.data_structure.CommandInfo;
 import com.hzzz.points.utils.github_update_checker.UpdateChecker;
-import com.hzzz.points.utils.data_structure.Tuple4;
+import com.hzzz.points.utils.data_structure.tuple.Tuple4;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -241,7 +241,7 @@ public final class Points extends JavaPlugin {
 
         // reload一遍配置文件，用于重载 这个和onDisable谁先都一样
         reloadConfig();
-        baseUtilsClass.reloadConfig();
+        BaseUtilsClass.reloadConfig();
         // 读取配置，加载文字
         reloadLangConfig();
 
@@ -268,6 +268,7 @@ public final class Points extends JavaPlugin {
         // TODO 向游戏内玩家发送（加上对应权限）
         // TODO 定期检查更新（配置文件也要加上）
         // TODO 向哪里检查更新，对应源url
+        // TODO 比如请求头，更多地方要开放配置文件，还有手动检查更新的指令
         logInfo(getMessage(UPDATE_CHECKER_START));
         String current_version = this.getDescription().getVersion();
         runTaskAsynchronously(() -> {

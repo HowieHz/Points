@@ -1,4 +1,4 @@
-package com.hzzz.points.utils.data_structure;
+package com.hzzz.points.utils.data_structure.tuple;
 
 /**
  * <p>tuple4，从vavr中精简了一下</p>

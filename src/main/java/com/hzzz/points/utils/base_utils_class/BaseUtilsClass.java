@@ -22,7 +22,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
  * @author <a href="https://github.com/HowieHz/">HowieHz</a>
  * @since 2022-11-26 20:46
  */
-public abstract class baseUtilsClass {
+public abstract class BaseUtilsClass {
     static protected FileConfiguration config = Points.getInstance().getConfig();  // 读取配置文件
 
     /**
