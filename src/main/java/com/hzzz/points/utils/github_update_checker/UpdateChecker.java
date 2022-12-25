@@ -39,7 +39,7 @@ public class UpdateChecker {
         int response_code = obj.getIntValue("response_code", 200);
         if (response_code == 200) {
             return new Tuple4<>(true,
-                    compare(current_version.substring(1), latest_version.substring(1)) < 0,
+                    compare(current_version, latest_version.substring(1)) < 0,
                     latest_version,
                     obj.getString("html_url"));
         }

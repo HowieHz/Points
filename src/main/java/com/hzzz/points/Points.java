@@ -63,9 +63,6 @@ public final class Points extends JavaPlugin {
      */
     @Override
     public void onLoad() {
-        // 检查更新
-        updateChecker();
-
         // 如果配置文件不存在, 保存默认的配置
         // config.yml
         saveDefaultConfig();
@@ -106,6 +103,9 @@ public final class Points extends JavaPlugin {
 
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
+
+        // 检查更新
+        updateChecker();
 
         // 可能需要重写，这样不论是否关闭模块，对应模块都会实例化，大概是不能写懒汉式单例
         final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
