@@ -5,6 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 
@@ -51,7 +52,7 @@ public final class DeathListener extends HowieUtilsListener {
      * @param e 事件
      */
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
+    public void onPlayerDeath(@NotNull PlayerDeathEvent e) {
         Player player = e.getEntity();  // 获取玩家
 
         // 配置文件检查和权限检查
