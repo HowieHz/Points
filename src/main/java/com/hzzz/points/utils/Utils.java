@@ -1,8 +1,10 @@
 package com.hzzz.points.utils;
 
 import com.hzzz.points.Points;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -96,5 +98,34 @@ public final class Utils {
      */
     public static boolean executeCommand(@NotNull String command) {
         return Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+
+    /**
+     * 发送一条Component消息
+     *
+     * @param sender  目标
+     * @param message 消息
+     */
+    public static void sendComponentMessage(CommandSender sender, Component message) {
+        Points.getAdventure().sender(sender).sendMessage(message);
+    }
+
+    /**
+     * 发送一条Component消息
+     *
+     * @param player  目标
+     * @param message 消息
+     */
+    public static void sendComponentMessage(Player player, Component message) {
+        Points.getAdventure().player(player).sendMessage(message);
+    }
+
+    /**
+     * 发送一条Component消息 给全部玩家
+     *
+     * @param message 消息
+     */
+    public static void sendComponentMessageToPlayers(Component message) {
+        Points.getAdventure().players().sendMessage(message);
     }
 }

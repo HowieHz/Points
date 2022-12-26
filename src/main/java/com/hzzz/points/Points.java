@@ -8,8 +8,9 @@ import com.hzzz.points.listeners.DeathListener;
 import com.hzzz.points.listeners.base_listener.NamedListener;
 import com.hzzz.points.utils.base_utils_class.BaseUtilsClass;
 import com.hzzz.points.utils.data_structure.CommandInfo;
-import com.hzzz.points.utils.github_update_checker.UpdateChecker;
 import com.hzzz.points.utils.data_structure.tuple.Tuple4;
+import com.hzzz.points.utils.github_update_checker.UpdateChecker;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -40,6 +41,8 @@ public final class Points extends JavaPlugin {
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
     private final List<NamedListener> eventHandlers = new ArrayList<>();  // 已注册的监听器
 
+    private static BukkitAudiences adventure;
+
     /**
      * 设置instance，方便获取实例
      */
@@ -48,7 +51,6 @@ public final class Points extends JavaPlugin {
         instance = this;
     }
 
-
     /**
      * 获取插件实例
      *
@@ -56,6 +58,19 @@ public final class Points extends JavaPlugin {
      */
     public static Points getInstance() {
         return instance;
+    }
+
+    /**
+     * 获取adventure实例
+     * <a href="https://docs.adventure.kyori.net/platform/bukkit.html">...</a>
+     *
+     * @return Points实例
+     */
+    public static BukkitAudiences getAdventure() {
+        if (adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return adventure;
     }
 
     /**
@@ -100,6 +115,9 @@ public final class Points extends JavaPlugin {
     @Override
     public void onEnable() {
         logInfo(getMessage(PLUGIN_STARTING));  // 插件正在启动
+
+        // Initialize an audiences instance for the plugin
+        adventure = BukkitAudiences.create(this);
 
         // 读取配置 供初始化使用
         FileConfiguration config = getConfig();
@@ -163,6 +181,11 @@ public final class Points extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);  // 关闭插件时, 确保取消我调度的所有任务
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
+
+        if (this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
 
         logInfo(getMessage(PLUGIN_DISABLED));  // 插件已关闭
     }

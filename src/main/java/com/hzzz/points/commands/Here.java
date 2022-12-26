@@ -1,8 +1,6 @@
 package com.hzzz.points.commands;
 
 import com.hzzz.points.commands.base_executor.HowieUtilsExecutor;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
+import static com.hzzz.points.utils.Utils.sendComponentMessageToPlayers;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.NO_PERMISSION;
 import static com.hzzz.points.utils.message.MsgKey.PLAYER_ONLY;
@@ -53,7 +52,7 @@ public final class Here extends HowieUtilsExecutor {
         }
 
         // 生成消息并在在公屏发送
-        Bukkit.broadcast(buildPlayerCoordinatesMessage("here", player), Server.BROADCAST_CHANNEL_USERS);
+        sendComponentMessageToPlayers(buildPlayerCoordinatesMessage("here", player));
 
         // 给发送者附上发光效果
         if (config.getBoolean("here.glowing.enable", false)) {

@@ -165,7 +165,7 @@ public final class DeathLog {
     private static void readAndOutputDeathRecord(@NotNull ResultSet rs, CommandSender receiver, String playerName, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) throws SQLException {
         int count = 0;
         while (rs.next()) {
-            receiver.sendMessage(buildDeathLogMessage(rs, playerName, voxelmapSupport, xaerosSupport, teleportSupport));
+            sendComponentMessage(receiver, buildDeathLogMessage(rs, playerName, voxelmapSupport, xaerosSupport, teleportSupport));
             count++;
         }
         if (count == 0) {  // 没有已经存储的死亡记录

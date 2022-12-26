@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import static com.hzzz.points.data_manager.operations_utils.DeathLog.insertDeathLog;
 import static com.hzzz.points.data_manager.operations_utils.DeathMessageConfig.isEnableDeathMessage;
 import static com.hzzz.points.utils.Utils.runTaskAsynchronously;
+import static com.hzzz.points.utils.Utils.sendComponentMessage;
 
 /**
  * 玩家死亡事件监听器
@@ -62,7 +63,7 @@ public final class DeathListener extends HowieUtilsListener {
             try {
                 if (config.getBoolean("death.message.enable", false) && isEnableDeathMessage(player)) {  // 出现错误默认不发送死亡消息
                     // 生成并发送消息给执行者
-                    player.sendMessage(buildPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
+                    sendComponentMessage(player,buildPlayerCoordinatesMessage("death.message", player, " X-> ", NamedTextColor.RED));
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();

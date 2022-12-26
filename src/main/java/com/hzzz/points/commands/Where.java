@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
+import static com.hzzz.points.utils.Utils.sendComponentMessage;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -53,7 +54,7 @@ public final class Where extends HowieUtilsExecutor {
             }
 
             // 生成并发送消息给执行者
-            sender.sendMessage(buildPlayerCoordinatesMessage("where", player));
+            sendComponentMessage(sender,buildPlayerCoordinatesMessage("where", player));
             return true;
         } else if (args.length == 1) {
             // 权限检查
@@ -74,7 +75,7 @@ public final class Where extends HowieUtilsExecutor {
             }
 
             // 生成并发送消息给执行者
-            sender.sendMessage(buildPlayerCoordinatesMessage("where", targetPlayer));
+            sendComponentMessage(sender,buildPlayerCoordinatesMessage("where", targetPlayer));
             return true;
         }
         sender.sendMessage(getMessage(HELP_WHERE));
