@@ -5,7 +5,7 @@ plugins {
     id "org.sonarqube" version "3.4.0.2513"
 }
 
-version = '0.2.4.1'
+version = '0.2.4.2'
 mainClassName = 'com.hzzz.points.Points'
 
 repositories {
@@ -110,6 +110,10 @@ sonarqube {  // CI
 shadowJar {  // 打包库到jar里面，以及给bstats的库改位置
     mergeServiceFiles()
     relocate('org.bstats', 'utils.org.bstats') {
+    }
+    relocate('com.alibaba.fastjson2', 'utils.com.alibaba.fastjson2') {
+    }
+    relocate('net.kyori', 'utils.net.kyori') {
     }
 }
 
