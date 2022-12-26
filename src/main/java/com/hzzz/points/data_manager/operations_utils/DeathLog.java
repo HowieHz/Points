@@ -112,8 +112,8 @@ public final class DeathLog {
     /**
      * 向接受者发送目标玩家玩家的死亡日志
      *
-     * @param playerName 目标玩家的用户名
-     * @param receiver   接受者
+     * @param playerName      目标玩家的用户名
+     * @param receiver        接受者
      * @param voxelmapSupport voxelmap mod支持
      * @param xaerosSupport   xaeros mod支持
      * @param teleportSupport tp支持
@@ -142,36 +142,10 @@ public final class DeathLog {
         UUID uuid = targetPlayer.getUniqueId();
 
         try (ResultSet rs = readDeathLog(uuid)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             int count = 0;
             while (rs.next()) {
-                // 编辑消息
-                Component component = Component.text("")
-                        .append(Component.text(sdf.format(rs.getInt("deathTime") * 1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
-                        .append(Component.text(" -> ").color(NamedTextColor.WHITE))
-                        .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
-                        .append(Component.text(String.format(getMessage(COORDINATES_FORMAT), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
-
-                if (voxelmapSupport) {
-                    component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
-                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
-                }
-
-                if (xaerosSupport) {
-                    component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
-                            .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
-                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
-                }
-
-                if (teleportSupport) {
-                    component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
-                            .append(Component.text("[tp] ").color(NamedTextColor.RED)
-                                    .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
-                                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(TELEPORT_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
-                }
+                receiver.sendMessage(buildDeathLogMessage(rs, playerName, voxelmapSupport, xaerosSupport, teleportSupport));
                 count++;
-                receiver.sendMessage(component);
             }
             if (count == 0) {  // 没有已经存储的死亡记录
                 receiver.sendMessage(String.format(getMessage(NO_DEATH_RECORD), playerName));
@@ -184,4 +158,47 @@ public final class DeathLog {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 创建死亡日志消息
+     *
+     * @param rs              结果集
+     * @param playerName      玩家名
+     * @param voxelmapSupport voxelmap mod支持
+     * @param xaerosSupport   xaeros mod支持
+     * @param teleportSupport tp支持
+     * @return 生成好的消息
+     * @throws SQLException
+     */
+    private static Component buildDeathLogMessage(ResultSet rs, String playerName, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) throws SQLException {
+        // TODO sdf这个加入配置文件
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 编辑消息
+        Component component = Component.text("")
+                .append(Component.text(sdf.format(rs.getInt("deathTime") * 1000L)).color(NamedTextColor.YELLOW))  // 取得时间戳单位是秒, SimpleDateFormat需要毫秒, 所以乘1000L
+                .append(Component.text(" -> ").color(NamedTextColor.WHITE))
+                .append(Component.text(rs.getString("world")).color(NamedTextColor.YELLOW))
+                .append(Component.text(String.format(getMessage(COORDINATES_FORMAT), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"))).color(NamedTextColor.YELLOW));
+
+        if (voxelmapSupport) {
+            component = component.append(Component.text("[+V] ").color(NamedTextColor.AQUA)
+                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(VOXELMAP_SUPPORT_HOVER))))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(VOXELMAP_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+        }
+
+        if (xaerosSupport) {
+            component = component.append(Component.text("[+X] ").color(NamedTextColor.GOLD)
+                    .hoverEvent(HoverEvent.showText(Component.text(getMessage(XAEROS_SUPPORT_HOVER))))
+                    .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(XAEROS_SUPPORT_COMMAND), playerName, playerName.charAt(0), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"), rs.getString("world")))));
+        }
+
+        if (teleportSupport) {
+            component = component.append(Component.text("-> ").color(NamedTextColor.WHITE))
+                    .append(Component.text("[tp] ").color(NamedTextColor.RED)
+                            .hoverEvent(HoverEvent.showText(Component.text(String.format(getMessage(TELEPORT_SUPPORT_HOVER), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))))
+                            .clickEvent(ClickEvent.suggestCommand(String.format(getMessage(TELEPORT_SUPPORT_COMMAND), rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")))));
+        }
+        return component;
+    }
+
 }
