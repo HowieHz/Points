@@ -23,7 +23,7 @@ import static com.hzzz.points.utils.message.MsgKey.*;
  * @version 0.2.4
  * @since 2022-10-22 22:26
  */
-public class FairPVP extends HowieUtilsExecutor {
+public final class FairPVP extends HowieUtilsExecutor {
     private static final String PERMISSION_PARENT_NODE = "fair-pvp";
     private static final FairPVP instance = new FairPVP();
 

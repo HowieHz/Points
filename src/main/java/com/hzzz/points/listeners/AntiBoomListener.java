@@ -106,17 +106,29 @@ public final class AntiBoomListener extends HowieUtilsListener {
 
         for (AntiBoomInfo info : antiBoomInfo) {  // 遍历
             if (e.getEntity().getType().equals(info.type)) {  // 检查类型
-                if ((config.getBoolean(info.configParentNode + ".enable", false)) // anti-boom.类型.enable
-                        && (config.getBoolean(info.configParentNode + ".world", false)  // anti-boom.类型.enable.world
-                        && checkWordName(worldName, WorldName.WORLD))
-                        || (config.getBoolean(info.configParentNode + ".world-nether", false)  // anti-boom.类型.enable.world-nether
-                        && checkWordName(worldName, WorldName.NETHER))
-                        || (config.getBoolean(info.configParentNode + ".world-the-end", false)  // anti-boom.类型.enable.world-the-end
-                        && checkWordName(worldName, WorldName.THE_END))) {
-                    e.setCancelled(true);
-                }
-                break;
+                checkWorldConfig(e, info, worldName); // 检查配置文件
+                return;
             }
+        }
+    }
+
+    /**
+     * 检查对应类型，在配置文件有没有开启对应世界的防爆
+     *
+     * @param e         事件
+     * @param info      类型
+     * @param worldName 事件发生的世界名
+     */
+    private void checkWorldConfig(EntityExplodeEvent e, AntiBoomInfo info, String worldName) {
+        // TODO 世界检查列表 为列表而不是在几个世界里面选择
+        if ((config.getBoolean(info.configParentNode + ".enable", false)) // anti-boom.类型.enable
+                && (config.getBoolean(info.configParentNode + ".world", false)  // anti-boom.类型.enable.world
+                && checkWordName(worldName, WorldName.WORLD))
+                || (config.getBoolean(info.configParentNode + ".world-nether", false)  // anti-boom.类型.enable.world-nether
+                && checkWordName(worldName, WorldName.NETHER))
+                || (config.getBoolean(info.configParentNode + ".world-the-end", false)  // anti-boom.类型.enable.world-the-end
+                && checkWordName(worldName, WorldName.THE_END))) {
+            e.setCancelled(true);
         }
     }
 
@@ -198,6 +210,7 @@ public final class AntiBoomListener extends HowieUtilsListener {
      * @return 符合返回true
      */
     private boolean checkWordName(String worldName, WorldName whichWorld) {
+        // 重构之后这个函数应该不需要了
         final String configWorldNameParentNode = "anti-boom.world-name";
 
         switch (whichWorld) {

@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import static com.hzzz.points.utils.Utils.checkPermission;
-import static com.hzzz.points.utils.Utils.stringFormatEnd;
 import static com.hzzz.points.utils.message.Lang.getMessage;
 import static com.hzzz.points.utils.message.MsgKey.*;
 
@@ -28,7 +27,7 @@ public abstract class BaseUtilsClass {
     /**
      * 重新读取配置文件
      */
-    static public void reloadConfig(){
+    static public void reloadConfig() {
         config = Points.getInstance().getConfig();  // 读取配置文件
     }
 
@@ -101,7 +100,6 @@ public abstract class BaseUtilsClass {
     }
 
 
-
     /**
      * 指令目标为指定玩家, 检查是否有权限 (用于完整输入指令后，运行时检查) <br>
      * 意图是：检查有没有对<big>其他玩家</big>使用该指令的权限，先检查通用权限，再检查指定玩家<br><br>
@@ -132,10 +130,16 @@ public abstract class BaseUtilsClass {
         if (checkPermission(sender, config.getString(parentConfigNode + ".permission.other.node-other-player", defaultPermissionNodeTargetOtherPlayers))) {  // 检查有没有这个权限 other通用节点
             return true;
         }
+
+        String permission = config.getString(parentConfigNode + ".permission.other.node-target-player");
+
+        if (permission == null){
+            permission = defaultPermissionNodeTargetSingerPlayer;
+        }
+
         // 把玩家名格式化带入 检查有没有这个权限 other特定玩家节点
-        return checkPermission(sender,
-                stringFormatEnd(config.getString(parentConfigNode + ".permission.other.node-target-player"),
-                        "%s", defaultPermissionNodeTargetSingerPlayer, targetPlayerName));
+        // TODO 需要重构，自定义权限要拉到单独一个文件里面比较好
+        return checkPermission(sender, permission.replace("%s", targetPlayerName));
     }
 
     /**
@@ -154,8 +158,8 @@ public abstract class BaseUtilsClass {
      * @return 是否通过权限检查 (通过为true)
      */
     public boolean checkPermissionTargetSelf(CommandSender sender,
-                                                    String parentConfigNode,
-                                                    String defaultPermissionNode) {
+                                             String parentConfigNode,
+                                             String defaultPermissionNode) {
         if (!config.getBoolean(parentConfigNode + ".permission.self.enable", true)) {  // 权限管理有没有开启
             return true;
         }
@@ -178,8 +182,8 @@ public abstract class BaseUtilsClass {
      * @return 是否通过权限检查 (通过为true)
      */
     public boolean checkPermissionOneConfigNode(CommandSender sender,
-                                                       String parentConfigNode,
-                                                       String defaultPermissionNode) {
+                                                String parentConfigNode,
+                                                String defaultPermissionNode) {
         if (!config.getBoolean(parentConfigNode + ".permission.enable", true)) {  // 权限管理有没有开启
             return true;
         }

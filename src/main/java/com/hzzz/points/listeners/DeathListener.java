@@ -1,7 +1,6 @@
 package com.hzzz.points.listeners;
 
 import com.hzzz.points.listeners.base_listener.HowieUtilsListener;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,11 +70,11 @@ public final class DeathListener extends HowieUtilsListener {
 
             // 记录死亡日志
             if (config.getBoolean("death.log.enable", false)) {
-                Component deathMessage = e.deathMessage();
+                String deathMessage = e.getDeathMessage();
                 if (deathMessage == null) {  // 被手动设置deathMessage才可能为null吧
                     return;
                 }
-                insertDeathLog(player, deathMessage.toString(), config.getInt("death.log.record-limit", 5));
+                insertDeathLog(player, deathMessage, config.getInt("death.log.record-limit", 5));
             }
         });
     }

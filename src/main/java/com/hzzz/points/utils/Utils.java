@@ -32,29 +32,6 @@ public final class Utils {
         }
     }
 
-    // TODO 重构通配符模式
-
-    /**
-     * 检查一段字符串末尾是否是指定字符串(通配符检查)<br>如果是就格式化，不是就使用默认字符串进行格式化
-     *
-     * @param string        一段字符串
-     * @param endString     检查结尾是否是此字符串
-     * @param defaultString 默认字符串
-     * @param args          格式化参数
-     * @return 格式化完毕之后的字符串
-     */
-    public static String stringFormatEnd(String string, String endString, String defaultString, Object... args) {
-        if (string == null) {
-            return String.format(defaultString, args);
-        }
-
-        if (string.endsWith(endString)) {
-            return String.format(string, args);
-        } else {
-            return String.format(defaultString, args);
-        }
-    }
-
     /**
      * 向控制台发送消息
      *
