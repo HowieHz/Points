@@ -46,75 +46,85 @@ public class FairPVP extends HowieUtilsExecutor {
     private FairPVP() {
     }
 
+    /**
+     * 开启公平pvp
+     *
+     * @param player 被操作的玩家
+     */
+    private void enableFairPVP(Player player) {
+        for (String word : words) {
+            executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier add " + player.getName() + " " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
+        }
+    }
+
+    /**
+     * 关闭公平pvp
+     *
+     * @param player 被操作的玩家
+     */
+    private void disableFairPVP(Player player) {
+        for (String word : words) {
+            executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier remove " + player.getName() + "  fair_pvp_" + word));
+        }
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        switch (args.length) {
-            case 1 -> {
-                // 检查执行者
-                if (!(sender instanceof Player player)) {
-                    sender.sendMessage(getMessage(PLAYER_ONLY));
-                    return true;
-                }
-                // 权限检查
-                if (!checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
-                        "points.command.fair-pvp.self")) {
-                    sender.sendMessage(getMessage(NO_PERMISSION));
-                    return true;
-                }
-                if (args[0].equals("on")) {
-                    for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier add " + player.getName() + " " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
-                    }
-                    player.sendMessage(getMessage(ENABLE_FAIR_PVP));
-                } else if (args[0].equals("off")) {
-                    for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(player.getPlayer(), "sk modifier remove " + player.getName() + "  fair_pvp_" + word));
-                    }
-                    player.sendMessage(getMessage(DISABLE_FAIR_PVP));
-                } else {
-                    sender.sendMessage(getMessage(HELP_FAIR_PVP));
-                }
+        if (args.length == 1) {
+            // 检查执行者
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(getMessage(PLAYER_ONLY));
                 return true;
             }
-            case 2 -> {
-                // 权限检查
-                if (!checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
-                        args[1], "points.command.fair-pvp.other",
-                        "points.command.fair-pvp.other.%s"
-                )
-                ) {
-                    sender.sendMessage(getMessage(NO_PERMISSION));
-                    return true;
-                }
-
-                Player targetPlayer = Bukkit.getPlayerExact(args[1]);  // 使用玩家名获取
-                if (targetPlayer == null) {  // 检查是否获取到玩家
-                    sender.sendMessage(getMessage(PLAYER_NOT_ONLINE));
-                    return true;
-                }
-
-                if (args[0].equals("on")) {
-                    for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(targetPlayer, "sk modifier add " + targetPlayer.getName() + " " + word + " fair_pvp_" + word + " -%aureliumskills_" + word + "%"));
-                    }
-                    targetPlayer.sendMessage(getMessage(ENABLE_FAIR_PVP));
-                    sender.sendMessage(targetPlayer.getName() + " " + getMessage(ENABLE_FAIR_PVP));
-                } else if (args[0].equals("off")) {
-                    for (String word : words) {
-                        executeCommand(PlaceholderAPI.setPlaceholders(targetPlayer, "sk modifier remove " + targetPlayer.getName() + "  fair_pvp_" + word));
-                    }
-                    targetPlayer.sendMessage(getMessage(DISABLE_FAIR_PVP));
-                    sender.sendMessage(targetPlayer.getName() + " " + getMessage(DISABLE_FAIR_PVP));
-                } else {
-                    sender.sendMessage(getMessage(HELP_FAIR_PVP));
-                }
+            // 权限检查
+            if (!checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
+                    "points.command.fair-pvp.self")) {
+                sender.sendMessage(getMessage(NO_PERMISSION));
                 return true;
             }
-            default -> {
+
+            if (args[0].equals("on")) {
+                enableFairPVP(player);
+                player.sendMessage(getMessage(ENABLE_FAIR_PVP));
+            } else if (args[0].equals("off")) {
+                disableFairPVP(player);
+                player.sendMessage(getMessage(DISABLE_FAIR_PVP));
+            } else {
                 sender.sendMessage(getMessage(HELP_FAIR_PVP));
+            }
+            return true;
+        } else if (args.length == 2) {
+            // 权限检查
+            if (!checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
+                    args[1], "points.command.fair-pvp.other",
+                    "points.command.fair-pvp.other.%s"
+            )
+            ) {
+                sender.sendMessage(getMessage(NO_PERMISSION));
                 return true;
             }
+
+            Player targetPlayer = Bukkit.getPlayerExact(args[1]);  // 使用玩家名获取
+            if (targetPlayer == null) {  // 检查是否获取到玩家
+                sender.sendMessage(getMessage(PLAYER_NOT_ONLINE));
+                return true;
+            }
+
+            if (args[0].equals("on")) {
+                enableFairPVP(targetPlayer);
+                targetPlayer.sendMessage(getMessage(ENABLE_FAIR_PVP));
+                sender.sendMessage(targetPlayer.getName() + " " + getMessage(ENABLE_FAIR_PVP));
+            } else if (args[0].equals("off")) {
+                disableFairPVP(targetPlayer);
+                targetPlayer.sendMessage(getMessage(DISABLE_FAIR_PVP));
+                sender.sendMessage(targetPlayer.getName() + " " + getMessage(DISABLE_FAIR_PVP));
+            } else {
+                sender.sendMessage(getMessage(HELP_FAIR_PVP));
+            }
+            return true;
         }
+        sender.sendMessage(getMessage(HELP_FAIR_PVP));
+        return true;
     }
 
     @Override

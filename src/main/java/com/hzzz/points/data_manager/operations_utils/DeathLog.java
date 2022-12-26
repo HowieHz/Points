@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ public final class DeathLog {
      * @param uuid 目标玩家的uuid
      * @return 读取到的记录集
      */
-    private static ResultSet readDeathLog(UUID uuid) throws SQLException {
+    private static ResultSet readDeathLog(@NotNull UUID uuid) throws SQLException {
         // 查询死亡记录的操作
         psSelectDeathLog.setString(1, uuid.toString());
         return psSelectDeathLog.executeQuery();
@@ -73,7 +74,7 @@ public final class DeathLog {
      * @param deathReason  死亡原因
      * @param recordLimit  死亡记录上限
      */
-    public static void insertDeathLog(Player targetPlayer, String deathReason, int recordLimit) {
+    public static void insertDeathLog(@NotNull Player targetPlayer, String deathReason, int recordLimit) {
         int count;  // 目前记录条数
         try {
             count = countDeathLog(targetPlayer.getUniqueId());  // 获取目前记录条数
@@ -137,25 +138,40 @@ public final class DeathLog {
      * @param xaerosSupport   xaeros mod支持
      * @param teleportSupport tp支持
      */
-    public static void outputDeathLog(Player targetPlayer, CommandSender receiver, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) {
+    public static void outputDeathLog(@NotNull Player targetPlayer, CommandSender receiver, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) {
         String playerName = targetPlayer.getName();
         UUID uuid = targetPlayer.getUniqueId();
 
         try (ResultSet rs = readDeathLog(uuid)) {
-            int count = 0;
-            while (rs.next()) {
-                receiver.sendMessage(buildDeathLogMessage(rs, playerName, voxelmapSupport, xaerosSupport, teleportSupport));
-                count++;
-            }
-            if (count == 0) {  // 没有已经存储的死亡记录
-                receiver.sendMessage(String.format(getMessage(NO_DEATH_RECORD), playerName));
-            } else {
-                receiver.sendMessage(String.format(getMessage(READ_DEATH_RECORD), count));
-            }
+            readAndOutputDeathRecord(rs, receiver, playerName, voxelmapSupport, xaerosSupport, teleportSupport);
         } catch (SQLException e) {
             logInfo(getMessage(DATABASE_ERROR));
             receiver.sendMessage(getMessage(DATABASE_ERROR));
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 处理rs数据集，发送死亡记录
+     *
+     * @param rs              结果集
+     * @param receiver        接受者
+     * @param playerName      玩家名
+     * @param voxelmapSupport voxelmap mod支持
+     * @param xaerosSupport   xaeros mod支持
+     * @param teleportSupport tp支持
+     * @throws SQLException sql错误
+     */
+    private static void readAndOutputDeathRecord(@NotNull ResultSet rs, CommandSender receiver, String playerName, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) throws SQLException {
+        int count = 0;
+        while (rs.next()) {
+            receiver.sendMessage(buildDeathLogMessage(rs, playerName, voxelmapSupport, xaerosSupport, teleportSupport));
+            count++;
+        }
+        if (count == 0) {  // 没有已经存储的死亡记录
+            receiver.sendMessage(String.format(getMessage(NO_DEATH_RECORD), playerName));
+        } else {
+            receiver.sendMessage(String.format(getMessage(READ_DEATH_RECORD), count));
         }
     }
 
@@ -168,7 +184,7 @@ public final class DeathLog {
      * @param xaerosSupport   xaeros mod支持
      * @param teleportSupport tp支持
      * @return 生成好的消息
-     * @throws SQLException
+     * @throws SQLException sql错误
      */
     private static Component buildDeathLogMessage(ResultSet rs, String playerName, boolean voxelmapSupport, boolean xaerosSupport, boolean teleportSupport) throws SQLException {
         // TODO sdf这个加入配置文件

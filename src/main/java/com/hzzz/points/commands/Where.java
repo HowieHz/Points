@@ -36,54 +36,49 @@ public final class Where extends HowieUtilsExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        switch (args.length) {
-            case 0 -> {
-                // /where
-                // 此处sender就是player，只是一个是CommandSender类型一个强转成了Player类型
+        if (args.length == 0) {
+            // /where
+            // 此处sender就是player，只是一个是CommandSender类型一个强转成了Player类型
 
-                // 检查执行者
-                if (!(sender instanceof Player player)) {
-                    sender.sendMessage(getMessage(PLAYER_ONLY));
-                    return true;
-                }
-                // 权限检查
-                if (!checkPermissionTargetSelf(sender, "where",
-                        "points.command.where.self")) {
-                    sender.sendMessage(getMessage(NO_PERMISSION));
-                    return true;
-                }
-
-                // 生成并发送消息给执行者
-                sender.sendMessage(buildPlayerCoordinatesMessage("where", player));
+            // 检查执行者
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(getMessage(PLAYER_ONLY));
                 return true;
             }
-            case 1 -> {
-                // 权限检查
-                if (!checkPermissionTargetOther(sender, "where",
-                        args[0], "points.command.where.other",
-                        "points.command.where.other.%s"
-                )
-                ) {
-                    sender.sendMessage(getMessage(NO_PERMISSION));
-                    return true;
-                }
-
-                Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
-
-                if (targetPlayer == null) {  // 检查是否获取到玩家
-                    sender.sendMessage(getMessage(PLAYER_NOT_ONLINE));
-                    return true;
-                }
-
-                // 生成并发送消息给执行者
-                sender.sendMessage(buildPlayerCoordinatesMessage("where", targetPlayer));
+            // 权限检查
+            if (!checkPermissionTargetSelf(sender, "where",
+                    "points.command.where.self")) {
+                sender.sendMessage(getMessage(NO_PERMISSION));
                 return true;
             }
-            default -> {
-                sender.sendMessage(getMessage(HELP_WHERE));
+
+            // 生成并发送消息给执行者
+            sender.sendMessage(buildPlayerCoordinatesMessage("where", player));
+            return true;
+        } else if (args.length == 1) {
+            // 权限检查
+            if (!checkPermissionTargetOther(sender, "where",
+                    args[0], "points.command.where.other",
+                    "points.command.where.other.%s"
+            )
+            ) {
+                sender.sendMessage(getMessage(NO_PERMISSION));
                 return true;
             }
+
+            Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
+
+            if (targetPlayer == null) {  // 检查是否获取到玩家
+                sender.sendMessage(getMessage(PLAYER_NOT_ONLINE));
+                return true;
+            }
+
+            // 生成并发送消息给执行者
+            sender.sendMessage(buildPlayerCoordinatesMessage("where", targetPlayer));
+            return true;
         }
+        sender.sendMessage(getMessage(HELP_WHERE));
+        return true;
     }
 
     @Override

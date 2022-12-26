@@ -46,45 +46,41 @@ public final class Enderchest extends HowieUtilsExecutor {
             sender.sendMessage(getMessage(PLAYER_ONLY));
             return true;
         }
-        switch (args.length) {
-            case 0 -> {
-                // 权限检查
-                if (!checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
-                        "points.command.enderchest.self")) {
-                    sender.sendMessage(getMessage(NO_PERMISSION));
-                    return true;
-                }
 
-                // 开启此玩家的末影箱
-                player.openInventory(player.getEnderChest());
+        if (args.length == 0) {
+            // 权限检查
+            if (!checkPermissionTargetSelf(sender, PERMISSION_PARENT_NODE,
+                    "points.command.enderchest.self")) {
+                sender.sendMessage(getMessage(NO_PERMISSION));
                 return true;
             }
-            case 1 -> {
-                // 权限检查
-                if (!checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
-                        args[0], "points.command.enderchest.other",
-                        "points.command.enderchest.other.%s"
-                )
-                ) {
-                    sender.sendMessage(getMessage(NO_PERMISSION));
-                    return true;
-                }
 
-                Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
-
-                if (targetPlayer == null) {  // 检查是否获取到玩家
-                    player.sendMessage(getMessage(PLAYER_NOT_ONLINE));
-                    return true;
-                }
-
-                player.openInventory(targetPlayer.getEnderChest());  // 开启目标玩家的潜影箱
+            // 开启此玩家的末影箱
+            player.openInventory(player.getEnderChest());
+            return true;
+        } else if (args.length == 1) {
+            // 权限检查
+            if (!checkPermissionTargetOther(sender, PERMISSION_PARENT_NODE,
+                    args[0], "points.command.enderchest.other",
+                    "points.command.enderchest.other.%s"
+            )
+            ) {
+                sender.sendMessage(getMessage(NO_PERMISSION));
                 return true;
             }
-            default -> {
-                sender.sendMessage(getMessage(HELP_ENDERCHEST));
+
+            Player targetPlayer = Bukkit.getPlayerExact(args[0]);  // 使用玩家名获取
+
+            if (targetPlayer == null) {  // 检查是否获取到玩家
+                player.sendMessage(getMessage(PLAYER_NOT_ONLINE));
                 return true;
             }
+
+            player.openInventory(targetPlayer.getEnderChest());  // 开启目标玩家的潜影箱
+            return true;
         }
+        sender.sendMessage(getMessage(HELP_ENDERCHEST));
+        return true;
     }
 
     @Override

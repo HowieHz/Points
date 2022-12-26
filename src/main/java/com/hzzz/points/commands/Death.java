@@ -49,96 +49,103 @@ public final class Death extends HowieUtilsExecutor {
 
         switch (args[0]) {
             case "message" -> {
-                if (config.getBoolean("death.message.enable", false)) {  // 检查子模块是否开启
+                if (!config.getBoolean("death.message.enable", false)) {  // 检查子模块是否开启
+                    sender.sendMessage(getMessage(DISABLE_MODULE));
+                    return true;
+                }
+
+                // 检查执行者
+                if (!(sender instanceof Player player)) {
+                    sender.sendMessage(getMessage(PLAYER_ONLY));
+                    return true;
+                }
+                // 权限检查
+                if (checkPermissionOneConfigNode(sender, "death.message.command", "points.command.death.message")) {
+                    sender.sendMessage(getMessage(NO_PERMISSION));
+                    return true;
+                }
+                if (args.length > 1) {  // 参数过多语法错误
+                    sender.sendMessage(getMessage(HELP_DEATH));
+                    return true;
+                }
+
+                runTaskAsynchronously(() -> {
+                    try {
+                        if (updateDeathMessageConfig(player)) {  // 更改数据库config
+                            sender.sendMessage(getMessage(ENABLE_DEATH_MESSAGE));
+                        } else {
+                            sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
+                        }
+                    } catch (SQLException e) {
+                        sender.sendMessage(getMessage(DATABASE_ERROR));
+                        sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
+                        logError(getMessage(DATABASE_ERROR));
+                        e.printStackTrace();
+                    }
+                });
+
+                return true;
+            }
+            case "log" -> {
+                if (!config.getBoolean("death.log.enable", false)) {  // 检查子模块是否开启
+                    sender.sendMessage(getMessage(DISABLE_MODULE));
+                    return true;
+                }
+
+                if (args.length == 1) {  // /death log
+                    // 权限检查
+                    if (!checkPermissionTargetSelf(sender, "death.log",
+                            "points.command.death.log.self")) {
+                        sender.sendMessage(getMessage(NO_PERMISSION));
+                        return true;
+                    }
+
                     // 检查执行者
                     if (!(sender instanceof Player player)) {
                         sender.sendMessage(getMessage(PLAYER_ONLY));
                         return true;
                     }
-                    // 权限检查
-                    if (checkPermissionOneConfigNode(sender, "death.message.command", "points.command.death.message")) {
-                        sender.sendMessage(getMessage(NO_PERMISSION));
-                        return true;
-                    }
-                    if (args.length > 1) {  // 参数过多语法错误
-                        sender.sendMessage(getMessage(HELP_DEATH));
+
+                    // 使用频率检查
+                    if (checkCommandFrequencyLimit(player)) {
                         return true;
                     }
 
-                    runTaskAsynchronously(() -> {
-                        try {
-                            if (updateDeathMessageConfig(player)) {  // 更改数据库config
-                                sender.sendMessage(getMessage(ENABLE_DEATH_MESSAGE));
-                            } else {
-                                sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
-                            }
-                        } catch (SQLException e) {
-                            sender.sendMessage(getMessage(DATABASE_ERROR));
-                            sender.sendMessage(getMessage(DISABLE_DEATH_MESSAGE));
-                            logError(getMessage(DATABASE_ERROR));
-                            e.printStackTrace();
-                        }
-                    });
-                } else {
-                    sender.sendMessage(getMessage(DISABLE_MODULE));
+                    runTaskAsynchronously(() -> outputDeathLog(player, player,
+                            config.getBoolean("death.log.voxelmap-support", false),
+                            config.getBoolean("death.log.xaeros-support", false),
+                            config.getBoolean("death.log.teleport-support", false)));  // 查看自己的log
+                    return true;
+
                 }
-            }
-            case "log" -> {
-                if (config.getBoolean("death.log.enable", false)) {  // 检查子模块是否开启
-                    if (args.length == 1) {  // /death log
-                        // 权限检查
-                        if (!checkPermissionTargetSelf(sender, "death.log",
-                                "points.command.death.log.self")) {
-                            sender.sendMessage(getMessage(NO_PERMISSION));
-                            return true;
-                        }
 
-                        // 检查执行者
-                        if (!(sender instanceof Player player)) {
-                            sender.sendMessage(getMessage(PLAYER_ONLY));
-                            return true;
-                        }
-
-                        // 使用频率检查
-                        if (checkCommandFrequencyLimit(player)) {
-                            return true;
-                        }
-
-                        runTaskAsynchronously(() -> outputDeathLog(player, player,
-                                config.getBoolean("death.log.voxelmap-support", false),
-                                config.getBoolean("death.log.xaeros-support", false),
-                                config.getBoolean("death.log.teleport-support", false)));  // 查看自己的log
-
-                    } else {  // /death log Howie_HzGo
-                        // 权限检查
-                        if (!checkPermissionTargetOther(sender, "death.log",
-                                args[1], "points.command.death.log.other",
-                                "points.command.death.log.other.%s"
-                        )
-                        ) {
-                            sender.sendMessage(getMessage(NO_PERMISSION));
-                            return true;
-                        }
-
-                        // 检查执行者 是玩家就进行频率检查
-                        if (sender instanceof Player player
-                                && checkCommandFrequencyLimit(player)) {
-                            return true;
-                        }
-
-                        runTaskAsynchronously(() -> outputDeathLog(args[1], sender,
-                                config.getBoolean("death.log.voxelmap-support", false),
-                                config.getBoolean("death.log.xaeros-support", false),
-                                config.getBoolean("death.log.teleport-support", false)));  // 查看玩家的log
-                    }
-
-                } else {
-                    sender.sendMessage(getMessage(DISABLE_MODULE));
+                // /death log Howie_HzGo
+                // 权限检查
+                if (!checkPermissionTargetOther(sender, "death.log",
+                        args[1], "points.command.death.log.other",
+                        "points.command.death.log.other.%s"
+                )) {
+                    sender.sendMessage(getMessage(NO_PERMISSION));
+                    return true;
                 }
+
+                // 检查执行者 是玩家就进行频率检查
+                if (sender instanceof Player player
+                        && checkCommandFrequencyLimit(player)) {
+                    return true;
+                }
+
+                runTaskAsynchronously(() -> outputDeathLog(args[1], sender,
+                        config.getBoolean("death.log.voxelmap-support", false),
+                        config.getBoolean("death.log.xaeros-support", false),
+                        config.getBoolean("death.log.teleport-support", false)));  // 查看玩家的log
+                return true;
             }
-            default -> sender.sendMessage(getMessage(HELP_DEATH));
+            default -> {
+                sender.sendMessage(getMessage(HELP_DEATH));
+                return true;
+            }
         }
-        return true;
     }
 
     /**
@@ -180,41 +187,32 @@ public final class Death extends HowieUtilsExecutor {
          * death log <player_name>
          */
         // 检查模块 - 检查权限
-        switch (args.length) {
-            case 0, 1 -> {
-                // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
-                // 交叉检测，开启哪个模块有哪个模块的补全提示
-                // 因为没有第二个参数，所以没法检测 points.command.death.log.other.玩家名 的权限
-                List<String> completeArrays = new ArrayList<>();
-                if (config.getBoolean("death.message.enable", false)) {
-                    completeArrays.add("message");
-                }
-                if (config.getBoolean("death.log.enable", false)
-                        && (checkPermissionTargetSelf(sender, "death.log", "points.command.death.log.self")
-                        || checkPermissionTargetOther(sender, "death.log", "", "points.command.death.log.other", "points.command.death.log.other.%s"))) {
-                    completeArrays.add("log");
-                }
-                return completeArrays;
+        if (args.length == 0 || args.length == 1) {
+            // 没有参数或者正在输入第一个参数（根指令后面只有一个空格（此时长度为0 /death ），或者第一个参数输入到一半（此时长度为一 /death lo……））
+            // 交叉检测，开启哪个模块有哪个模块的补全提示
+            // 因为没有第二个参数，所以没法检测 points.command.death.log.other.玩家名 的权限
+            List<String> completeArrays = new ArrayList<>();
+            if (config.getBoolean("death.message.enable", false)) {
+                completeArrays.add("message");
             }
-            case 2 -> {
-                // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））
-                if ("log".equals(args[0])) {
-                    if (config.getBoolean("death.log.enable", false)) {  // 是否开启模块
-                        if (checkPermissionTargetOther(sender, "death.log",
-                                "", "points.command.death.log.other",
-                                "points.command.death.log.other.%s"
-                        )) {
-                            // 过权限检查
-                            return null;  // death log Ho……提示玩家名
-                        }
-                        // 没权限 不继续提示
-                    }
-                    // 没开启模块 不继续提示
-                }
-                // 第一个参数是message或者其他什么奇奇怪怪的东西 不提示
+            if (config.getBoolean("death.log.enable", false)
+                    && (checkPermissionTargetSelf(sender, "death.log", "points.command.death.log.self")
+                    || checkPermissionTargetOther(sender, "death.log", "", "points.command.death.log.other", "points.command.death.log.other.%s"))) {
+                completeArrays.add("log");
             }
-            // 前两个参数已经输入完成，不继续提示
+            return completeArrays;
         }
+
+        // 正在输入第二个参数（第二个参数输入一半（/death log Ho……））
+        if ("log".equals(args[0])
+                && config.getBoolean("death.log.enable", false)
+                && checkPermissionTargetOther(sender, "death.log",
+                "", "points.command.death.log.other",
+                "points.command.death.log.other.%s"
+        )) {  // 是否开启模块,第一个参数是message或者其他什么奇奇怪怪的东西,权限检查
+            return null;  // death log Ho……提示玩家名
+        }
+        // 前两个参数已经输入完成，不继续提示
         return Collections.singletonList("");
     }
 }
