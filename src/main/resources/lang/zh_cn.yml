@@ -11,7 +11,7 @@ listeners:
 reloaded:
   config: "配置已重新加载"
 finished: "已执行"
-reload_ready: "插件已完成重载！"
+reload_ready: "插件已重新加载配置文件和语言文件！"
 plugin:
   starting: "插件正在启动"
   loading: "插件正在加载"
@@ -79,15 +79,15 @@ enderchest:
   help: "使用方法: §e/enderchest 玩家名 §f或 §e/enderchest"
 points:
   help: |
-    §6================================
+    §6==================================
     §e/points §f: 显示此消息
-    §e/points reload §f: 重载插件
+    §e/points reload §f: 重新加载配置文件和语言文件
     §e/points help §f: 显示此消息
     §e/here §f: 广播自己的坐标并且获得高亮
     §e/where §f: 获取自己的坐标
     §e/where <player_name> §f: 获取他人的坐标
     §e/death §f: 死亡模块相关的指令帮助
-    §6================================
+    §6==================================
 fair-pvp:
   enable: "§e已启动公平PVP模式"
   disable: "§e已关闭公平PVP模式"

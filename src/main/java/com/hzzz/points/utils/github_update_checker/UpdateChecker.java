@@ -35,9 +35,11 @@ public class UpdateChecker {
         //TODO 自己进行json解析
         String url = "https://api.github.com/repos/HowieHz/Points/releases/latest";
         JSONObject obj = JSON.parseObject(getJson(url));
-        String latest_version = obj.getString("tag_name");
+
         int response_code = obj.getIntValue("response_code", 200);
         if (response_code == 200) {
+            // String downloadUrl = obj.getJSONArray("assets").getJSONObject(0).getString("browser_download_url");
+            String latest_version = obj.getString("tag_name");
             return new Tuple4<>(true,
                     compare(current_version, latest_version.substring(1)) < 0,
                     latest_version,
