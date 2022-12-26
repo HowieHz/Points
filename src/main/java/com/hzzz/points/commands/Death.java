@@ -148,22 +148,26 @@ public final class Death extends HowieUtilsExecutor {
      * @return 超限返回true，返回false是允许使用
      */
     private boolean checkCommandFrequencyLimit(Player player) {
-        if (config.getBoolean("death.log.command.frequency-limit.enable", false)) {
-            if (lastUseDeathLogStamps.containsKey(player.getUniqueId())) {  // 检查是否有记录
-                final long cooldown = config.getInt("death.log.command.frequency-limit.second", 1) / config.getInt("death.log.command.frequency-limit.maximum-usage", 1);
-
-                if ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) < (cooldown * 1000)) {
-                    double cd = cooldown - ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) / 1000.0);
-                    player.sendMessage(getMessage(COMMAND_FREQUENCY_LIMIT).replace("[time]", String.format("%.2f", cd)));
-                    return true;
-                } else {  // 更新
-                    lastUseDeathLogStamps.put(player.getUniqueId(), System.currentTimeMillis());
-                }
-            } else {  // 初始化
-                lastUseDeathLogStamps.put(player.getUniqueId(), System.currentTimeMillis());
-            }
+        if (!config.getBoolean("death.log.command.frequency-limit.enable", false)) {
+            return false;
         }
-        return false;
+
+        if (!lastUseDeathLogStamps.containsKey(player.getUniqueId())) {  // 检查是否有记录
+            // 初始化
+            lastUseDeathLogStamps.put(player.getUniqueId(), System.currentTimeMillis());
+            return false;
+        }
+
+        final long cooldown = config.getInt("death.log.command.frequency-limit.second", 1) / config.getInt("death.log.command.frequency-limit.maximum-usage", 1);
+
+        if ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) < (cooldown * 1000)) {
+            double cd = cooldown - ((System.currentTimeMillis() - lastUseDeathLogStamps.get(player.getUniqueId())) / 1000.0);
+            player.sendMessage(getMessage(COMMAND_FREQUENCY_LIMIT).replace("[time]", String.format("%.2f", cd)));
+            return true;
+        } else {  // 更新
+            lastUseDeathLogStamps.put(player.getUniqueId(), System.currentTimeMillis());
+            return false;
+        }
     }
 
     @Override
