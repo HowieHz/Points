@@ -123,16 +123,16 @@ public final class Points extends JavaPlugin {
         FileConfiguration config = getConfig();
 
         // 检查更新
-        updateChecker();
+        runTaskAsynchronously(this::updateChecker);
 
         // 可能需要重写，这样不论是否关闭模块，对应模块都会实例化，大概是不能写懒汉式单例
         final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
                 new CommandInfo("here", Here.getInstance(), "here.enable", true),  // here指令
                 new CommandInfo("where", Where.getInstance(), "where.enable", true),  // where指令
                 new CommandInfo("points", PointsCommand.getInstance(), null, true),  // points指令
-                new CommandInfo("death", Death.getInstance(), "death.enable",
-                        DeathLogSQLite.getInstance().isReady() && ConfigSQLite.getInstance().isReady()),  // death指令
                 new CommandInfo("enderchest", Enderchest.getInstance(), "enderchest.enable", true),  // enderchest指令
+                new CommandInfo("fair-pvp", FairPVP.getInstance(), "fair-pvp.enable", isLoadDepend("PlaceholderAPI")
+                        && isLoadDepend("AureliumSkills")),  // fair-pvp指令
         };
         // 注册指令
         for (CommandInfo info : commandInfos) {
@@ -146,12 +146,8 @@ public final class Points extends JavaPlugin {
                 }
             }
         }
-        if (config.getBoolean("fair-pvp.enable", false) && (isLoadDepend("PlaceholderAPI") && isLoadDepend("AureliumSkills"))) {
-            setExecutor("fair-pvp", FairPVP.getInstance());
 
-        }
-
-        // death模块 监听器注册
+        // death模块 监听器注册 指令注册
         if (config.getBoolean("death.enable", false)) {
             // 数据库检查 启动数据库
             if (ConfigSQLite.getInstance().isReady() && DeathLogSQLite.getInstance().isReady()) {
@@ -160,6 +156,8 @@ public final class Points extends JavaPlugin {
                 // 数据库成功启动才启动death模块
                 // 注册监听
                 registerEvents(DeathListener.getInstance());
+                // 注册指令
+                setExecutor("death", Death.getInstance());
             } else {
                 logError(String.format(getMessage(SQLITE_NOT_READY), "config.sqlite, death_log.sqlite"));
             }
@@ -297,24 +295,22 @@ public final class Points extends JavaPlugin {
         // TODO 比如请求头，更多地方要开放配置文件，还有手动检查更新的指令
         logInfo(getMessage(UPDATE_CHECKER_START));
         String current_version = this.getDescription().getVersion();
-        runTaskAsynchronously(() -> {
-            Tuple4<Boolean, Boolean, String, String> result = UpdateChecker.check(current_version);
-            if (result._1) {
-                if (result._2) {
-                    // 需要更新
-                    logInfo(getMessage(UPDATE_CHECKER_NEED_UPDATE)
-                            .replace("[current_version]", current_version)
-                            .replace("[latest_version]", result._3)
-                            .replace("[html_url]", result._4)
-                    );
-                } else {
-                    // 是最新版
-                    logInfo(getMessage(UPDATE_CHECKER_IS_LATEST).replace("[current_version]", current_version));
-                }
+        Tuple4<Boolean, Boolean, String, String> result = UpdateChecker.check(current_version);
+        if (result._1) {
+            if (result._2) {
+                // 需要更新
+                logInfo(getMessage(UPDATE_CHECKER_NEED_UPDATE)
+                        .replace("[current_version]", current_version)
+                        .replace("[latest_version]", result._3)
+                        .replace("[html_url]", result._4));
             } else {
-                // 信息获取失败
-                logInfo(getMessage(UPDATE_CHECKER_FAIL));
+                // 是最新版
+                logInfo(getMessage(UPDATE_CHECKER_IS_LATEST)
+                        .replace("[current_version]", current_version));
             }
-        });
+        } else {
+            // 信息获取失败
+            logInfo(getMessage(UPDATE_CHECKER_FAIL));
+        }
     }
 }
