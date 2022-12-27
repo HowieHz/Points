@@ -126,17 +126,17 @@ public final class Points extends JavaPlugin {
         runTaskAsynchronously(this::updateChecker);
 
         final CommandInfo[] commandInfos = {  // 指令 要注册的执行器 判断是否开启的配置文件节点(为null就是直接开启) 其他的也需要满足的判断
-                new CommandInfo("here", () -> Here.getInstance(), "here.enable", () -> true),  // here指令
-                new CommandInfo("where", () -> Where.getInstance(), "where.enable", () -> true),  // where指令
-                new CommandInfo("points", () -> PointsCommand.getInstance(), null, () -> true),  // points指令
-                new CommandInfo("enderchest", () -> Enderchest.getInstance(), "enderchest.enable", () -> true),  // enderchest指令
-                new CommandInfo("fair-pvp", () -> FairPVP.getInstance(), "fair-pvp.enable",
+                new CommandInfo("here", Here::getInstance, "here.enable", () -> true),  // here指令
+                new CommandInfo("where", Where::getInstance, "where.enable", () -> true),  // where指令
+                new CommandInfo("points", PointsCommand::getInstance, null, () -> true),  // points指令
+                new CommandInfo("enderchest", Enderchest::getInstance, "enderchest.enable", () -> true),  // enderchest指令
+                new CommandInfo("fair-pvp", FairPVP::getInstance, "fair-pvp.enable",
                         () -> (isLoadDepend("PlaceholderAPI") && isLoadDepend("AureliumSkills"))),  // fair-pvp指令
         };
 
         // 注册指令
         for (CommandInfo info : commandInfos) {
-            if (info.and.get() && (info.enabling == null || config.getBoolean(info.enabling, false))) {
+            if ((info.enabling == null || config.getBoolean(info.enabling, false)) && info.and.get()) {
                 setExecutor(info.command, info.executor.get());
             }
         }
