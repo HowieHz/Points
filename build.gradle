@@ -111,10 +111,10 @@ shadowJar {  // 打包库到jar里面，以及给bstats的库改位置
     mergeServiceFiles()
     relocate('org.bstats', 'utils.org.bstats') {
     }
-//    relocate('com.alibaba.fastjson2', 'utils.com.alibaba.fastjson2') {
-//    }
-//    relocate('net.kyori', 'utils.net.kyori') {
-//    }
+    relocate('com.alibaba.fastjson2', 'utils.com.alibaba.fastjson2') {
+    }
+    relocate('net.kyori', 'utils.net.kyori') {
+    }
 }
 
 test {  // 测试
