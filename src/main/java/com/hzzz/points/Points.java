@@ -182,9 +182,9 @@ public final class Points extends JavaPlugin {
         disableExecutor();  // 卸载指令
         disableEventHandler();  // 卸载监听器
 
-        if (this.adventure != null) {
-            this.adventure.close();
-            this.adventure = null;
+        if (adventure != null) {
+            adventure.close();
+            adventure = null;
         }
 
         logInfo(getMessage(PLUGIN_DISABLED));  // 插件已关闭
