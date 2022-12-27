@@ -94,12 +94,12 @@ anti-boom:
   #
   # 下面每项的 enable 意思是 是否启用这个子模块
   #
-  # whitelist 为 true（白名单模式），world-list填谁谁启用
-  # whitelist 为 false（黑名单模式），world-list填谁谁不启用
+  # whitelist 为 true（白名单模式），world-list填谁谁启用防爆
+  # whitelist 为 false（黑名单模式），world-list填谁谁不启用防爆
   #
   # world-list 下面填世界名
   # 默认主世界叫 world，下界叫world_nether，末地叫world_the_end
-  # 例子：在默认的主世界，下界，还有一个dimensionalhome的世界启用
+  # 例子：在主世界，下界，还有一个叫dimensionalhome的世界启用
   # whitelist: true
   # world-list:
   #   - world
