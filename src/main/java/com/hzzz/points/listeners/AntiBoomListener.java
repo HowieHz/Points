@@ -89,12 +89,12 @@ public final class AntiBoomListener extends HowieUtilsListener {
     private boolean checkWorldConfig(Cancellable e, String configPath, String worldName) {
         if (config.getBoolean(configPath + ".enable", false)) {
             if (config.getBoolean(configPath + ".whitelist", false)) {
-                if (config.getStringList(".world-list").contains(worldName)) {
+                if (config.getStringList(configPath + ".world-list").contains(worldName)) {
                     e.setCancelled(true);
                     return true;
                 }
             } else {
-                if (!config.getStringList(".world-list").contains(worldName)) {
+                if (!config.getStringList(configPath + ".world-list").contains(worldName)) {
                     e.setCancelled(true);
                     return true;
                 }
