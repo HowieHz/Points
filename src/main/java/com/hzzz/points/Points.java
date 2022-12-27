@@ -41,7 +41,6 @@ public final class Points extends JavaPlugin {
     private final List<String> commands = new ArrayList<>();  // 已注册的指令
     private final List<NamedListener> eventHandlers = new ArrayList<>();  // 已注册的监听器
     private static BukkitAudiences adventure;  // 好用的adventure
-    private final String PATH_TO_SAVE_DATABASE = "./plugins/Points/database";
 
     /**
      * 设置instance，方便获取实例
@@ -90,6 +89,7 @@ public final class Points extends JavaPlugin {
         logInfo(getMessage(PLUGIN_LOADING));
 
         // 初始化数据库存放的文件夹
+        String PATH_TO_SAVE_DATABASE = "./plugins/Points/database";
         File file = new File(PATH_TO_SAVE_DATABASE);
         //文件夹不存在则创建
         if (!file.exists() && !file.isDirectory()) {

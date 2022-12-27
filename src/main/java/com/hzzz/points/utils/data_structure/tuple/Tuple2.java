@@ -7,7 +7,7 @@ package com.hzzz.points.utils.data_structure.tuple;
  * @version 0.2.4.2
  * @since 2022-12-25 15:33
  */
-public class Tuple2<T1, T2, T3, T4> {
+public class Tuple2<T1, T2> {
     /**
      * 建立一个二元素元组
      * @param t1 元素一

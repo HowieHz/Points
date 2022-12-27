@@ -121,12 +121,12 @@ public final class AntiBoomListener extends HowieUtilsListener {
      */
     private void checkWorldConfig(EntityExplodeEvent e, AntiBoomInfo info, String worldName) {
         // TODO 世界检查列表 为列表而不是在几个世界里面选择
-        if ((config.getBoolean(info.configParentNode + ".enable", false)) // anti-boom.类型.enable
-                && (config.getBoolean(info.configParentNode + ".world", false)  // anti-boom.类型.enable.world
+        if ((config.getBoolean(info._2 + ".enable", false)) // anti-boom.类型.enable
+                && (config.getBoolean(info._2 + ".world", false)  // anti-boom.类型.enable.world
                 && checkWordName(worldName, WorldName.WORLD))
-                || (config.getBoolean(info.configParentNode + ".world-nether", false)  // anti-boom.类型.enable.world-nether
+                || (config.getBoolean(info._2 + ".world-nether", false)  // anti-boom.类型.enable.world-nether
                 && checkWordName(worldName, WorldName.NETHER))
-                || (config.getBoolean(info.configParentNode + ".world-the-end", false)  // anti-boom.类型.enable.world-the-end
+                || (config.getBoolean(info._2 + ".world-the-end", false)  // anti-boom.类型.enable.world-the-end
                 && checkWordName(worldName, WorldName.THE_END))) {
             e.setCancelled(true);
         }
