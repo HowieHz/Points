@@ -288,19 +288,19 @@ public final class Points extends JavaPlugin {
         // TODO 向哪里检查更新，对应源url
         // TODO 比如请求头，更多地方要开放配置文件，还有手动检查更新的指令
         logInfo(getMessage(UPDATE_CHECKER_START));
-        String current_version = this.getDescription().getVersion();
-        Tuple4<Boolean, Boolean, String, String> result = UpdateChecker.check(current_version);
+        String currentVersion = this.getDescription().getVersion();
+        Tuple4<Boolean, Boolean, String, String> result = UpdateChecker.check(currentVersion);
         if (result._1) {
             if (result._2) {
                 // 需要更新
                 logInfo(getMessage(UPDATE_CHECKER_NEED_UPDATE)
-                        .replace("[current_version]", current_version)
+                        .replace("[current_version]", currentVersion)
                         .replace("[latest_version]", result._3)
                         .replace("[html_url]", result._4));
             } else {
                 // 是最新版
                 logInfo(getMessage(UPDATE_CHECKER_IS_LATEST)
-                        .replace("[current_version]", current_version));
+                        .replace("[current_version]", currentVersion));
             }
         } else {
             // 信息获取失败

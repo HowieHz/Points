@@ -1,4 +1,4 @@
-version: 2
+version: 3
 
 # 此项是否需要权限才能使用 = 如果这里是false，那么全部玩家都有使用权限，如果是true，就需要对应的权限才能使用
 
@@ -80,7 +80,7 @@ enderchest:
   # 随身末影箱
   enable: true  # 是否启用enderchest随身末影箱
   permission:
-    self:  # enderchest对象为玩家自己
+    self: # enderchest对象为玩家自己
       enable: false  # 此项是否需要权限才能使用
       node: points.command.enderchest.self
     other: # enderchest对象为其他玩家
@@ -89,65 +89,94 @@ enderchest:
       node-target-player: points.command.enderchest.other.%s  # 指定玩家 %s为玩家名的占位符
 
 anti-boom:
-  # 防爆
+  # 防爆 床和重生锚是防使用
   enable: true  # 是否启用anti-boom子模块
-  # enable 是否启用子模块
-  # world是主世界是否启用 world-nether是下界是否启用 world-the-end是末地是否启用
-  world-name: # 世界名字，一般无需修改
-    world: world
-    world-nether: world_nether
-    world-the-end: world_the_end
+  #
+  # 下面每项的 enable 意思是 是否启用这个子模块
+  #
+  # whitelist 为 true（白名单模式），world-list填谁谁启用
+  # whitelist 为 false（黑名单模式），world-list填谁谁不启用
+  #
+  # world-list 下面填世界名
+  # 默认主世界叫 world，下界叫world_nether，末地叫world_the_end
+  # 例子：在默认的主世界，下界，还有一个dimensionalhome的世界启用
+  # whitelist: true
+  # world-list:
+  #   - world
+  #   - world_nether
+  #   - dimensionalhome
+
   bed:
     enable: false  # 防止下界和末地床爆炸, 本质上是阻止玩家使用床
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   creeper:
     enable: false  # 防止苦力怕爆炸
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   ender-crystal:
     enable: false  # 防止末影水晶爆炸
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   ghast:
     enable: false  # 防止恶魂火球爆炸
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   minecart-tnt:
     enable: false  # 防止tnt矿车爆炸
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   respawn-anchor:
     enable: false  # 防止重生锚爆炸, 本质上是阻止玩家使用重生锚
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   tnt:
     enable: false  # 防止tnt爆炸
-    world: false
-    world-nether: false
-    world-the-end: false
+    whitelist: true
+    world-list:
+      - world
+      - world_nether
+      - world_the_end
   wither:
     skull:
       enable: false  # 凋零发射的头颅
-      world: false
-      world-nether: false
-      world-the-end: false
+      whitelist: true
+      world-list:
+        - world
+        - world_nether
+        - world_the_end
     spawn:
       enable: false  # 凋零生成的时候爆炸
-      world: false
-      world-nether: false
-      world-the-end: false
+      whitelist: true
+      world-list:
+        - world
+        - world_nether
+        - world_the_end
     body:
       enable: false  # 凋零自身破坏方块
-      world: false
-      world-nether: false
-      world-the-end: false
+      whitelist: true
+      world-list:
+        - world
+        - world_nether
+        - world_the_end
 
 points:
   reload:
@@ -159,10 +188,10 @@ points:
       enable: true  # 此项是否需要权限才能使用
       node: points.command.help  # 权限节点
 
-debug:  # debug模式
+debug: # debug模式
   enable: false
 
-log:  # 详细信息
+log: # 详细信息
   more-information: false
 
 # 以下功能比较需求比较特殊
