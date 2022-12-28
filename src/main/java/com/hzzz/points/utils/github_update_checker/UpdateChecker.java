@@ -1,7 +1,7 @@
 package com.hzzz.points.utils.github_update_checker;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hzzz.points.utils.data_structure.tuple.Tuple4;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * <p>检查github上是否更新了</p>
@@ -35,21 +36,23 @@ public class UpdateChecker {
      */
     @Contract("_ -> new")
     static public @NotNull Tuple4<Boolean, Boolean, String, String> check(String current_version) {
-        //TODO 自己进行json解析
         String url = "https://api.github.com/repos/HowieHz/Points/releases/latest";
-        JSONObject obj = JSON.parseObject(getJson(url));
+        String jsonString = getJson(url);
 
-        int response_code = obj.getIntValue("response_code", 200);
-        if (response_code != 200) {
+        Map<String, Object> objMap = new Gson().fromJson(jsonString, new TypeToken<>() {
+        }.getType());
+
+        Object response_code = objMap.get("response_code");
+        if (response_code != null) {
             return new Tuple4<>(false, false, "", "");
         }
 
         // String downloadUrl = obj.getJSONArray("assets").getJSONObject(0).getString("browser_download_url");
-        String latest_version = obj.getString("tag_name");
+        String latest_version = String.valueOf(objMap.get("tag_name"));
         return new Tuple4<>(true,
                 compare(current_version, latest_version.substring(1)) < 0,
                 latest_version,
-                obj.getString("html_url"));
+                String.valueOf(objMap.get("html_url")));
     }
 
     /**

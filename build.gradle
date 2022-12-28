@@ -57,8 +57,6 @@ dependencies {
     implementation 'net.kyori:adventure-api:4.12.0'
     implementation "net.kyori:adventure-platform-bukkit:4.2.0"
 
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.21.graal'
-
 
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
@@ -110,8 +108,6 @@ sonarqube {  // CI
 shadowJar {  // 打包库到jar里面，以及给bstats的库改位置
     mergeServiceFiles()
     relocate('org.bstats', 'utils.org.bstats') {
-    }
-    relocate('com.alibaba.fastjson2', 'utils.com.alibaba.fastjson2') {
     }
     relocate('net.kyori', 'utils.net.kyori') {
     }
