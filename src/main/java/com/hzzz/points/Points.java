@@ -63,7 +63,7 @@ public final class Points extends JavaPlugin {
      * 获取adventure实例
      * <a href="https://docs.adventure.kyori.net/platform/bukkit.html">...</a>
      *
-     * @return Points实例
+     * @return Adventure实例
      */
     public static BukkitAudiences getAdventure() {
         if (adventure == null) {
