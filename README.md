@@ -168,7 +168,8 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 11. 能自定义的常量都允许自定义
 12. 在配置中允许用户调试启用的世界和禁用的世界
 13. 调用paperlib进行优化
-15. 兼容到1.8
+14. 兼容到1.8
+15. 动态视距
 
 ### 反更新计划（即不太可能更新的，除非有强烈需求）
 
