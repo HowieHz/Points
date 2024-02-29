@@ -157,6 +157,10 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 
 ![Alt](https://repobeats.axiom.co/api/embed/4eb97438e77c1ee2b0343992a726e6ff81242b90.svg "Repobeats analytics image")
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=HowieHz/Points&type=Date)](https://star-history.com/#HowieHz/Points&Date)
+
 ## 更新计划
 
 1. 添加床和重生锚有爆炸伤害但不破坏地形的选项
