@@ -12,7 +12,7 @@ public class AntiBoomInfo extends Tuple2<EntityType, String> {
 
     /**
      * @param type       需要检查的EntityType
-     * @param configPath 需要检查的configPath
+     * @param configParentNode 需要检查的configParentNode
      */
     public AntiBoomInfo(EntityType type, String configParentNode) {
         super(type, configParentNode);
