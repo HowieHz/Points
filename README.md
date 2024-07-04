@@ -11,7 +11,7 @@
 
 A paper plugin, some useful points
 
-插件支持 1.16.5 1.17.1 1.18.2 1.19.x 1.20.x **Spigot, Paper及其衍生端** (如Purpur)
+插件支持 1.16.5 1.17.1 1.18.2 1.19.x 1.20.x 1.21.x **Spigot, Paper及其衍生端** (如Purpur)
 
 插件最低要求为 **java16**
 
