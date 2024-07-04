@@ -6,7 +6,7 @@ plugins {
 }
 
 version = '0.2.6'
-mainClassName = 'com.hzzz.points.Points'
+mainClassName = 'top.howiehz.points.Points'
 
 repositories {
 //    mavenLocal()  自己电脑的缓存

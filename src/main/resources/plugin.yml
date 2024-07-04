@@ -8,7 +8,7 @@ description: Some useful points
 website: https://github.com/HowieHz/Points
 
 # Technical settings
-main: com.hzzz.points.Points
+main: top.howiehz.points.Points
 api-version: 1.16
 
 softdepend: [PlaceholderAPI, AureliumSkills]
