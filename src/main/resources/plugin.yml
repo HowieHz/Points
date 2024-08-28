@@ -27,9 +27,9 @@ commands:
     description: About death
     aliases: [ de ]
     usage: "Not enable 'death'"
-  enderchest:
+  penderchest:
     description: About enderchest
-    aliases: [ ec ]
+    aliases: [ ec, pec, enderchest ]
     usage: "Not enable 'enderchest'"
   points:
     description: plugin commands

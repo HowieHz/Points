@@ -105,7 +105,7 @@ A paper plugin, some useful points
 
 ![death-log](./img/death-log-demo.png)
 
-#### /enderchest (/ec)
+#### /enderchest (/ec, /penderchest, /pec)
 
     /enderchest
     开启自己的末影箱

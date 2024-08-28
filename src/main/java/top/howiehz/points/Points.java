@@ -129,7 +129,7 @@ public final class Points extends JavaPlugin {
                 new CommandInfo("here", Here::getInstance, "here.enable", () -> true),  // here指令
                 new CommandInfo("where", Where::getInstance, "where.enable", () -> true),  // where指令
                 new CommandInfo("points", PointsCommand::getInstance, null, () -> true),  // points指令
-                new CommandInfo("enderchest", Enderchest::getInstance, "enderchest.enable", () -> true),  // enderchest指令
+                new CommandInfo("penderchest", Enderchest::getInstance, "enderchest.enable", () -> true),  // enderchest指令
                 new CommandInfo("fair-pvp", FairPVP::getInstance, "fair-pvp.enable",
                         () -> (isLoadDepend("PlaceholderAPI") && isLoadDepend("AureliumSkills"))),  // fair-pvp指令
         };
