@@ -1,7 +1,6 @@
 plugins {
     id 'com.gradleup.shadow' version '9.4.1'
     id 'java'
-    id "org.sonarqube" version "7.2.3.7755"
 }
 
 version = '0.2.9'
@@ -90,14 +89,6 @@ processResources {
     filteringCharset = 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
-    }
-}
-
-sonarqube {  // CI
-    properties {
-        property "sonar.projectKey", "HowieHz_Points"
-        property "sonar.organization", "howiehz"
-        property "sonar.host.url", "https://sonarcloud.io"
     }
 }
 

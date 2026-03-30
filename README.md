@@ -147,7 +147,7 @@ spigot-api 版本为 1.16.5
 
 ## 代码质量
 
-Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_Points), [codacy.com](https://app.codacy.com/gh/HowieHz/Points/dashboard), [deepsource.io](https://deepsource.io/gh/HowieHz/Points) 监控代码质量
+Points使用 [codacy.com](https://app.codacy.com/gh/HowieHz/Points/dashboard), [deepsource.io](https://deepsource.io/gh/HowieHz/Points) 监控代码质量
 
 ## bStats
 

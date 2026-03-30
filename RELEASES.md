@@ -88,7 +88,3 @@ Release 创建后，`Build Plugin and Upload Artifacts` workflow 会自动执行
 - `workflow_dispatch`
 
 这些场景主要用于验证项目是否还能正常构建。
-
-如果仓库 Secrets 中存在 `SONAR_TOKEN`，那么 `push` 和 `pull_request` 触发时还会额外执行：
-
-`./gradlew sonarqube --console=plain`
