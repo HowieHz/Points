@@ -10,8 +10,8 @@ repositories {
 //    mavenLocal()  自己电脑的缓存
     mavenCentral()  // 中央仓库
     maven {
-        name "Alibaba"
-        url "https://maven.aliyun.com/repository/public"
+        name = "Alibaba"
+        url = "https://maven.aliyun.com/repository/public"
     }
     maven {
         name = 'spigotmc-repo'
@@ -31,7 +31,7 @@ repositories {
     }
     maven {
         name = 'ProtocolLib'
-        url "https://repo.dmulloy2.net/repository/public/"
+        url = "https://repo.dmulloy2.net/repository/public/"
     }
 }
 
@@ -87,7 +87,7 @@ processResources {
     ]
 
     inputs.properties props
-    filteringCharset 'UTF-8'
+    filteringCharset = 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
     }
