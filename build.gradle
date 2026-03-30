@@ -1,12 +1,10 @@
 plugins {
-    id 'com.gradleup.shadow' version '7.1.2'
+    id 'com.gradleup.shadow' version '9.4.1'
     id 'java'
-    id 'application'
     id "org.sonarqube" version "7.2.3.7755"
 }
 
 version = '0.2.9'
-mainClassName = 'top.howiehz.points.Points'
 
 repositories {
 //    mavenLocal()  自己电脑的缓存
