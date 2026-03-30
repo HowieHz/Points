@@ -40,7 +40,7 @@ A paper plugin, some useful points
 
    有权限的玩家看到的
    ![tab-complete-control1](./img/tab-complete-control1.png)
-   
+
    无权限玩家看到的
    ![tab-complete-control2](./img/tab-complete-control2.png)
 
@@ -147,7 +147,8 @@ spigot-api 版本为 1.16.5
 
 ## 代码质量
 
-Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_Points), [codacy.com](https://app.codacy.com/gh/HowieHz/Points/dashboard), [deepsource.io](https://deepsource.io/gh/HowieHz/Points) 监控代码质量
+Points使用 [codacy.com](https://app.codacy.com/gh/HowieHz/Points/dashboard), [deepsource.io](https://deepsource.io/gh/HowieHz/Points)
+监控代码质量
 
 ## bStats
 
@@ -171,7 +172,7 @@ Points使用 [sonarcloud.io](https://sonarcloud.io/project/overview?id=HowieHz_P
 6. 均衡饮食功能
 7. Help指令 玩家只能看到有权限执行的指令的帮助
 8. 语言文件的最大化，前缀的分离
-9.  跟随版本自动更新的配置文件
+9. 跟随版本自动更新的配置文件
 10. 能自定义的常量都允许自定义
 11. 在配置中允许用户调试启用的世界和禁用的世界
 12. 调用paperlib进行优化
