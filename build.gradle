@@ -64,14 +64,16 @@ java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)  // 转换
 
     sourceCompatibility = javaVersion  // 编译环境有关 定义源文件应被视为哪种语言版本的 Java 关系到你使用到的Java语法特性及库 不能比targetCompatibility大
-    targetCompatibility = javaVersion  // 运行环境有关 定义代码应运行的最低 JVM 版本，即它确定编译器生成的字节代码的版本 不能比目标客户端运行环境的JavaVersion大 不能比当前Gradle使用的JavaVersion大
+    // 运行环境有关 定义代码应运行的最低 JVM 版本，即它确定编译器生成的字节代码的版本 不能比目标客户端运行环境的JavaVersion大 不能比当前Gradle使用的JavaVersion大
+    targetCompatibility = javaVersion
 
     if (JavaVersion.current() < javaVersion) {  // JavaVersion.current()是gradle使用的java版本
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)  // 工具链指向 Java xx version
     }
 }
 
-tasks.withType(JavaCompile).configureEach {  // https://docs.gradle.org/current/userguide/building_java_projects.html#sec:java_cross_compilation
+tasks.withType(JavaCompile).configureEach {
+    // https://docs.gradle.org/current/userguide/building_java_projects.html#sec:java_cross_compilation
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }
@@ -81,9 +83,8 @@ processResources {
     println "inputs: " + getInputs().getFiles().asList()
     println "outputs: " + getOutputs().getFiles().asList()
 
-    def props = [  // 需要填充的变量
-                   version: version,
-    ]
+    // 需要填充的变量
+    def props = [version: version,]
 
     inputs.properties props
     filteringCharset = 'UTF-8'
@@ -94,10 +95,8 @@ processResources {
 
 shadowJar {  // 打包库到jar里面，以及给bstats的库改位置
     mergeServiceFiles()
-    relocate('org.bstats', 'utils.org.bstats') {
-    }
-    relocate('net.kyori', 'utils.net.kyori') {
-    }
+    relocate('org.bstats', 'utils.org.bstats') {}
+    relocate('net.kyori', 'utils.net.kyori') {}
 }
 
 test {  // 测试
