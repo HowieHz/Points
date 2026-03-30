@@ -141,9 +141,9 @@ A paper plugin, some useful points
 
 ## 构建
 
-spigot-api版本为1.16.5
+spigot-api 版本为 1.16.5
 
-最新开发版自动构建可在github action中下载
+最新开发版自动构建可在 github action 中下载
 
 ## 代码质量
 

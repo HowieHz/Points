@@ -1,0 +1,45 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:30"
+      timezone: "Asia/Shanghai"
+    groups:
+      bukkit-platform:
+        patterns:
+          - "org.spigotmc:*"
+          - "io.papermc.paper:*"
+          - "me.clip:*"
+          - "net.kyori:*"
+        update-types:
+          - "minor"
+          - "patch"
+      build-plugins:
+        patterns:
+          - "com.github.johnrengelman.shadow"
+          - "org.sonarqube"
+        update-types:
+          - "minor"
+          - "patch"
+      misc:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:30"
+      timezone: "Asia/Shanghai"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"

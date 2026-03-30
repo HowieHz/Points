@@ -1,0 +1,206 @@
+name: Build Plugin and Upload Artifacts
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - dev
+  release:
+    types:
+      - created
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build shadow jar
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: false
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        shell: bash
+        run: |
+          version="${{ github.event.release.tag_name }}"
+          version="${version#v}"
+
+          if [ -n "$version" ]; then
+            python3 - <<'PY' "$version"
+            import re
+            import sys
+            from pathlib import Path
+
+            version = sys.argv[1]
+            build_file = Path("build.gradle")
+            text = build_file.read_text(encoding="utf-8")
+            updated, count = re.subn(
+                r"(?m)^version\s*=\s*'[^']+'",
+                f"version = '{version}'",
+                text,
+                count=1,
+            )
+            if count != 1:
+                raise SystemExit("Failed to update project version in build.gradle")
+            build_file.write_text(updated, encoding="utf-8")
+            PY
+          fi
+
+          ./gradlew clean build shadowJar --profile --console=plain
+
+      - name: Summarize Gradle profile
+        if: always()
+        shell: bash
+        run: |
+          profile_report=$(ls -t build/reports/profile/profile-*.html 2>/dev/null | head -n 1 || true)
+          if [ -z "$profile_report" ]; then
+            echo "## Gradle Build Profile" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "No Gradle profile report was generated." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          python3 - <<'PY' "$profile_report" >> "$GITHUB_STEP_SUMMARY"
+          import re
+          import sys
+          from pathlib import Path
+
+          report_path = Path(sys.argv[1])
+          text = report_path.read_text(encoding="utf-8")
+
+          total_match = re.search(r'<td>Total Build Time</td>\s*<td class="numeric">([^<]+)</td>', text)
+          task_rows = re.findall(
+              r'<td class="indentPath">([^<]+)</td>\s*<td class="numeric">([^<]+)</td>\s*<td>([^<]*)</td>',
+              text,
+          )
+
+          interesting = []
+          for task, duration, result in task_rows:
+              if result.strip() in {"UP-TO-DATE", "SKIPPED", "NO-SOURCE", "Did No Work"}:
+                  continue
+              interesting.append((task, duration))
+
+          print("## Gradle Build Profile")
+          print()
+          print(f"- Report: `{report_path}`")
+          if total_match:
+              print(f"- Total build time: `{total_match.group(1)}`")
+          print()
+          print("### Slowest executed tasks")
+          print()
+          if interesting:
+              for task, duration in interesting[:10]:
+                  print(f"- `{task}`: `{duration}`")
+          else:
+              print("- No executed tasks found in the profile report.")
+          PY
+
+      - name: Analyze with SonarQube
+        if: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') && secrets.SONAR_TOKEN != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonarqube --console=plain
+
+      - name: Upload Gradle profile report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gradle-profile
+          path: build/reports/profile/profile-*.html
+          retention-days: 1
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: points-shadow-jar
+          path: build/libs/*-all.jar
+          retention-days: 1
+
+  github-release:
+    name: Upload release assets
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'release'
+
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: points-shadow-jar
+          path: build/libs
+          merge-multiple: true
+
+      - name: Get release metadata
+        shell: bash
+        run: |
+          artifact_pathnames=$(ls build/libs/*.jar | paste -sd "," -)
+          echo "ARTIFACT_PATHNAMES=${artifact_pathnames}" >> "$GITHUB_ENV"
+          echo "RELEASE_ID=${{ github.event.release.id }}" >> "$GITHUB_ENV"
+
+      - name: Upload release assets
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs').promises;
+
+            const releaseId = process.env.RELEASE_ID;
+            const artifactPathNames = process.env.ARTIFACT_PATHNAMES
+              .split(',')
+              .filter(Boolean);
+
+            const existingAssets = await github.paginate(
+              github.rest.repos.listReleaseAssets,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: releaseId
+              }
+            );
+
+            for (const artifactPathName of artifactPathNames) {
+              const artifactName = artifactPathName.split('/').pop();
+              const existingAsset = existingAssets.find((asset) => asset.name === artifactName);
+
+              if (existingAsset) {
+                core.info(`Deleting existing asset ${artifactName} (${existingAsset.id})`);
+                await github.rest.repos.deleteReleaseAsset({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  asset_id: existingAsset.id
+                });
+              }
+
+              core.info(`Uploading ${artifactPathName} as ${artifactName}`);
+              await github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: releaseId,
+                name: artifactName,
+                data: await fs.readFile(artifactPathName)
+              });
+            }
