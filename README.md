@@ -11,22 +11,22 @@
 
 A paper plugin, some useful points
 
-插件支持 1.16.5 1.17.1 1.18.2 1.19.x 1.20.x 1.21.x **Spigot, Paper及其衍生端** (如Purpur)
+插件支持 1.16.5 1.17.1 1.18.2 1.19.x 1.20.x 1.21.x 26.1.x **Spigot, Paper及其衍生端** (如 Purpur)
 
 插件最低要求为 **java16**
 
 ## 主要功能
 
-1. 高亮自身 公屏发坐标 (/here指令)
+1. 高亮自身，并在公屏发坐标 (/here指令)
 2. 得到某个玩家的坐标 (/where指令)
 3. 死亡的时候发送死亡位置 (/death指令)
 4. 记录死亡信息 (/death指令)
 5. 随身开启末影箱 (/enderchest指令)
 6. 防爆
 
-   ### 特殊需求功能
+### 特殊需求功能
 
-7. 公平PVP模式 (/fair-pvp指令, 关闭AureliumSkills插件的属性加成, 需要PlaceholderAPI和AureliumSkills插件)
+1. 公平PVP模式 (/fair-pvp指令, 关闭AureliumSkills插件的属性加成, 需要PlaceholderAPI和AureliumSkills插件)
 
 **其他**
 
