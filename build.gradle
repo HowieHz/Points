@@ -3,7 +3,7 @@ plugins {
     id 'java'
 }
 
-version = '0.2.9'
+version = '0.2.10'
 
 repositories {
 //    mavenLocal()  自己电脑的缓存
