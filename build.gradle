@@ -43,7 +43,7 @@ dependencies {
 //    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 //    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 //    compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
-    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:26.1-R0.1-SNAPSHOT'
 
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     compileOnly 'org.xerial:sqlite-jdbc:3.51.3.0'
