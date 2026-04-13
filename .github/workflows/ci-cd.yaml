@@ -138,7 +138,7 @@ jobs:
           echo "RELEASE_ID=${{ github.event.release.id }}" >> "$GITHUB_ENV"
 
       - name: Upload release assets
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # https://github.com/actions/github-script/releases/tag/v9.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
