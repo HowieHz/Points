@@ -1,5 +1,5 @@
 plugins {
-    id 'com.gradleup.shadow' version '9.4.1'
+    id 'com.gradleup.shadow' version '9.4.2'
     id 'java'
 }
 
@@ -43,7 +43,7 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
 
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
-    compileOnly 'org.xerial:sqlite-jdbc:3.53.0.0'
+    compileOnly 'org.xerial:sqlite-jdbc:3.53.1.0'
 
     compileOnly 'me.clip:placeholderapi:2.12.2'
 
