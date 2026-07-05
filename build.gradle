@@ -45,7 +45,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     compileOnly 'org.xerial:sqlite-jdbc:3.53.2.0'
 
-    compileOnly 'me.clip:placeholderapi:2.12.2'
+    compileOnly 'me.clip:placeholderapi:2.12.3'
 
     // https://mvnrepository.com/artifact/org.bstats/bstats-bukkit
     implementation 'org.bstats:bstats-bukkit:3.2.1'
